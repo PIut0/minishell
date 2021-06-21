@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/21 14:06:53 by klim             ###   ########.fr        #
+#    Updated: 2021/06/21 14:29:08 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,10 @@ CC			= 	gcc
 CFLAGS		=	-Wextra -Wall -Werror -c
 
 NAME		=	minishell
-SRCS		=	test.c
+SRCS_DIR	=	./src/
+SRCS_LIST	=	test.c \
+
+SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS		=	$(SRCS:.c=.o)
 INCLS		=	include
 
