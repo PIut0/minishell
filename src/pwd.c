@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/21 18:21:20 by sehyan           ###   ########.fr       */
+/*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
+/*   Updated: 2021/06/21 18:19:15 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../include/minishell.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <limits.h>
+void	pwd(void)
+{
+	char	buf[PATH_MAX];
 
-int		get_next_line(int fd, char **line);
-
-void	pwd(void);
-#endif
+	if (!(getcwd(buf, sizeof(buf))))
+		return ; //error
+	printf("%s\n", buf);
+}

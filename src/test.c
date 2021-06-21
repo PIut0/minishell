@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/21 18:21:20 by sehyan           ###   ########.fr       */
+/*   Created: 2021/06/21 18:18:34 by sehyan            #+#    #+#             */
+/*   Updated: 2021/06/21 18:51:40 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../include/minishell.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <limits.h>
+int main()
+{
+	int d;
 
-int		get_next_line(int fd, char **line);
-
-void	pwd(void);
-#endif
+	scanf("%d", &d);
+	if (d == 1)
+		pwd();
+	return 0;
+}
