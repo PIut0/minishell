@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/21 14:29:08 by klim             ###   ########.fr        #
+#    Updated: 2021/06/21 14:51:06 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ CFLAGS		=	-Wextra -Wall -Werror -c
 NAME		=	minishell
 SRCS_DIR	=	./src/
 SRCS_LIST	=	test.c \
+				get_next_line.c \
+				get_next_line_utils.c
 
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS		=	$(SRCS:.c=.o)
