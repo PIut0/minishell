@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 15:41:34 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/23 19:48:34 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include "builtin.h"
 
 void	m_pwd(void)
 {
@@ -29,34 +30,13 @@ void	m_cd(char *s)
 	if(result == 0)
 		m_pwd();
 	else
-		perror("Fail...\n");
+		m_error("Fail...");
 }
 
 void	m_exit(void)
 {
 	exit(0);
 }
-
-// void	m_export(char *s)
-// {
-// 	// example : JAVAHOME=/user/lib/java-7-openjdk-amd64/
-// 	//			 ENV=hello
-// 	//			 ENV="Hello, World!"
-	
-// }
-
-// void	m_env(void)
-// {
-// 	execve("/usr/bin/env", "env", NULL);
-// }
-
-// void	m_exec(char *argv)
-// {
-// 	if(execve("/bin", &argv, NULL) == -1) {
-// 		printf("프로그램 실행 error\n"); 
-// 		return ; 
-// 	}
-// }
 
 void	m_echo(char *s, int flag)
 {

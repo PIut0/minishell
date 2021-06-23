@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/23 19:16:04 by sehyan           ###   ########.fr       */
+/*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
+/*   Updated: 2021/06/23 20:09:35 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "builtin.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <limits.h>
-# include <stdlib.h>
+void	print_stack(t_node *node)
+{
+	t_node *now;
 
-int		get_next_line(int fd, char **line);
+	now = node;
+	while (now)
+	{
+		printf(">>%s\n", now->key);
+		now = now->next;
+	}
+	printf("\n");
+}
 
-#endif
+void	m_error(char *s)
+{
+	printf("%s\n", s);
+	exit(1);
+}
