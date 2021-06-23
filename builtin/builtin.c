@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 19:48:34 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/23 21:57:05 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,20 @@ void	m_exit(void)
 	exit(0);
 }
 
-void	m_echo(char *s, int flag)
+void	m_echo(char **s, int flag, int argc)
 {
-	if (flag == 0)
-		printf("%s\n", s);
-	else
-		printf("%s", s);
+	int i;
+
+	i = 0;
+	while (++i < argc)
+    	printf("%s%s", s[i], (i < argc-1) ? " " : "");
+  	printf("\n");
+  return ;
+}
+
+void	m_exec(char **argv)
+{
+	if(execve("/usr/bin/env", argv, NULL) == -1)
+		printf("프로그램 실행 error\n");
+	return ;
 }

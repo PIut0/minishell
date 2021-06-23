@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:18:07 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 20:09:43 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/23 21:29:31 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct	s_env
 void	m_pwd(void);
 void	m_cd(char *s);
 void	m_exit(void);
-void	m_echo(char *s, int flag);
+void	m_echo(char **s, int flag, int argc);
 
 //builtin_utils
 void	m_error(char *s);

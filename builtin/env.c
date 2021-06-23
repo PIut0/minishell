@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:26:41 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 20:44:12 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/23 21:56:48 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,18 @@ void	init_env(char **arg_env)
 
 int main(int argc, char *argv[], char **env)
 {
+	char *line;
+
 	init_env(env);
+	while (1)
+	{
+		ft_putstr_fd("minishell > ", 1);
+		// get_next_line(0, &line);
+
+		if(execve("/usr/bin/env", argv, NULL) == -1) {
+			printf("프로그램 실행 error\n"); 
+		}
+		//printf("%s\n",info->cmd);
+	}
 	return (0);
 }
