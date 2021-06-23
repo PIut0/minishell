@@ -6,11 +6,11 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 20:32:47 by klim              #+#    #+#             */
-/*   Updated: 2021/06/21 14:47:04 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/23 17:00:40 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/get_next_line.h"
+#include "get_next_line.h"
 
 int		ft_strlen(char *s)
 {

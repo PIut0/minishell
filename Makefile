@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/21 14:51:06 by klim             ###   ########.fr        #
+#    Updated: 2021/06/23 17:05:07 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,11 @@ CFLAGS		=	-Wextra -Wall -Werror -c
 NAME		=	minishell
 SRCS_DIR	=	./src/
 SRCS_LIST	=	test.c \
-				get_next_line.c \
-				get_next_line_utils.c
+				gnl/get_next_line.c \
+				gnl/get_next_line_utils.c \
+				parsing1.c \
+				node.c \
+				info.c
 
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS		=	$(SRCS:.c=.o)
@@ -43,3 +46,4 @@ fclean		: clean
 	make fclean -C libft
 
 re			: fclean all
+	./$(NAME)
