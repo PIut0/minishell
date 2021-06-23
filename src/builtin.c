@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/22 17:22:00 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/23 14:25:17 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,22 @@ void	m_exit(void)
 // 	// example : JAVAHOME=/user/lib/java-7-openjdk-amd64/
 // 	//			 ENV=hello
 // 	//			 ENV="Hello, World!"
+	
 // }
 
 // void	m_env(void)
 // {
-	
+// 	execve("/usr/bin/env", "env", NULL);
 // }
+
+void	m_exec(char *argv)
+{
+	// execve("/usr/bin/", &argv, NULL);
+	if(execve("/usr/bin/env", &argv, NULL) == -1) {
+		printf("프로그램 실행 error\n"); 
+		return ; 
+	}
+}
 
 void	m_echo(char *s, int flag)
 {
