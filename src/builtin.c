@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 14:25:17 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/23 15:41:34 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,13 @@ void	m_exit(void)
 // 	execve("/usr/bin/env", "env", NULL);
 // }
 
-void	m_exec(char *argv)
-{
-	// execve("/usr/bin/", &argv, NULL);
-	if(execve("/usr/bin/env", &argv, NULL) == -1) {
-		printf("프로그램 실행 error\n"); 
-		return ; 
-	}
-}
+// void	m_exec(char *argv)
+// {
+// 	if(execve("/bin", &argv, NULL) == -1) {
+// 		printf("프로그램 실행 error\n"); 
+// 		return ; 
+// 	}
+// }
 
 void	m_echo(char *s, int flag)
 {

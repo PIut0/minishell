@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:18:34 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 15:07:53 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/23 15:24:05 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	// char s[100];
 	// scanf("%s", s);
@@ -30,14 +30,13 @@ int main(int argc, char *argv[])
 			char str[100];
 			int f;
 			f = 0;
-			for (int i = 0; str[i] != '\n'; i++)
-				scanf("%c", str[i]);
+			scanf("%s", str);
 			m_echo(str, f);
 		}
 		if (k == 4){
-			printf("here!\n");
-			if (execve("/bin/env", argv, NULL) < 0)
-				printf("error\n");
+			char argv[100];
+			scanf("%s", argv);
+			m_exec(argv);
 		}
 	}
 	
