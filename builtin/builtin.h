@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:18:07 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 21:29:31 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/24 16:04:15 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ void	init_env(char **arg_env);
 void	input_env(char *s, t_node *new);
 
 //debuging
-void	print_stack(t_node *node);
+void	print_env(t_node *node);
 #endif

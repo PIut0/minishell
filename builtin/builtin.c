@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 21:57:05 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/24 16:05:09 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,9 @@ void	m_exec(char **argv)
 	if(execve("/usr/bin/env", argv, NULL) == -1)
 		printf("프로그램 실행 error\n");
 	return ;
+}
+
+void	m_env(t_env *env)
+{
+	print_env(env->head);
 }

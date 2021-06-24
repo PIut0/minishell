@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:26:41 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/23 21:56:48 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/24 17:33:55 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,58 @@ void	input_env(char *s, t_node *new)
 		m_error("malloc error");
 	i = -1;
 	while (s[++i] != '=')
-	{
 		new->key[i] = s[i];
-	}
 	j = 0;
 	while (s[++i])
 	{
 		new->value[j] = s[i];
 		j++;
+	}
+}
+
+t_node	*find(t_node *new)
+{
+	char *str;
+	char *val;
+
+	if (!(str = (char *)malloc(sizeof(char) * ft_strlen(new->key))))
+		m_error("malloc error");
+	if (!(val = (char *)malloc(sizeof(char) * ft_strlen(new->value))))
+		m_error("malloc error");
+	str = ft_strlcpy(str, new->key, ft_strlen(new->key));
+	val = ft_strlcpy(val, new->value, ft_strlen(new->value));
+	//위로 올라가면서 찾기?
+	while (new->prev)
+	{
+		if (ft_strncmp(str, new->key, ft_strlen(str)))
+			return (new);
+		new = new->prev;
+	}
+}
+
+void	plus_value(t_node *new)
+{
+	//new의 키와 같은 값을 가진 node를 찾아서, 
+	// 그 node의 value 뒤에 new의 value붙여넣기.
+}
+
+void	check_key_val(t_node *new)
+{
+	int i;
+
+	i = 0;
+	if (ft_isalpha(new->key[0]) == 0)
+		//error, 오류 출력 후 shell 로 돌아가야함
+	while (new->key[i])
+	{
+		if (!(('A' <= new->key[i] && new->key[i] <= 'Z')
+				|| ('a' <= new->key[i] && new->key[i] <= 'z')
+				|| ('0' <= new->key[i] && new->key[i] <= '9'))
+				&& new->key[i] != '+')
+			//error, 오류 출력 후 shell로 돌아가야함.
+		if (new->key[i] == '+' && i == ft_strlen(new->key))
+			plus_value(new);
+		i++;
 	}
 }
 
@@ -54,6 +98,7 @@ void	add_env(char *s, t_env *env)
 		env->tail = new;
 		env->tail->next = NULL;
 	}
+	check_key_val(new);
 }
 
 void	rm_env(char *rm_key, t_env *env)
