@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/23 20:04:49 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 14:27:03 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 
 # define WHITE_SPACE " \t\n\v\f\b"
+# define BACK_SLASH -1
 
 typedef enum		e_token_type
 {

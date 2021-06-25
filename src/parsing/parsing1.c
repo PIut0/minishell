@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 13:52:55 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 15:13:05 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ int			is_space(char c)
 			return (1);
 	}
 	return (0);
-}
-
-char		*remove_space(char *line)
-{
-	while (is_space(*line))
-		line++;
-	return (line);
 }
 
 char		get_param_split(char **str)
@@ -92,7 +85,7 @@ int			is_quote(char *line, int n)
 	i = 0;
 	while (line[i] && i < n)
 	{
-		if (i > 0 && line[i - 1] == '\\')
+		if (i > 0 && line[i - 1] == BACK_SLASH)
 			;
 		else if (quote == 0 && line[i] == '\'')
 			quote = 1;
@@ -111,7 +104,7 @@ t_token_type	get_token(char *line, int i)
 {
 	if (is_quote(line, i))
 		return (_null);
-	if (i > 0 && line[i - 1] == '\\')
+	if (i > 0 && line[i - 1] == BACK_SLASH)
 		return (_null);
 	else if (line[i] == 0)
 		return (_none);
@@ -130,6 +123,53 @@ t_token_type	get_token(char *line, int i)
 	return (_null);
 }
 
+char		*join_bs(char *str, int len)
+{
+	int		i;
+	int		bs_cnt;
+	char	*ret;
+
+	if (!str)
+		return (0);
+	if (!(ret = (char *)malloc(len)))
+		return (0);
+	i = -1;
+	bs_cnt = 0;
+	while (++i < len)
+	{
+		if (str[i] != BACK_SLASH)
+			ret[i - bs_cnt] = str[i];
+		else
+			bs_cnt++;
+	}
+	ret[i - bs_cnt] = 0;
+	free(str);
+	return (ret);
+}
+
+char	*remove_space(char *str)
+{
+	char	*t;
+	size_t	i;
+	size_t	end;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i] && ft_strchr(WHITE_SPACE, str[i]))
+		i++;
+	end = ft_strlen(str + i);
+	while (end && str[i + end - 1] && ft_strchr(WHITE_SPACE, str[i + end - 1]))
+		end--;
+	if (!(t = (char *)malloc(end + 1)))
+		return (0);
+	if (str[i + end - 1] == BACK_SLASH && ft_strchr(WHITE_SPACE, str[i + end]))
+		end++;
+	ft_strlcpy(t, str + i, end + 1);
+	free(str);
+	return (t);
+}
+//   abcd
 int			add_new_token(t_token *head, char *line, int *i, int last)
 {
 	t_token_type	type;
@@ -138,12 +178,12 @@ int			add_new_token(t_token *head, char *line, int *i, int last)
 	char			*data;
 
 	tmp = head;
-	data = ft_substr(line, last, (size_t)(*i - last));
 	type = get_token(line, *i);
-	if (!(n = init_token(ft_strtrim(data, WHITE_SPACE))))
+	data = ft_substr(line, last, (size_t)(*i - last));
+	data = remove_space(data);
+	if (!(n = init_token(join_bs(data, (*i - last)))))
 		return (1);
 	n->token_type = type;
-	free(data);
 	if (type == _d_brackets || type == _rd_brackets)
 		(*i)++;
 	while (tmp->next)
@@ -152,14 +192,14 @@ int			add_new_token(t_token *head, char *line, int *i, int last)
 	return (0);
 }
 
-int				parse_token(char *line, t_info *info, t_token *head)
+int				parse_token(char *line, t_info *info, t_token *head, int len)
 {
 	int				i;
 	int				last;
 
 	i = -1;
 	last = 0;
-	while (line[++i])
+	while (++i < len)
 	{
 		if (get_token(line, i) != _null)
 		{
@@ -183,38 +223,16 @@ int			remove_bs(char *line, int len)
 	count = 0;
 	while (++i < len)
 	{
-		if (i > 0 && line[i-1] == 0)
+		if (i > 0 && line[i-1] == BACK_SLASH)
 			;
 		else if (line[i] == '\\')
 		{
-			line[i] = 0;
+			line[i] = BACK_SLASH;
 			count++;
 		}
 	}
 	return (count);
 }
-
-//char		*join_bs(char *line, int count, int len)
-//{
-//	int i = -1;
-//	count = 0;
-
-//	while (++i < len)
-//		write(1, &line[i], 1);
-//	write(1, "\n", 1);
-//	return (line);
-//}
-
-//char		*replace_backslash(char *line)
-//{
-//	int		len;
-//	int		count;
-
-//	count = 0;
-//	len = ft_strlen(line);
-//	line = remove_bs(line, &count, len);
-//	return (line);
-//}
 
 int			parsing(char *line, t_info *info)
 {
@@ -222,24 +240,13 @@ int			parsing(char *line, t_info *info)
 	int			len;
 	int			bs_cnt;
 
-	head = init_token("");
 	len = ft_strlen(line);
 	bs_cnt = remove_bs(line, len);
-	//if (!(line = replace_backslash(line)))
-	//	return (1);
-	if (parse_token(line, info, head))
+	if (is_quote(line, len))
 		return (1);
-	//i = 0;
-	//len = ft_strlen(line);
-	//while (i < len)
-	//{
-	//	line = remove_space(line);
-	//	if (push_argv(parse_param(&line), info))
-	//		return (1);
-	//	line = remove_space(line);
-	//}
+	head = init_token("");
+	if (parse_token(line, info, head, len))
+		return (1);
 	free(line);
 	return 0;
 }
-
-//	> echo "test"
