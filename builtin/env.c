@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:26:41 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/25 13:16:09 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/25 16:20:07 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,14 @@ int		check_key_val(char *key)
 		return (0);
 	while (key[i])
 	{
-		if (!(('A' <= key[i] && key[i] <= 'Z')
-				|| ('a' <= key[i] && key[i] <= 'z')
-				|| ('0' <= key[i] && key[i] <= '9'))
-				&& key[i] != '+')
+		if (ft_isalpha(key[i]) == 0 || ft_isalnum(key[i]) == 0)
 			return (0);
-		// if (key[i] == '+' && i == ft_strlen(key))
-		// 	plus_value(new);
 		i++;
 	}
 	return (1);
 }
 
-void	add_env(char *s, t_env *env)
+int		add_env(char *s, t_env *env)
 {
 	t_node	*new;
 
@@ -105,7 +100,12 @@ void	add_env(char *s, t_env *env)
 		env->tail = new;
 		env->tail->next = NULL;
 	}
-	check_key_val(new);
+	if (!(check_key_val(new)))
+	{
+		rm_env(new->key, env);
+		return (0);
+	}
+	return (1);
 }
 
 void	rm_env(char *rm_key, t_env *env)
@@ -148,11 +148,6 @@ void	init_env(char **arg_env)
 		add_env(arg_env[i], env);
 		i++;
 	}
-	// add_env("HELLO=hello my world", env);
-	// printf("==== %s=====\n", env->tail->key);
-	// rm_env("HELLO", env);
-	// printf("----%s----\n", env->tail->key);
-	// print_stack(env->head);
 }
 
 int main(int argc, char *argv[], char **env)
@@ -163,10 +158,11 @@ int main(int argc, char *argv[], char **env)
 	while (1)
 	{
 		ft_putstr_fd("minishell > ", 1);
-		// get_next_line(0, &line);
-
-		if(execve("/usr/bin/env", argv, NULL) == -1) {
-			printf("프로그램 실행 error\n");
+		int cmd;
+		scanf("%d", &cmd);
+		if (cmd == 1)
+		{
+			printf()
 		}
 		//printf("%s\n",info->cmd);
 	}
