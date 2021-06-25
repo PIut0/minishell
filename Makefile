@@ -6,12 +6,12 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/23 17:07:41 by klim             ###   ########.fr        #
+#    Updated: 2021/06/23 17:24:16 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= 	gcc
-CFLAGS		=	-Wextra -Wall -Werror -c
+CFLAGS		=	-Wextra -Wall -Werror -c -I include
 
 NAME		=	minishell
 SRCS_DIR	=	./src/
@@ -19,7 +19,7 @@ SRCS_LIST	=	test.c \
 				gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
 				parsing/parsing1.c \
-				node.c \
+				argv.c \
 				info.c
 
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))

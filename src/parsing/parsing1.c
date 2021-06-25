@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/23 20:46:05 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 13:52:55 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,21 +134,21 @@ int			add_new_token(t_token *head, char *line, int *i, int last)
 {
 	t_token_type	type;
 	t_token			*tmp;
-	t_token			*new;
+	t_token			*n;
 	char			*data;
 
 	tmp = head;
 	data = ft_substr(line, last, (size_t)(*i - last));
 	type = get_token(line, *i);
-	new->token_type = type;
-	if (!(new = init_token(ft_strtrim(data, WHITE_SPACE))))
+	if (!(n = init_token(ft_strtrim(data, WHITE_SPACE))))
 		return (1);
+	n->token_type = type;
 	free(data);
 	if (type == _d_brackets || type == _rd_brackets)
 		(*i)++;
 	while (tmp->next)
 		tmp = tmp->next;
-	tmp->next = new;
+	tmp->next = n;
 	return (0);
 }
 
@@ -174,13 +174,59 @@ int				parse_token(char *line, t_info *info, t_token *head)
 	return (0);
 }
 
+int			remove_bs(char *line, int len)
+{
+	int		i;
+	int		count;
+
+	i = -1;
+	count = 0;
+	while (++i < len)
+	{
+		if (i > 0 && line[i-1] == 0)
+			;
+		else if (line[i] == '\\')
+		{
+			line[i] = 0;
+			count++;
+		}
+	}
+	return (count);
+}
+
+//char		*join_bs(char *line, int count, int len)
+//{
+//	int i = -1;
+//	count = 0;
+
+//	while (++i < len)
+//		write(1, &line[i], 1);
+//	write(1, "\n", 1);
+//	return (line);
+//}
+
+//char		*replace_backslash(char *line)
+//{
+//	int		len;
+//	int		count;
+
+//	count = 0;
+//	len = ft_strlen(line);
+//	line = remove_bs(line, &count, len);
+//	return (line);
+//}
+
 int			parsing(char *line, t_info *info)
 {
 	t_token		*head;
-	//int			i;
-	//int			len;
+	int			len;
+	int			bs_cnt;
 
 	head = init_token("");
+	len = ft_strlen(line);
+	bs_cnt = remove_bs(line, len);
+	//if (!(line = replace_backslash(line)))
+	//	return (1);
 	if (parse_token(line, info, head))
 		return (1);
 	//i = 0;

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 16:57:57 by klim              #+#    #+#             */
-/*   Updated: 2021/06/23 16:57:59 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/23 20:44:33 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,17 @@ void		print_argv(t_argv *argv)
 	{
 		printf("%s\n",t->data);
 		t = t->next;
+	}
+}
+
+void		print_token(t_token *head)
+{
+	t_token	*tmp;
+
+	tmp = head->next;
+	while (tmp)
+	{
+		printf("|%s|\n", tmp->data);
+		tmp = tmp->next;
 	}
 }
