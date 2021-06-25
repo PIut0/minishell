@@ -6,12 +6,17 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/25 15:46:10 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/25 21:47:24 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "builtin.h"
+
+void	greater_sign()
+{
+	
+}
 
 void	m_pwd(void)
 {
@@ -28,29 +33,14 @@ void	m_cd(char *s)
 
 	result = chdir(s);
 	if(result == 0)
-		m_pwd();
+		;
 	else
-		m_error("Fail...");
+		err_int("fail", 0);
 }
 
 void	m_exit(void)
 {
 	exit(0);
-}
-
-int		check_flag(char *argv)
-{
-	int j;
-
-	j = 1;
-	while (argv[j])
-	{
-		if (argv[j] == 'n')
-			j++;
-		else
-			return (0);
-	}
-	return (1);
 }
 
 void	m_echo(int argc, char **argv)
@@ -92,5 +82,25 @@ void	m_exec(char **argv)
 
 void	m_env(t_env *env)
 {
-	print_env(env->head);
+	print_env(env);
+}
+
+void	m_unset(char *key, t_env *env)
+{
+	t_node *n;
+
+	n = find_node(key, env);
+	rm_env(n);
+}
+
+void	m_export(int argc, char **argv, t_env *env)
+{
+	int i;
+
+	i = 1;
+	while (++i < argc)
+	{
+		printf("argv = %s\n", argv[i]);
+		add_env(argv[i], env);
+	}
 }
