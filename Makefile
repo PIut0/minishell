@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/23 17:24:16 by klim             ###   ########.fr        #
+#    Updated: 2021/06/25 16:10:09 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ SRCS_DIR	=	./src/
 SRCS_LIST	=	test.c \
 				gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
+				libft_ref/ref1.c \
 				parsing/parsing1.c \
+				parsing/parsing2.c \
+				parsing/token1.c \
+				util/util1.c \
 				argv.c \
 				info.c
 

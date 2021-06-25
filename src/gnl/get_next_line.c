@@ -6,12 +6,11 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 21:08:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/23 17:19:37 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 16:07:11 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "minishell.h"
 
 int		is_newline(char *buf)
 {
