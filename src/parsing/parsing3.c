@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token1.c                                           :+:      :+:    :+:   */
+/*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 16:03:57 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 18:16:08 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int			parse_token(char *line, t_info *info, t_token *head, int len)
 		return (1);
 	if (join_brackets(head))
 		return (1);
+	//if (parse_argv(head))
+	//	return (1);
 	info->head = head;
 	return (0);
 }

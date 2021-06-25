@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/25 16:10:09 by klim             ###   ########.fr        #
+#    Updated: 2021/06/25 18:24:03 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,11 @@ SRCS_LIST	=	test.c \
 				libft_ref/ref1.c \
 				parsing/parsing1.c \
 				parsing/parsing2.c \
-				parsing/token1.c \
+				parsing/parsing3.c \
+				parsing/parsing4.c \
 				util/util1.c \
+				util/err_util1.c \
+				util/env_util1.c \
 				argv.c \
 				info.c
 

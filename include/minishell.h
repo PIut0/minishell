@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 16:06:48 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 18:20:04 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,30 @@ typedef enum		e_token_type
 	_semicolon
 }					t_token_type;
 
+typedef struct	s_node
+{
+	struct s_node	*next;
+	struct s_node	*prev;
+	char			*key;
+	char			*value;
+}				t_node;
+
+typedef struct	s_env
+{
+	t_node		*head;
+	t_node		*tail;
+}				t_env;
+
 typedef	struct		s_argv
 {
 	char			*data;
 	struct	s_argv	*next;
 }					t_argv;
 
+typedef	struct		s_shell
+{
+	t_env			*env;
+}					t_shell;
 typedef	struct		s_token
 {
 	char			*data;
@@ -51,6 +69,7 @@ typedef	struct		s_info
 	char			*cmd;
 	t_argv			*argv;
 	t_token			*head;
+	t_shell			*shell;
 }					t_info;
 
 int				get_next_line(int fd, char **line);
@@ -69,14 +88,24 @@ int				is_quote(char *line, int n);
 t_token			*init_token(char *data);
 int				is_space(char c);
 
-t_argv		*init_argv(char *data);
-int			push_argv(char *data, t_info *info);
-void		print_argv(t_argv *argv);
-void		print_token(t_token *head);
+t_argv			*init_argv(char *data);
+int				push_argv(char *data, t_info *info);
+void			print_argv(t_argv *argv);
+void			print_token(t_token *head);
+
+t_node			*init_node(char *s);
+t_node			*find_node(t_node *n, t_env *env);
+int				check_key_val(t_node *node);
+int				add_env(char *s, t_env *env);
+void			rm_env(t_node *node);
+t_env			*init_env(char **arg_env);
+
+int		err_int(char *s, int ret);
+void	*err_ptr(char *s, void *ret);
 
 
 void	free_info(t_info *info);
-t_info	*init_info(void);
+t_info	*init_info(t_shell *shell);
 
 
 #endif
