@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/24 16:05:09 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/25 15:46:10 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,49 @@ void	m_exit(void)
 	exit(0);
 }
 
-void	m_echo(char **s, int flag, int argc)
+int		check_flag(char *argv)
+{
+	int j;
+
+	j = 1;
+	while (argv[j])
+	{
+		if (argv[j] == 'n')
+			j++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+void	m_echo(int argc, char **argv)
 {
 	int i;
-
+	int j;
+	int flag;
+	
 	i = 0;
-	while (++i < argc)
-    	printf("%s%s", s[i], (i < argc-1) ? " " : "");
-  	printf("\n");
-  return ;
+	j = 0;
+	flag = 0;
+	while (argv[++i][j] == '-')
+	{
+		if (check_flag(argv[i]) == 1)
+			flag = 1;
+		else
+		{
+			i--;
+			break;
+		}
+	}
+	while (i < argc)
+	{
+		printf("%s", argv[i]);
+		i++;
+		if (argv[i])
+			printf(" ");
+	}
+	if (flag == 0)
+		printf("\n");
 }
 
 void	m_exec(char **argv)

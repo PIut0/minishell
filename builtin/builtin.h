@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:18:07 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/24 16:04:15 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/25 15:46:17 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ typedef struct	s_env
 void	m_pwd(void);
 void	m_cd(char *s);
 void	m_exit(void);
-void	m_echo(char **s, int flag, int argc);
+void	m_echo(int argc, char **argv);
+int		check_flag(char *argv);
 
 //builtin_utils
 void	m_error(char *s);

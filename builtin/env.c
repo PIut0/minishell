@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:26:41 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/24 17:33:55 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/25 13:16:09 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,50 +31,57 @@ void	input_env(char *s, t_node *new)
 	}
 }
 
-t_node	*find(t_node *new)
+t_node	*find_node(t_node *new)
 {
 	char *str;
-	char *val;
 
 	if (!(str = (char *)malloc(sizeof(char) * ft_strlen(new->key))))
 		m_error("malloc error");
-	if (!(val = (char *)malloc(sizeof(char) * ft_strlen(new->value))))
-		m_error("malloc error");
 	str = ft_strlcpy(str, new->key, ft_strlen(new->key));
-	val = ft_strlcpy(val, new->value, ft_strlen(new->value));
 	//위로 올라가면서 찾기?
 	while (new->prev)
 	{
 		if (ft_strncmp(str, new->key, ft_strlen(str)))
+		{
+			free(str);
 			return (new);
+		}
 		new = new->prev;
 	}
+	return (0);
 }
 
 void	plus_value(t_node *new)
 {
-	//new의 키와 같은 값을 가진 node를 찾아서, 
-	// 그 node의 value 뒤에 new의 value붙여넣기.
+	char	*val;
+	t_node	*node;
+
+	if (!(val = (char *)malloc(sizeof(char) * ft_strlen(new->value))))
+		m_error("malloc error");
+	val = ft_strlcpy(val, new->value, ft_strlen(new->value));
+	node = find_node(new);
+	node->value = ft_strjoin(node->value, val); //free 문제
 }
 
-void	check_key_val(t_node *new)
+int		check_key_val(char *key)
 {
 	int i;
 
 	i = 0;
-	if (ft_isalpha(new->key[0]) == 0)
-		//error, 오류 출력 후 shell 로 돌아가야함
-	while (new->key[i])
+	if (ft_isalpha(key[0]) == 0)
+		return (0);
+	while (key[i])
 	{
-		if (!(('A' <= new->key[i] && new->key[i] <= 'Z')
-				|| ('a' <= new->key[i] && new->key[i] <= 'z')
-				|| ('0' <= new->key[i] && new->key[i] <= '9'))
-				&& new->key[i] != '+')
-			//error, 오류 출력 후 shell로 돌아가야함.
-		if (new->key[i] == '+' && i == ft_strlen(new->key))
-			plus_value(new);
+		if (!(('A' <= key[i] && key[i] <= 'Z')
+				|| ('a' <= key[i] && key[i] <= 'z')
+				|| ('0' <= key[i] && key[i] <= '9'))
+				&& key[i] != '+')
+			return (0);
+		// if (key[i] == '+' && i == ft_strlen(key))
+		// 	plus_value(new);
 		i++;
 	}
+	return (1);
 }
 
 void	add_env(char *s, t_env *env)
@@ -159,7 +166,7 @@ int main(int argc, char *argv[], char **env)
 		// get_next_line(0, &line);
 
 		if(execve("/usr/bin/env", argv, NULL) == -1) {
-			printf("프로그램 실행 error\n"); 
+			printf("프로그램 실행 error\n");
 		}
 		//printf("%s\n",info->cmd);
 	}
