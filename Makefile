@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/25 18:24:03 by klim             ###   ########.fr        #
+#    Updated: 2021/06/25 19:56:50 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS_LIST	=	test.c \
 				parsing/parsing3.c \
 				parsing/parsing4.c \
 				util/util1.c \
+				util/parse_util1.c \
 				util/err_util1.c \
 				util/env_util1.c \
 				argv.c \

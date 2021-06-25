@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 18:32:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 18:52:52 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ t_node	*init_node(char *s)
 	return (n);
 }
 
-t_node	*find_node(t_node *n, t_env *env)
+t_node	*find_node(char *key, t_env *env)
 {
 	t_node		*tmp;
 
 	tmp = env->head;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, n->key, ft_strlen(tmp->key)))
+		if (!ft_strncmp(tmp->key, key, ft_strlen(tmp->key)))
 			return (tmp);
 		tmp = tmp->next;
 	}
@@ -54,14 +54,14 @@ int		check_key_val(t_node *node)
 {
 	char	*key;
 	int		i;
-
 	key = node->key;
 	i = 0;
-	if (ft_isalpha(key[0]) == 0)
+	if ((ft_isalpha(key[0]) == 0) && key[0] != '_')
 		return (0);
 	while (key[i])
 	{
-		if (ft_isalpha(key[i]) == 0 || ft_isalnum(key[i]) == 0)
+		if ((ft_isalpha(key[i]) == 0 || ft_isalnum(key[i]) == 0)
+				&& key[0] != '_')
 			return (0);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 18:20:04 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 19:54:53 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef	struct		s_shell
 typedef	struct		s_token
 {
 	char			*data;
-	t_argv			*argv;
+	char			**argv;
 	t_token_type	token_type;
 	struct	s_token	*next;
 }					t_token;
@@ -87,6 +87,7 @@ t_token_type	get_token(char *line, int i);
 int				is_quote(char *line, int n);
 t_token			*init_token(char *data);
 int				is_space(char c);
+int		parse_argv(t_info *info, t_token *head);
 
 t_argv			*init_argv(char *data);
 int				push_argv(char *data, t_info *info);
@@ -94,7 +95,7 @@ void			print_argv(t_argv *argv);
 void			print_token(t_token *head);
 
 t_node			*init_node(char *s);
-t_node			*find_node(t_node *n, t_env *env);
+t_node	*find_node(char *key, t_env *env);
 int				check_key_val(t_node *node);
 int				add_env(char *s, t_env *env);
 void			rm_env(t_node *node);
@@ -102,6 +103,7 @@ t_env			*init_env(char **arg_env);
 
 int		err_int(char *s, int ret);
 void	*err_ptr(char *s, void *ret);
+char	**splice_space(char *str, char *charset);
 
 
 void	free_info(t_info *info);
