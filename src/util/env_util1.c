@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 18:52:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/26 17:48:07 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_node	*find_node(char *key, t_env *env)
 	tmp = env->head;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, key, ft_strlen(tmp->key)))
+		if (!ft_strncmp(tmp->key, key, ft_strlen(key)))
 			return (tmp);
 		tmp = tmp->next;
 	}

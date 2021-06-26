@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 19:54:53 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/26 18:14:49 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define WHITE_SPACE " \t\n\v\f\b"
 # define BACK_SLASH -1
+# define ENV_D_QUOTE -2
 
 typedef enum		e_token_type
 {
@@ -87,7 +88,7 @@ t_token_type	get_token(char *line, int i);
 int				is_quote(char *line, int n);
 t_token			*init_token(char *data);
 int				is_space(char c);
-int		parse_argv(t_info *info, t_token *head);
+int				parse_argv(t_info *info, t_token *head);
 
 t_argv			*init_argv(char *data);
 int				push_argv(char *data, t_info *info);
@@ -95,7 +96,7 @@ void			print_argv(t_argv *argv);
 void			print_token(t_token *head);
 
 t_node			*init_node(char *s);
-t_node	*find_node(char *key, t_env *env);
+t_node			*find_node(char *key, t_env *env);
 int				check_key_val(t_node *node);
 int				add_env(char *s, t_env *env);
 void			rm_env(t_node *node);

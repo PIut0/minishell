@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 16:06:35 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/25 21:39:46 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			remove_bs(char *line, int len)
 	count = 0;
 	while (++i < len)
 	{
-		if (i > 0 && line[i-1] == BACK_SLASH)
+		if ((i > 0 && line[i-1] == BACK_SLASH) || is_quote(line, i) == 1)
 			;
 		else if (line[i] == '\\')
 		{
