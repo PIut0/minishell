@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 18:49:35 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 20:04:05 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/26 18:52:46 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int		is_char_set(char *str, char *charset, char *start)
 {
-	if (is_quote(start, str - start))
+	int		q;
+
+	q = is_quote(start, str - start);
+	if (q && ((q == 1 && *str != '\'') || (q == 2 && *str != '\"')))
 		return (0);
 	while (*charset)
 	{
@@ -53,7 +56,7 @@ void	ft_strcpy(char *dest, char *from, char *to)
 	*dest = 0;
 }
 
-char	**splice_space(char *str, char *charset)
+char	**splice_str(char *str, char *charset)
 {
 	char	**result;
 	char	*from;

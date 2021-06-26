@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 21:39:46 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/26 19:24:52 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			backup_bs(char *line, int len)
 	return (count);
 }
 
-int			remove_bs(char *line, int len)
+int			replace_bs(char *line, int len)
 {
 	int		i;
 	int		count;
@@ -80,7 +80,7 @@ int			parsing(char *line, t_info *info)
 	int			bs_cnt;
 
 	len = ft_strlen(line);
-	bs_cnt = remove_bs(line, len);
+	bs_cnt = replace_bs(line, len);
 	if (is_quote(line, len))
 		return (1);
 	head = init_token("");

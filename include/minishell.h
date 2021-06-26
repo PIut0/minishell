@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/26 18:14:49 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/26 19:26:00 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef	struct		s_info
 
 int				get_next_line(int fd, char **line);
 int				parsing(char *line, t_info *info);
-int				remove_bs(char *line, int len);
+int				replace_bs(char *line, int len);
 int				backup_bs(char *line, int len);
 int				parse_token(char *line, t_info *info, t_token *head, int len);
 int				join_brackets(t_token *head);
@@ -104,7 +104,8 @@ t_env			*init_env(char **arg_env);
 
 int		err_int(char *s, int ret);
 void	*err_ptr(char *s, void *ret);
-char	**splice_space(char *str, char *charset);
+char	**splice_str(char *str, char *charset);
+char		*ft_sp_merge(char **sp);
 
 
 void	free_info(t_info *info);

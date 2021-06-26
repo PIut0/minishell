@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/06/26 18:28:48 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/26 20:03:28 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*change_key_to_value(char *argv, int *i, int env_len, t_info *info)
 	ret = ft_strjoin(argv, value);
 	ret = ft_strjoin(ret, argv + *i + env_len + 1);
 	free(argv);
-	printf("key: %s | value: %s\n",key, value);
+	//printf("key: %s | value: %s\n",key, value);
 	return (ret);
 }
 
@@ -79,18 +79,39 @@ char	*replace_env(char *argv, t_info *info)
 				return (0);
 		}
 	}
-	printf("argv: %s\n",argv);
 	return (argv);
 }
 
-char	*parse_env(char *argv, t_info *info)
+char	*remove_quote(char *str)
 {
+	char	**sp;
 	char	*ret;
 
-	ret = replace_env(argv, info);
-	ret = remove_quote(ret);
-	ret = change_dq_edq(ret, 1);
+	sp = splice_str(str, "\'\"");
+	ret = ft_sp_merge(sp);
+	free(str);
 	return (ret);
+}
+
+char	*remove_bs(char *str)
+{
+	char	**sp;
+	char	*ret;
+
+	sp = ft_split(str, BACK_SLASH);
+	ret = ft_sp_merge(sp);
+	free(str);
+	return (ret);
+}
+
+char	*parse_data(char *argv, t_info *info)
+{
+	argv = replace_env(argv, info);
+	argv = remove_quote(argv);
+	argv = change_dq_edq(argv, 1);
+	argv = remove_bs(argv);
+	printf("argv: %s\n",argv);
+	return (argv);
 }
 
 int		parse_argv(t_info *info, t_token *head)
@@ -104,11 +125,13 @@ int		parse_argv(t_info *info, t_token *head)
 	token = head->next;
 	while (token)
 	{
-		token->argv = splice_space(token->data, WHITE_SPACE);
+		token->argv = splice_str(token->data, WHITE_SPACE);
 		tmp = token->argv;
-		i = -1;
+		if (tmp[0])
+			tmp[0] = parse_data(tmp[0], info);
+		i = 0;
 		while (tmp[++i])
-			tmp[i] = parse_env(tmp[i], info);
+			tmp[i] = parse_data(tmp[i], info);
 		printf("*********\n");
 		token = token->next;
 	}
