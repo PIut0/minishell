@@ -6,16 +6,32 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/25 21:47:24 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 11:37:57 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "builtin.h"
 
-void	greater_sign()
+int		max(int a, int b)
 {
-	
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+void	greater_sign(char *str)
+{
+	char *line;
+
+	while (1)
+	{
+		ft_putstr_fd(" > ", 0);
+		get_next_line(0, &line);	
+		if (ft_strncmp(line, str, max(ft_strlen(str), ft_strlen(line))) == 0)
+			break;
+	}
 }
 
 void	m_pwd(void)
@@ -48,7 +64,8 @@ void	m_echo(int argc, char **argv)
 	int i;
 	int j;
 	int flag;
-	
+
+	greater_sign("END");
 	i = 0;
 	j = 0;
 	flag = 0;
@@ -64,6 +81,7 @@ void	m_echo(int argc, char **argv)
 	}
 	while (i < argc)
 	{
+		
 		printf("%s", argv[i]);
 		i++;
 		if (argv[i])
@@ -100,7 +118,7 @@ void	m_export(int argc, char **argv, t_env *env)
 	i = 1;
 	while (++i < argc)
 	{
-		printf("argv = %s\n", argv[i]);
+		// printf("argv = %s\n", argv[i]);
 		add_env(argv[i], env);
 	}
 }
