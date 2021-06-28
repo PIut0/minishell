@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/25 19:56:50 by klim             ###   ########.fr        #
+#    Updated: 2021/06/27 16:21:19 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS_LIST	=	test.c \
 				parsing/parsing2.c \
 				parsing/parsing3.c \
 				parsing/parsing4.c \
+				process/process1.c \
 				util/util1.c \
 				util/parse_util1.c \
 				util/err_util1.c \
@@ -43,6 +44,12 @@ $(NAME)		: $(OBJS)
 	make all -C libft/
 	cp libft/libft.a ./libft.a
 	$(CC) -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
+
+leak		: $(OBJS)
+	make all -C libft/
+	cp libft/libft.a ./libft.a
+#$(CC) -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
+	$(CC) -fsanitize=address -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
 
 clean		:
 	rm -rf $(OBJS)

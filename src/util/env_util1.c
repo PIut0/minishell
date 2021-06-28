@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/26 17:48:07 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/27 15:36:22 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,14 @@ int		add_env(char *s, t_env *env)
 
 void	rm_env(t_node *node)
 {
+	if (!node)
+		return ;
 	node->next->prev = node->prev;
 	node->prev->next = node->next;
-	free(node->key);
-	free(node->value);
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
 	free(node);
 }
 

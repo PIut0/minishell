@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/06/26 20:03:28 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/27 16:30:37 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*parse_data(char *argv, t_info *info)
 	argv = remove_quote(argv);
 	argv = change_dq_edq(argv, 1);
 	argv = remove_bs(argv);
-	printf("argv: %s\n",argv);
+	//printf("argv: %s\n",argv);
 	return (argv);
 }
 
@@ -118,7 +118,6 @@ int		parse_argv(t_info *info, t_token *head)
 {
 	t_env		*env;
 	t_token		*token;
-	int			i;
 	char		**tmp;
 
 	env = info->shell->env;
@@ -129,10 +128,6 @@ int		parse_argv(t_info *info, t_token *head)
 		tmp = token->argv;
 		if (tmp[0])
 			tmp[0] = parse_data(tmp[0], info);
-		i = 0;
-		while (tmp[++i])
-			tmp[i] = parse_data(tmp[i], info);
-		printf("*********\n");
 		token = token->next;
 	}
 	return (0);

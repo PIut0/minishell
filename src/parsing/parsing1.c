@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/26 19:24:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/27 16:23:32 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ int			parsing(char *line, t_info *info)
 	len = ft_strlen(line);
 	bs_cnt = replace_bs(line, len);
 	if (is_quote(line, len))
-		return (1);
+		return (err_int("minishell: unexpected quote", 1));
 	head = init_token("");
 	if (parse_token(line, info, head, len))
 		return (1);
+	info->head = head;
 	free(line);
 	return 0;
 }
