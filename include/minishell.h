@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/27 16:28:48 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/28 21:52:37 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <errno.h>
 # include "libft.h"
 
 # define WHITE_SPACE " \t\n\v\f\b"
+# define NEGATIVE_CHAR "><~"
 # define BACK_SLASH -1
 # define ENV_D_QUOTE -2
 
@@ -68,8 +70,8 @@ typedef	struct		s_info
 
 int				get_next_line(int fd, char **line);
 int				parsing(char *line, t_info *info);
-int				replace_bs(char *line, int len);
-int				backup_bs(char *line, int len);
+char			*replace_bs(char *line, int len);
+char			*backup_bs(char *line, int len);
 int				parse_token(char *line, t_info *info, t_token *head, int len);
 int				join_brackets(t_token *head);
 char			*get_brackets(t_token_type t);
@@ -87,6 +89,10 @@ char	*replace_env(char *argv, t_info *info);
 char	*remove_quote(char *str);
 char	*change_dq_edq(char *str, int key);
 char	*remove_bs(char *str);
+
+char		*backup_data(char *data, t_info *info);
+char		*backup_nega_char(char *data);
+
 
 int		process_info(t_info *info);
 

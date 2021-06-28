@@ -1,37 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   argv.c                                             :+:      :+:    :+:   */
+/*   backup1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/23 16:57:57 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 21:21:43 by klim             ###   ########.fr       */
+/*   Created: 2021/06/28 21:03:37 by klim              #+#    #+#             */
+/*   Updated: 2021/06/28 21:20:07 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
-void		print_token(t_token *head)
-{
-	t_token	*tmp;
-
-	tmp = head->next;
-	while (tmp)
-	{
-		print_argv(tmp->argv);
-		tmp = tmp->next;
-	}
-}
-
-void		print_argv(char **argv)
+char		*backup_bs(char *line, int len)
 {
 	int		i;
 
 	i = -1;
-	printf("| ");
-	while (argv[++i])
-		printf("%s ",backup_nega_char(argv[i]));
-		//printf("%s ",argv[i]);
-	printf("|\n");
+	while (++i < len)
+	{
+		if (line[i] == BACK_SLASH)
+			line[i] = '\\';
+	}
+	return (line);
+}
+
+char		*backup_nega_char(char *data)
+{
+	int		i;
+
+	i = -1;
+	while (data[++i])
+		if (data[i] < 0)
+			data[i] = -data[i];
+	return (data);
+}
+
+char		*backup_data(char *data, t_info *info)
+{
+	info = 0;
+
+	data = backup_bs(data, ft_strlen(data));
+	data = backup_nega_char(data);
+	return (data);
 }

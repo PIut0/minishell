@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 16:02:46 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/28 21:05:04 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		process_info(t_info *info)
 			printf("not built: ");
 			i = -1;
 			while (tmp->argv[++i])
-				backup_bs(tmp->argv[i], ft_strlen(tmp->argv[i]));
+				tmp->argv[i] = backup_data(tmp->argv[i], info);
 		}
 		print_argv(tmp->argv);
 		tmp = tmp->next;
