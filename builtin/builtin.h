@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:18:07 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/28 19:35:02 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 21:54:54 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 void	m_pwd(int fd);
 void	m_cd(char *s);
 void	m_exit(void);
-void	m_echo(char **argv);
+void	m_echo(t_token *tmp);
 void	m_env(t_env *env);
 void	m_unset(char *key, t_env *env);
 void	m_export(char **argv, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 18:49:58 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 21:42:42 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		check_builtin(char *argv)
 	return (0);
 }
 
-int		process_info(t_info *info, t_shell *shell)
+int		process_info(t_info *info)
 {
 	int		i;
 	t_token	*tmp;
@@ -39,7 +39,7 @@ int		process_info(t_info *info, t_shell *shell)
 	while (tmp)
 	{
 		i = -1;
-
+		tmp->fd = 0;
 		if (!(tmp->argv) || !(tmp->argv[0]))
 			;
 		else if (check_builtin(tmp->argv[0]))
@@ -56,7 +56,7 @@ int		process_info(t_info *info, t_shell *shell)
 			while (tmp->argv[++i])
 				backup_bs(tmp->argv[i], ft_strlen(tmp->argv[i]));
 		}
-		check_func(tmp, shell->env);
+		check_func(tmp, info);
 		// print_argv(tmp->argv);
 		tmp = tmp->next;
 	}

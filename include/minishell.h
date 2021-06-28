@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 19:36:40 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 21:38:15 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef	struct		s_token
 	char			*data;
 	char			**argv;
 	t_token_type	token_type;
+	int				fd;
 	struct	s_token	*next;
 }					t_token;
 
@@ -94,7 +95,7 @@ char	*remove_quote(char *str);
 char	*change_dq_edq(char *str, int key);
 char	*remove_bs(char *str);
 
-int		process_info(t_info *info, t_shell *shell);
+int		process_info(t_info *info);
 
 void			print_token(t_token *head);
 void		print_argv(char **argv);
@@ -117,7 +118,7 @@ void	free_info(t_info *info);
 t_info	*init_info(t_shell *shell);
 
 
-void	check_func(t_token *tmp, t_env *env);
+void	check_func(t_token *tmp, t_info *info);
 
 void	print_env(t_env *env);
 // t_node	*init_node(char *s);

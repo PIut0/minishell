@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 19:37:14 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 21:11:59 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		shell_start(t_shell *shell)
 		get_next_line(0, &line);
 		if (parsing(line, info))
 			continue ;
-		if (process_info(info, shell))
+		if (process_info(info))
 			continue ;
 		free_info(info);
 	}

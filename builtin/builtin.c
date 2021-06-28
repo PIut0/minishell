@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/28 20:25:18 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 22:28:27 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,39 +39,67 @@ void	m_exit(void)
 	exit(0);
 }
 
-void	m_echo(char **argv)
+int		is_bracket(char *argv)
+{
+	if (ft_strcmp(argv, ">") ||
+		ft_strcmp(argv, ">>") ||
+		ft_strcmp(argv, "<") ||
+		ft_strcmp(argv, "<<"))
+		return (1);
+	return (0);
+}
+
+void	m_echo(t_token *tmp)
 {
 	int i;
 	int j;
+	int check;
 	int flag;
 
 	i = 0;
 	j = 0;
+	check = 0;
 	flag = 0;
-	if (!argv[1])
+	if (tmp->fd == 0)
+		tmp->fd = 1;
+	if (!tmp->argv[1])
 	{
 		write(1, "\n", 1);
 		return ;
 	}
-	while (argv[++i][j] == '-')
+	while (tmp->argv[++i])
 	{
-		if (check_flag(argv[i]) == 1)
+		if (is_bracket(tmp->argv[i]))
+		{
+			// printf("test2: %s\n",tmp->argv[i]);
+			if (tmp->argv[++i])
+				++i;
+			if (!tmp->argv[i])
+				break ;
+		}
+		if (!check && check_flag(tmp->argv[i]))
 			flag = 1;
 		else
+			check = 1;
+		if (check && tmp->argv[i])
 		{
-			// i--;
-			break;
+			ft_putstr_fd(tmp->argv[i], tmp->fd);
+			if (tmp->argv[i + 1])
+				write(tmp->fd, " ", 1);
 		}
 	}
-	while (argv[i])
-	{	
-		ft_putstr_fd(argv[i], 1);
-		i++;
-		if (argv[i])
-			write(1, " ", 1);
-	}
+	// while (tmp->argv[++i][j] == '-')
+	// {
+	// 	if (check_flag(tmp->argv[i]) == 1)
+	// 		flag = 1;
+	// 	else
+	// 	{
+	// 		// i--;
+	// 		break;
+	// 	}
+	// }
 	if (flag == 0)
-		write(1, "\n", 1);
+		write(tmp->fd, "\n", 1);
 }
 
 void	m_exec(char **argv)
