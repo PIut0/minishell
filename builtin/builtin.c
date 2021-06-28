@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/28 15:53:04 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/28 20:25:18 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	m_pwd(int fd)
 	if (!(getcwd(buf, sizeof(buf))))
 		return ; //error
 	write(fd, buf, ft_strlen(buf));
+	write(fd, "\n", 1);
 }
 
 void	m_cd(char *s)
@@ -38,7 +39,7 @@ void	m_exit(void)
 	exit(0);
 }
 
-void	m_echo(int argc, char **argv)
+void	m_echo(char **argv)
 {
 	int i;
 	int j;
@@ -47,26 +48,30 @@ void	m_echo(int argc, char **argv)
 	i = 0;
 	j = 0;
 	flag = 0;
+	if (!argv[1])
+	{
+		write(1, "\n", 1);
+		return ;
+	}
 	while (argv[++i][j] == '-')
 	{
 		if (check_flag(argv[i]) == 1)
 			flag = 1;
 		else
 		{
-			i--;
+			// i--;
 			break;
 		}
 	}
-	while (i < argc)
-	{
-		
-		printf("%s", argv[i]);
+	while (argv[i])
+	{	
+		ft_putstr_fd(argv[i], 1);
 		i++;
 		if (argv[i])
-			printf(" ");
+			write(1, " ", 1);
 	}
 	if (flag == 0)
-		printf("\n");
+		write(1, "\n", 1);
 }
 
 void	m_exec(char **argv)
@@ -88,12 +93,14 @@ void	m_unset(char *key, t_env *env)
 	rm_env(n);
 }
 
-void	m_export(int argc, char **argv, t_env *env)
+void	m_export(char **argv, t_env *env)
 {
 	int i;
 
-	i = 1;
-	while (++i < argc)
+	i = 0;
+	if (!argv[1])
+		print_export(env);
+	while (argv[++i])
 	{
 		add_env(argv[i], env);
 	}

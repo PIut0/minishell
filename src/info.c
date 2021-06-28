@@ -1,24 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   info.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/23 18:18:09 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 14:26:26 by klim             ###   ########.fr       */
+/*   Created: 2021/06/21 17:33:52 by klim              #+#    #+#             */
+/*   Updated: 2021/06/27 15:23:52 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	free_info(t_info *info)
 {
-	char	*t;
+	t_token	*tmp;
 
-	if (!s || !(t = (char *)malloc(len + 1)))
+	free(info->cmd);
+	while (info->head)
+	{
+		tmp = info->head->next;
+		free(info->head);
+		info->head = tmp;
+	}
+	free(info);
+}
+
+t_info	*init_info(t_shell *shell)
+{
+	t_info	*ret;
+
+	if (!(ret = (t_info *)malloc(sizeof(t_info))))
 		return (0);
-	if (start >= ft_strlen(s) || !ft_strlcpy(t, s + start, len + 1))
-		t[0] = 0;
-	return (t);
+	ret->cmd = 0;
+	ret->shell = shell;
+	return (ret);
 }

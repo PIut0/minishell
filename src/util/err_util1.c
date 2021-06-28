@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   err_utiil1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/23 18:18:09 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 14:26:26 by klim             ###   ########.fr       */
+/*   Created: 2021/06/25 18:18:54 by klim              #+#    #+#             */
+/*   Updated: 2021/06/25 18:19:50 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int		err_int(char *s, int ret)
 {
-	char	*t;
+	printf("%s\n", s);
+	return (ret);
+}
 
-	if (!s || !(t = (char *)malloc(len + 1)))
-		return (0);
-	if (start >= ft_strlen(s) || !ft_strlcpy(t, s + start, len + 1))
-		t[0] = 0;
-	return (t);
+void	*err_ptr(char *s, void *ret)
+{
+	printf("%s\n", s);
+	return (ret);
 }

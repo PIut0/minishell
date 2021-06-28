@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   argv.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/23 18:18:09 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 14:26:26 by klim             ###   ########.fr       */
+/*   Created: 2021/06/23 16:57:57 by klim              #+#    #+#             */
+/*   Updated: 2021/06/27 16:28:57 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void		print_token(t_token *head)
 {
-	char	*t;
+	t_token	*tmp;
 
-	if (!s || !(t = (char *)malloc(len + 1)))
-		return (0);
-	if (start >= ft_strlen(s) || !ft_strlcpy(t, s + start, len + 1))
-		t[0] = 0;
-	return (t);
+	tmp = head->next;
+	while (tmp)
+	{
+		print_argv(tmp->argv);
+		tmp = tmp->next;
+	}
+}
+
+void		print_argv(char **argv)
+{
+	int		i;
+
+	i = -1;
+	printf("| ");
+	while (argv[++i])
+		printf("%s ",argv[i]);
+	printf("|\n");
 }
