@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 18:19:14 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/28 15:15:12 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 15:48:59 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ int find_fd(char *str)
 	int fd;
 
 	fd = 0;
-	printf("str = %s\n", str);
 	fd = open(str,  O_RDWR | O_CREAT | O_TRUNC, 00777);
+	printf("fd1 = %d\n", fd);
+	close(fd);
+	printf("fd2 = %d\n", fd);
+
 	return (fd);
 }
 
@@ -27,10 +30,13 @@ int main(int argc, char **argv, char **env)
 	t_env	*g_env;
 	int		fd;
 	int i = 0;
+	int k = 0;
+	printf("test1\n");
+
 	while (i < argc)
 	{
-		if (i == 3){
-			fd = find_fd(argv[i]);
+		if (argv[i][0] == '1'){
+			fd = find_fd(argv[i+1]);
 			break;
 		}
 		i++;
@@ -43,7 +49,6 @@ int main(int argc, char **argv, char **env)
 		scanf("%d", &k);
 		if (k == 1)
 		{
-			// printf("==pwd==\n");
 			m_pwd(fd);
 		}
 		else if (k == 2)
