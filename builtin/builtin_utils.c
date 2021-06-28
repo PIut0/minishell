@@ -6,11 +6,19 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/25 19:50:55 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 13:25:31 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+int		max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
 
 void	print_env(t_env *env)
 {

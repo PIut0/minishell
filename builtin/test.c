@@ -6,25 +6,45 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 18:19:14 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/25 20:01:39 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/28 15:15:12 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
+int find_fd(char *str)
+{
+	int fd;
+
+	fd = 0;
+	printf("str = %s\n", str);
+	fd = open(str,  O_RDWR | O_CREAT | O_TRUNC, 00777);
+	return (fd);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	t_env	*g_env;
-
+	int		fd;
+	int i = 0;
+	while (i < argc)
+	{
+		if (i == 3){
+			fd = find_fd(argv[i]);
+			break;
+		}
+		i++;
+	}
 	g_env = init_env(env);
 	while (1)
 	{
 		int k;
+		ft_putstr_fd("minishell >> ", 0);
 		scanf("%d", &k);
 		if (k == 1)
 		{
-			printf("==pwd==\n");
-			m_pwd();
+			// printf("==pwd==\n");
+			m_pwd(fd);
 		}
 		else if (k == 2)
 		{
@@ -54,6 +74,10 @@ int main(int argc, char **argv, char **env)
 		else if (k == 7)
 		{
 			m_export(argc, argv, g_env);
+		}
+		else if (k == 8)
+		{
+			m_exec(argv);
 		}
 	}
 	return (0);
