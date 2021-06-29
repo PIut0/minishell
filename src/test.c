@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 20:25:58 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/29 16:42:37 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int		shell_start(t_shell *shell)
 		if (!(info = init_info(shell)))
 			continue ;
 		ft_putstr_fd("minishell > ", 1);
-		get_next_line(0, &line);
+		line = get_line();
+		//get_next_line(0, &line);
 		if (parsing(line, info))
 			continue ;
 		if (process_info(info))
