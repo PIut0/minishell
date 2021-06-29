@@ -6,7 +6,7 @@
 /*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 16:31:52 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/30 01:06:17 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ void	print_env(t_env *env)
 	tmp = env->head->next;
 	while (tmp != env->tail)
 	{
-		if (tmp->value)
-			printf("%s=%s\n",tmp->key,tmp->value);
+		if (tmp->value[0] != 0)
+		{
+			write(1, tmp->key, ft_strlen(tmp->key));
+			write(1, "=", 1);
+			write(1, tmp->value, ft_strlen(tmp->value));
+			write(1, "\n", 1);
+		}
 		tmp = tmp->next;
 	}
-	// printf("env suc\n");
 }
 
 int		shell_start(t_shell *shell)

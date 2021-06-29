@@ -6,7 +6,7 @@
 /*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/29 16:33:09 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/30 00:57:43 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_export(t_env *env)
 	while (now != env->tail)
 	{
 		write(1, now->key, ft_strlen(now->key));
-		if (now->value)
+		if (now->value[0])
 		{
 			write(1, "=\"", 2);
 			write(1, now->value, ft_strlen(now->value));
