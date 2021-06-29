@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 21:11:59 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/29 16:31:52 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+
+char **g_env;
 
 //void	processing(t_info *info)
 //{
@@ -35,7 +37,8 @@ void	print_env(t_env *env)
 	tmp = env->head->next;
 	while (tmp != env->tail)
 	{
-		printf("%s=%s\n",tmp->key,tmp->value);
+		if (tmp->value)
+			printf("%s=%s\n",tmp->key,tmp->value);
 		tmp = tmp->next;
 	}
 	// printf("env suc\n");
@@ -74,7 +77,7 @@ int		main(int argc, char **argv, char **env)
 {
 	t_shell	*shell;
 	argc = -1;
-
+	g_env = env;
 	(void) argv;
 	if (!(shell = init_shell(env)))
 		return (1);

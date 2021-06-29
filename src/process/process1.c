@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 21:42:42 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/29 15:11:10 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		process_info(t_info *info)
 			i = -1;
 			while (tmp->argv[++i])
 				tmp->argv[i] = parse_data(tmp->argv[i], info);
+			check_btin_func(tmp, info);
 		}
 		else
 		{
@@ -55,8 +56,8 @@ int		process_info(t_info *info)
 			i = -1;
 			while (tmp->argv[++i])
 				backup_bs(tmp->argv[i], ft_strlen(tmp->argv[i]));
+			check_func(tmp, info);
 		}
-		check_func(tmp, info);
 		// print_argv(tmp->argv);
 		tmp = tmp->next;
 	}

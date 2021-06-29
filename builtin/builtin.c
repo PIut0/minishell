@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/28 22:28:27 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/29 16:36:09 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	m_cd(char *s)
 
 void	m_exit(void)
 {
+	printf("bye!\n");
 	exit(0);
 }
 
@@ -71,7 +72,6 @@ void	m_echo(t_token *tmp)
 	{
 		if (is_bracket(tmp->argv[i]))
 		{
-			// printf("test2: %s\n",tmp->argv[i]);
 			if (tmp->argv[++i])
 				++i;
 			if (!tmp->argv[i])
@@ -88,16 +88,6 @@ void	m_echo(t_token *tmp)
 				write(tmp->fd, " ", 1);
 		}
 	}
-	// while (tmp->argv[++i][j] == '-')
-	// {
-	// 	if (check_flag(tmp->argv[i]) == 1)
-	// 		flag = 1;
-	// 	else
-	// 	{
-	// 		// i--;
-	// 		break;
-	// 	}
-	// }
 	if (flag == 0)
 		write(tmp->fd, "\n", 1);
 }
@@ -117,19 +107,26 @@ void	m_unset(char *key, t_env *env)
 {
 	t_node *n;
 
+	if (!key)
+		return ;
 	n = find_node(key, env);
+	if (!n)
+		return ;
 	rm_env(n);
 }
 
 void	m_export(char **argv, t_env *env)
 {
 	int i;
+	t_node *tmp;
 
 	i = 0;
 	if (!argv[1])
 		print_export(env);
 	while (argv[++i])
 	{
+		if ((tmp = find_node(argv[i], env)))
+			rm_env(tmp);
 		add_env(argv[i], env);
 	}
 }

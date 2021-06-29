@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 19:06:05 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/29 16:42:12 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_node	*init_node(char *s)
 		|| !(n->value = (char *)ft_calloc(sizeof(char), ft_strlen(s))))
 		return ((t_node *)err_ptr("malloc err", 0));
 	i = -1;
-	while (s[++i] != '=' && s[i])
+	while ((s[++i] != '=' || s[i] != '+') && s[i])
 		n->key[i] = s[i];
 	if (s[i] == '=')
 	{
@@ -34,6 +34,10 @@ t_node	*init_node(char *s)
 			j++;
 		}
 	}
+	// else if (s[i] == '+')
+	// {
+	
+	// }
 	else
 		n->value = 0;
 	n->next = 0;

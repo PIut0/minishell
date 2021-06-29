@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 21:38:15 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/29 15:37:12 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	free_info(t_info *info);
 t_info	*init_info(t_shell *shell);
 
 
+void	check_btin_func(t_token *tmp, t_info *info);
 void	check_func(t_token *tmp, t_info *info);
 
 void	print_env(t_env *env);

@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_func.c                                       :+:      :+:    :+:   */
+/*   check_btin_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:28:51 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/28 22:28:00 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/29 15:01:16 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+extern char **g_env;
 
 int		open_single(char *s)
 {
@@ -32,7 +34,7 @@ int		open_double(char *s)
 	return (fd);
 }
 
-void	check_func(t_token *tmp, t_info *info)
+void	check_btin_func(t_token *tmp, t_info *info)
 {
 	char *cmd;
 	t_node *home;
@@ -52,6 +54,10 @@ void	check_func(t_token *tmp, t_info *info)
 			if (tmp->fd != 0)
 				close(tmp->fd);
 			tmp->fd = open_double(tmp->argv[i + 1]);
+		}
+		else if (ft_strcmp(tmp->argv[i], "<") == 1)
+		{
+			
 		}
 		i++;
 	}
@@ -83,11 +89,31 @@ void	check_func(t_token *tmp, t_info *info)
 		m_env(info->shell->env);
 	}
 	else if (ft_strcmp("unset", cmd) == 1){
-		m_unset(tmp->argv[1], info->shell->env);
+		for (int i = 1; tmp->argv[i]; i++)
+			m_unset(tmp->argv[i], info->shell->env);
 	}
 	else
 	{
-		printf("exit");
-		exit(0);
+		printf("%s is not command\n", tmp->argv[0]);
+		return ;
+	}
+}
+
+void	check_func(t_token *tmp, t_info *info)
+{
+	info->cmd = 0;
+	//fork해서 자식프로세스로 실행해야 안끝남. 
+	if (ft_strcmp(tmp->argv[0], "cat") == 1)
+	{
+		if (execve("/bin/cat", tmp->argv, g_env) == -1)
+		{
+			printf("ERROR\n");
+			return ;
+		}
+	}
+	else
+	{
+		printf("here\n");
+		return ;
 	}
 }
