@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 17:13:54 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/29 20:57:48 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,20 @@ char	*add_char(char *str, char c)
 	return (ret);
 }
 
+char	*reset_ret(char *ret)
+{
+	free(ret);
+	ret = ft_strdup("");
+	g_sig = 0;
+	return (ret);
+}
+
 char	*get_input(int idx, char ch, char *ret)
 {
 	while (read(0, &ch, 1) > 0)
 	{
-		//printf("input: %c\n",ch);
+		if (g_sig == SIGINT)
+			ret = reset_ret(ret);
 		if (ch == 4 && !idx)
 			exit(0);
 		else if (ch == 4 && idx)
@@ -82,8 +91,7 @@ char	*get_line(void)
 	t_term			new_term;
 
 	set_input_mode(&new_term, &org_term);
-	ret = (char *)malloc(1);
-	*ret = 0;
+	ret = ft_strdup("");
 	ret = get_input(0, 0, ret);
 	reset_input_mode(&org_term);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 16:33:44 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/29 20:25:49 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <termios.h>
+# include <signal.h>
 # include "libft.h"
 
 # define WHITE_SPACE " \t\n\v\f\b"
@@ -25,6 +26,7 @@
 # define BACK_SLASH -1
 # define ENV_D_QUOTE -2
 
+int		g_sig;
 typedef struct termios	t_term;
 typedef enum		e_token_type
 {
@@ -114,6 +116,9 @@ char	**splice_str(char *str, char *charset);
 char		*ft_sp_merge(char **sp);
 
 char	*get_line(void);
+
+void		sig_sigint(int sig);
+void		sig_sigquit(int sig);
 
 
 void	free_info(t_info *info);

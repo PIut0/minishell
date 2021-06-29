@@ -6,11 +6,10 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 16:42:37 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/29 20:27:23 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 
 //void	processing(t_info *info)
@@ -73,9 +72,12 @@ t_shell		*init_shell(char **argv)
 
 int		main(int argc, char **argv)
 {
-	t_shell	*shell;
-	argc = -1;
+	t_shell				*shell;
 
+	argc = -1;
+	g_sig = 0;
+	signal(SIGINT, sig_sigint);
+	signal(SIGQUIT, sig_sigquit);
 	if (!(shell = init_shell(argv)))
 		return (1);
 	print_env(shell->env);

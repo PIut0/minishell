@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 21:05:04 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/29 20:47:28 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int		process_info(t_info *info)
 	t_token	*tmp;
 
 	tmp = info->head->next;
+	printf("\n");
 	while (tmp)
 	{
 		i = -1;
-
 		if (!(tmp->argv) || !(tmp->argv[0]))
 			;
 		else if (check_builtin(tmp->argv[0]))
