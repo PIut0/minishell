@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 00:56:11 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/30 11:03:00 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ t_node	*init_node(char *s)
 			j++;
 		}
 	}
-	// else if (s[i] == '+')
-	// {
-	
-	// }
 	else
 		n->value = 0;
 	n->next = 0;
@@ -52,12 +48,13 @@ t_node	*find_node(char *key, t_env *env)
 	tmp = env->head->next;
 	while (tmp != env->tail)
 	{
-		if (ft_strncmp(tmp->key, key, ft_strlen(tmp->key)) == 0)
+		if (ft_strcmp(key, tmp->key) == 1)
 			return (tmp);
 		tmp = tmp->next;
 	}
 	return (0);
 }
+
 int		check_key_val(t_node *node)
 {
 	char	*key;
@@ -75,13 +72,59 @@ int		check_key_val(t_node *node)
 	}
 	return (1);
 }
+
+void	add_env_back(t_node *tmp, char *s)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = ft_strlen(tmp->value);
+	while (s[i])
+	{
+		tmp->value[j] = s[i];
+		i++;
+		j++;
+	}
+	tmp->value[j] = 0;
+}
+
+int		plus_env(t_node *n, t_env *env)
+{
+	t_node	*tmp;
+
+	n->key[ft_strlen(n->key) - 1] = 0;
+	if ((tmp = find_node(n->key, env)))
+	{
+		add_env_back(tmp, n->value);
+	}
+	else
+	{
+		env->tail->prev->next = n;
+		n->prev = env->tail->prev;
+		n->next = env->tail;
+		env->tail->prev = n;
+		if (!(check_key_val(n)))
+		{
+			rm_env(n);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int		add_env(char *s, t_env *env)
 {
 	t_node	*n;
+	t_node	*tmp;
 
 	if (!(n = (t_node *)malloc(sizeof(t_node))))
 		return (err_int("malloc error", 1));
 	n = init_node(s);
+	if (n->key[ft_strlen(n->key) - 1] == '+')
+		return (plus_env(n, env));
+	else if ((tmp = find_node(n->key, env)))
+		rm_env(tmp);
 	env->tail->prev->next = n;
 	n->prev = env->tail->prev;
 	n->next = env->tail;

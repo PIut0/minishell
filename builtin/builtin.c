@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/29 16:36:09 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/30 11:03:21 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,13 @@ void	m_unset(char *key, t_env *env)
 void	m_export(char **argv, t_env *env)
 {
 	int i;
-	t_node *tmp;
+	// t_node *tmp;
 
 	i = 0;
 	if (!argv[1])
 		print_export(env);
 	while (argv[++i])
 	{
-		if ((tmp = find_node(argv[i], env)))
-			rm_env(tmp);
 		add_env(argv[i], env);
 	}
 }
