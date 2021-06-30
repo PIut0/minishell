@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 20:25:49 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 13:22:06 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int				parsing(char *line, t_info *info);
 char			*replace_bs(char *line, int len);
 char			*backup_bs(char *line, int len);
 int				parse_token(char *line, t_info *info, t_token *head, int len);
-int				join_brackets(t_token *head);
+int				join_brackets(t_token *t);
 char			*get_brackets(t_token_type t);
 char			*ft_strjoin_free(char *s1, char *s2, int n);
 int				is_type_brackets(t_token_type t);

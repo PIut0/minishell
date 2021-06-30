@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/06/25 16:03:29 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 13:22:35 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ char		*get_brackets(t_token_type t)
 	return ("");
 }
 
-int			join_brackets(t_token *head)
+int			join_brackets(t_token *t)
 {
 	t_token		*tmp;
-	t_token		*t;
 
-	t = head->next;
+	t = t->next;
 	while (t)
 	{
 		if (is_type_brackets(t->token_type))
@@ -51,12 +50,14 @@ int			join_brackets(t_token *head)
 				t->data = ft_strjoin_free(t->data, " ", 1);
 				t->data = ft_strjoin_free(t->data, tmp->data, 3);
 				t->next = tmp->next;
+				t->token_type = tmp->token_type;
 				free(tmp);
 			}
 			if (!t->data)
 				return (1);
 		}
-		t = t->next;
+		else
+			t = t->next;
 	}
 	return (0);
 }
