@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/30 13:05:44 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/30 16:11:11 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_export(t_env *env, int fd)
 		if (now->value[0])
 		{
 			write(fd, "=\"", 2);
-			write(fd, now->value, ft_strlen(now->value));
+			write(fd, backup_nega_char(now->value), ft_strlen(now->value));
 			write(fd, "\"", 1);
 		}
 		write(fd, "\n", 1);

@@ -34,13 +34,11 @@ int		open_double(char *s)
 	return (fd);
 }
 
-void	check_btin_func(t_token *tmp, t_info *info)
+void	check_bracket(t_token *tmp)
 {
-	char *cmd;
-	t_node *home;
 	int i;
-	i = 0;
 
+	i = 0;
 	while (tmp->argv[i])
 	{
 		if (ft_strcmp(tmp->argv[i], ">") == 1)
@@ -62,6 +60,19 @@ void	check_btin_func(t_token *tmp, t_info *info)
 		}
 		i++;
 	}
+}
+
+void	check_btin_func(t_token *tmp, t_info *info)
+{
+	char *cmd;
+	t_node *home;
+	int i;
+	i = 0;
+	printf("test2: %p\n",info->shell->env->tail);
+
+	signal(SIGINT, child_sig);
+	signal(SIGQUIT, child_sig);
+	check_bracket(tmp);
 	cmd = tmp->argv[0];
 	if (ft_strcmp("echo", cmd)== 1)
 	{
@@ -89,14 +100,19 @@ void	check_btin_func(t_token *tmp, t_info *info)
 		m_env(info->shell->env, tmp->fd);
 	}
 	else if (ft_strcmp("unset", cmd) == 1){
-		for (int i = 1; tmp->argv[i]; i++)
+		while (tmp->argv[++i])
+		{
 			m_unset(tmp->argv[i], info->shell->env);
+		}
 	}
 	else
 	{
 		printf("%s is not command\n", tmp->argv[0]);
-		return ;
+		//return ;
+		exit(0);
 	}
+	//return ;
+	exit(0);
 }
 
 char	*get_keyvalue(t_node *t)
@@ -118,14 +134,18 @@ char	**get_char_env(t_env *env)
 	char	**ret;
 
 	cnt = 0;
-	i = 0;
+	i = -1;
 	t = env->head->next;
 	while (t != env->tail && ++cnt)
 		t = t->next;
-	ret = (char **)malloc(sizeof(char *) * cnt + 1);
+	if (!(ret = (char **)malloc(sizeof(char *) * cnt + 1)))
+		return (0);
 	t = env->head->next;
 	while (t != env->tail)
-		ret[i++] = get_keyvalue(t);
+	{
+		ret[++i] = get_keyvalue(t);
+		t = t->next;
+	}
 	ret[i] = 0;
 	return (ret);
 }
@@ -144,16 +164,19 @@ void	check_func(t_token *tmp, t_info *info)
 	PID = fork();
 	if (PID == 0)
 	{
+		signal(SIGINT, child_sig);
+		signal(SIGQUIT, child_sig);
 		while (path[i])
 		{
 			s = ft_strjoin(path[i], "/");
 			s = ft_strjoin(s, tmp->argv[0]);
-			if (execve(s, tmp->argv, g_env) == -1)
+			// printf("here\n");
+			if (execve(s, tmp->argv, get_char_env(info->shell->env)))
 				;
 			i++;
 		}
 		printf("%s is not command\n", tmp->argv[0]);
-		return ;
+		exit(0);
 	}
 	else
 		wait(&PID);

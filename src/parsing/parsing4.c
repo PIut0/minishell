@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:50:22 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 21:12:53 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ int		get_env_len(char *argv, int i)
 		return (0);
 	while (argv[++idx])
 	{
-		if ((!ft_isalpha(argv[idx]) || !ft_isalnum(argv[idx]))
-				&& argv[idx] != '_')
+		if (!ft_isalnum(argv[idx]) && argv[idx] != '_')
 			return (idx - i - 1);
 	}
 	return (idx - i - 1);

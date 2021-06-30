@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:50:18 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 19:05:22 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char		*replace_bs(char *line, int len)
 		else if (line[i] == '\\')
 		{
 			if (is_quote(line, i) != 2 ||
-				(line[i + 1] == '"' || line[i + 1] == '\\'))
+				(line[i + 1] == '"' || line[i + 1] == '$' || line[i + 1] == '\\'))
 				line[i] = BACK_SLASH;
 		}
 	}

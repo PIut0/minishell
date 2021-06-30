@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:18:07 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/30 15:49:50 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 20:13:14 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	m_echo(t_token *tmp);
 void	m_env(t_env *env, int fd);
 void	m_unset(char *key, t_env *env);
 void	m_export(char **argv, t_env *env, int fd);
-void	m_exec(char **argv);
 
 //builtin_utils
 // void	*err_ptr(char *s, void *ptr);

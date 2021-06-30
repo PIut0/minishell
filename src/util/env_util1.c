@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 11:03:00 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/30 21:21:29 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ t_node	*init_node(char *s)
 		n->key[i] = s[i];
 	if (s[i] == '=')
 	{
-		j = 0;
+		j = -1;
 		while (s[++i])
-		{
-			n->value[j] = s[i];
-			j++;
-		}
+			n->value[++j] = s[i];
+		n->value[++j] = 0;
 	}
 	else
 		n->value = 0;
@@ -59,14 +57,14 @@ int		check_key_val(t_node *node)
 {
 	char	*key;
 	int		i;
+
 	key = node->key;
 	i = 0;
-	if ((ft_isalpha(key[0]) == 0) && key[0] != '_')
+	if (!ft_isalpha(key[i]) && key[i] != '_')
 		return (0);
 	while (key[i])
 	{
-		if ((ft_isalpha(key[i]) == 0 || ft_isalnum(key[i]) == 0)
-				&& key[0] != '_')
+		if (!ft_isalnum(key[i]) && key[i] != '_')
 			return (0);
 		i++;
 	}
@@ -111,6 +109,18 @@ int		plus_env(t_node *n, t_env *env)
 		}
 	}
 	return (0);
+}
+
+void	print_env2(t_env *env)
+{
+	t_node *t;
+
+	t = env->head->next;
+	while (t != env->tail)
+	{
+		printf("%s=%s\n",t->key,t->value);
+		t = t->next;
+	}
 }
 
 int		add_env(char *s, t_env *env)

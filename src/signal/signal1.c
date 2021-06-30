@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 20:04:00 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:50:34 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 17:36:33 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void		sig_sigint(int sig)
 	ft_putstr_fd("\nminishell > ", 0);
 	//printf("\nminishell > ");
 	//printf("");
+	return ;
+}
+
+void		child_sig(int sig)
+{
+	kill(getpid(), sig);
 	return ;
 }
 

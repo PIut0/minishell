@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 14:43:55 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 21:03:31 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	reset_input_mode(t_term *org_term)
 	tcsetattr(STDIN_FILENO, TCSANOW, org_term);
 }
 
-char	*add_char(char *str, char c)
+char	*add_char(char *str, int c)
 {
 	char	*ret;
 	char	*tmp;
@@ -37,6 +37,8 @@ char	*add_char(char *str, char c)
 		ret = ft_substr(str, 0, ft_strlen(str) - 1);
 		free(str);
 	}
+	else if (c == _UP || c == _DOWN)
+		return (str);
 	else
 	{
 		if (!(tmp = (char *)malloc(2)))
@@ -48,44 +50,68 @@ char	*add_char(char *str, char c)
 	return (ret);
 }
 
-char	*reset_ret(char *ret)
+char	*reset_ret(char *ret, int *idx)
 {
+	*idx = 0;
 	free(ret);
 	ret = ft_strdup("");
 	g_sig = 0;
 	return (ret);
 }
 
-char	*get_input(int idx, char ch, char *ret)
+char	*history_ret(int ch, char *ret, t_shell *shell, int *idx)
 {
-	while (read(0, &ch, 1) > 0)
+	int		i;
+	int		len;
+
+	if ((ch == _UP && shell->history->cur == shell->history->head)
+		|| (ch == _DOWN && shell->history->cur == shell->history->tail))
+		return (ret);
+	i = -1;
+	len = ft_strlen(ret);
+	while (++i < len)
+		write(0, "\b \b", 3);
+	free(ret);
+	if (ch == _UP)
+		shell->history->cur = shell->history->cur->prev;
+	else
+		shell->history->cur = shell->history->cur->next;
+	ret = ft_strdup(shell->history->cur->data);
+	write(0, ret, ft_strlen(ret));
+	*idx = ft_strlen(ret);
+	return (ret);
+}
+
+char	*get_input(int idx, int ch, char *ret, t_shell *shell)
+{
+	while (read(0, &ch, sizeof(int)) > 0)
 	{
 		if (g_sig == SIGINT)
-			ret = reset_ret(ret);
+			ret = reset_ret(ret, &idx);
 		if (ch == 4 && !idx)
 			exit(0);
-		else if (ch == 4 && idx)
+		else if ((ch == 4 && idx) || ch == _LEFT || ch == _RIGHT)
 			continue ;
+		else if (ch == _UP || ch == _DOWN)
+			ret = history_ret(ch, ret, shell, &idx);
 		else if (ch == 127 && idx-- > 0)
 			write(0, "\b \b", 3);
 		else if (ch == 127)
 			idx++;
 		else if (ch == '\n')
 			break ;
-		else
-		{
-			++idx;
-			write(0, &ch, 1);
-		}
+		else if (++idx)
+			write(0, &ch, sizeof(int));
 		if (!(ret = add_char(ret, ch)))
 			return (0);
 		ch = 0;
+		// left: 4479771 right: 4414235  up: 4283163 down: 4348699
 	}
 	write(0, "\n", 1);
 	return (ret);
 }
 
-char	*get_line(void)
+char	*get_line(t_shell *shell)
 {
 	char			*ret;
 	t_term			org_term;
@@ -93,7 +119,7 @@ char	*get_line(void)
 
 	set_input_mode(&new_term, &org_term);
 	ret = ft_strdup("");
-	ret = get_input(0, 0, ret);
+	ret = get_input(0, 0, ret, shell);
 	reset_input_mode(&org_term);
 	return (ret);
 }

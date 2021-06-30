@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:19:48 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/30 21:27:35 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		process_info(t_info *info)
 {
 	int		i;
 	t_token	*tmp;
+	pid_t	PID;
 
 	tmp = info->head->next;
 	while (tmp)
@@ -48,7 +49,12 @@ int		process_info(t_info *info)
 			i = -1;
 			while (tmp->argv[++i])
 				tmp->argv[i] = parse_data(tmp->argv[i], info);
-			check_btin_func(tmp, info);
+			printf("test1: %p\n",info->shell->env->tail);
+			PID = fork();
+			if (PID == 0)
+				check_btin_func(tmp, info);
+			else
+				wait(&PID);
 		}
 		else
 		{

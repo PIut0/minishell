@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/30 15:49:42 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 21:27:23 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	m_cd(char *s)
 void	m_exit(void)
 {
 	printf("bye!\n");
+	kill(getppid(), SIGTERM);
 	exit(0);
 }
 
@@ -83,19 +84,13 @@ void	m_echo(t_token *tmp)
 			check = 1;
 		if (check && tmp->argv[i])
 		{
-			ft_putstr_fd(tmp->argv[i], tmp->fd);
+			ft_putstr_fd(backup_nega_char(tmp->argv[i]), tmp->fd);
 			if (tmp->argv[i + 1])
 				write(tmp->fd, " ", 1);
 		}
 	}
 	if (flag == 0)
 		write(tmp->fd, "\n", 1);
-}
-
-void	m_exec(char **argv)
-{
-	if(execve("/usr/bin/env", argv, NULL) == -1)
-		printf("프로그램 실행 error\n");
 }
 
 void	m_env(t_env *env, int fd)
@@ -121,6 +116,7 @@ void	m_export(char **argv, t_env *env, int fd)
 	// t_node *tmp;
 
 	i = 0;
+	printf("test3: %p\n",env->tail);
 	if (!argv[1])
 		print_export(env, fd);
 	while (argv[++i])
