@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:58:13 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 14:58:02 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define ENV_D_QUOTE -2
 
 int					g_sig;
+char				**g_env;
 typedef struct		termios		t_term;
 typedef enum		e_token_type
 {
@@ -128,11 +129,6 @@ void	check_btin_func(t_token *tmp, t_info *info);
 void	check_func(t_token *tmp, t_info *info);
 
 void	print_env(t_env *env, int fd);
-// t_node	*init_node(char *s);
-// t_node	*find_node(char *key, t_env *env);
-// int		check_key_val(t_node *node);
-// int		add_env(char *s, t_env *env);
-// void	rm_env(t_node *node);
-// t_env	*init_env(char **arg_env);
+
 
 #endif

@@ -17,7 +17,7 @@ extern char **g_env;
 int		open_single(char *s)
 {
 	int fd;
-	
+
 	fd = open(s, O_RDWR | O_CREAT | O_TRUNC, 00777);
 	if (fd == -1)
 		fd = 0;
@@ -27,7 +27,7 @@ int		open_single(char *s)
 int		open_double(char *s)
 {
 	int fd;
-	
+
 	fd = open(s, O_RDWR | O_CREAT | O_APPEND, 00777);
 	if (fd == -1)
 		fd = 0;
@@ -41,11 +41,8 @@ void	check_btin_func(t_token *tmp, t_info *info)
 	int i;
 	i = 0;
 
-	for (int k = 0; tmp->argv[k]; k++)
-		printf("argv {%s}\n", tmp->argv[k]);
 	while (tmp->argv[i])
 	{
-		printf("argv[i] = %s\n", tmp->argv[i]);
 		if (ft_strcmp(tmp->argv[i], ">") == 1)
 		{
 			if (tmp->fd != 0)
@@ -57,17 +54,19 @@ void	check_btin_func(t_token *tmp, t_info *info)
 			if (tmp->fd != 0)
 				close(tmp->fd);
 			tmp->fd = open_double(tmp->argv[i + 1]);
-			
+
 		}
 		else if (ft_strcmp(tmp->argv[i], "<") == 1)
 		{
-			
+
 		}
 		i++;
 	}
 	cmd = tmp->argv[0];
 	if (ft_strcmp("echo", cmd)== 1)
+	{
 		m_echo(tmp);
+	}
 	else if (ft_strcmp("exit", cmd) == 1){
 		m_exit();
 	}
@@ -100,21 +99,62 @@ void	check_btin_func(t_token *tmp, t_info *info)
 	}
 }
 
+char	*get_keyvalue(t_node *t)
+{
+	char	*ret;
+
+	ret = ft_strdup("");
+	ret = ft_strjoin(ret, t->key);
+	ret = ft_strjoin(ret, "=");
+	ret = ft_strjoin(ret, t->value);
+	return (ret);
+}
+
+char	**get_char_env(t_env *env)
+{
+	t_node	*t;
+	int		cnt;
+	int		i;
+	char	**ret;
+
+	cnt = 0;
+	i = 0;
+	t = env->head->next;
+	while (t != env->tail && ++cnt)
+		t = t->next;
+	ret = (char **)malloc(sizeof(char *) * cnt + 1);
+	t = env->head->next;
+	while (t != env->tail)
+		ret[i++] = get_keyvalue(t);
+	ret[i] = 0;
+	return (ret);
+}
+
 void	check_func(t_token *tmp, t_info *info)
 {
-	info->shell->env->head->prev = 0;
-	//fork해서 자식프로세스로 실행해야 안끝남. 
-	if (ft_strcmp(tmp->argv[0], "cat") == 1)
+	pid_t PID;
+	char **path;
+	t_node *p_node;
+	int		i;
+	char	*s;
+
+	i = 0;
+	p_node = find_node("PATH", info->shell->env);
+	path = ft_split(p_node->value, ':');
+	PID = fork();
+	if (PID == 0)
 	{
-		if (execve("/bin/cat", tmp->argv, g_env) == -1)
+		while (path[i])
 		{
-			printf("ERROR\n");
-			return ;
+			s = ft_strjoin(path[i], "/");
+			s = ft_strjoin(s, tmp->argv[0]);
+			if (execve(s, tmp->argv, g_env) == -1)
+				;
+			i++;
 		}
-	}
-	else
-	{
-		printf("%s exec here\n", tmp->argv[0]);
+		printf("%s is not command\n", tmp->argv[0]);
 		return ;
 	}
+	else
+		wait(&PID);
 }
