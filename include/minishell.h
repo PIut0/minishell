@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 14:58:02 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 15:54:49 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@
 # include <dirent.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <termios.h>
 # include "libft.h"
 // #include "../builtin/builtin.h"
 # define WHITE_SPACE " \t\n\v\f\b"
 # define BACK_SLASH -1
 # define ENV_D_QUOTE -2
+# define NEGATIVE_CHAR "><~"
 
 int					g_sig;
 char				**g_env;
