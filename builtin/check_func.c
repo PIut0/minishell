@@ -41,6 +41,8 @@ void	check_btin_func(t_token *tmp, t_info *info)
 	int i;
 	i = 0;
 
+	for (int k = 0; tmp->argv[k]; k++)
+		printf("argv {%s}\n", tmp->argv[k]);
 	while (tmp->argv[i])
 	{
 		printf("argv[i] = %s\n", tmp->argv[i]);
@@ -70,7 +72,7 @@ void	check_btin_func(t_token *tmp, t_info *info)
 		m_exit();
 	}
 	else if (ft_strcmp("pwd", cmd) == 1){
-		m_pwd(1);
+		m_pwd(tmp->fd);
 	}
 	else if (ft_strcmp("cd", cmd) == 1){
 		if (!tmp->argv[1])
@@ -82,10 +84,10 @@ void	check_btin_func(t_token *tmp, t_info *info)
 			m_cd(tmp->argv[1]);
 	}
 	else if (ft_strcmp("export", cmd) == 1){
-		m_export(tmp->argv, info->shell->env);
+		m_export(tmp->argv, info->shell->env, tmp->fd);
 	}
 	else if (ft_strcmp("env", cmd) == 1){
-		m_env(info->shell->env);
+		m_env(info->shell->env, tmp->fd);
 	}
 	else if (ft_strcmp("unset", cmd) == 1){
 		for (int i = 1; tmp->argv[i]; i++)
@@ -112,7 +114,7 @@ void	check_func(t_token *tmp, t_info *info)
 	}
 	else
 	{
-		printf("exec here\n");
+		printf("%s exec here\n", tmp->argv[0]);
 		return ;
 	}
 }

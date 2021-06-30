@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 20:47:28 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 13:19:48 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,27 @@ int		process_info(t_info *info)
 	t_token	*tmp;
 
 	tmp = info->head->next;
-	printf("\n");
 	while (tmp)
 	{
 		i = -1;
+		tmp->fd = 0;
 		if (!(tmp->argv) || !(tmp->argv[0]))
 			;
 		else if (check_builtin(tmp->argv[0]))
 		{
-			printf("built in: ");
+			// printf("built in: ");
 			i = -1;
 			while (tmp->argv[++i])
 				tmp->argv[i] = parse_data(tmp->argv[i], info);
+			check_btin_func(tmp, info);
 		}
 		else
 		{
-			printf("not built: ");
 			i = -1;
 			while (tmp->argv[++i])
-				tmp->argv[i] = backup_data(tmp->argv[i], info);
+				backup_bs(tmp->argv[i], ft_strlen(tmp->argv[i]));
+			check_func(tmp, info);
 		}
-		print_argv(tmp->argv);
 		tmp = tmp->next;
 	}
 	return (0);

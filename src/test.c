@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 20:27:23 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 13:07:42 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
+
+char **g_env;
 
 //void	processing(t_info *info)
 //{
@@ -27,17 +30,22 @@
 //	return ;
 //}
 
-void	print_env(t_env *env)
+void	print_env(t_env *env, int fd)
 {
 	t_node	*tmp;
 
 	tmp = env->head->next;
 	while (tmp != env->tail)
 	{
-		printf("env: key = %s \t value = %s\n",tmp->key,tmp->value);
+		if (tmp->value[0] != 0)
+		{
+			write(fd, tmp->key, ft_strlen(tmp->key));
+			write(fd, "=", 1);
+			write(fd, tmp->value, ft_strlen(tmp->value));
+			write(fd, "\n", 1);
+		}
 		tmp = tmp->next;
 	}
-	printf("env suc\n");
 }
 
 int		shell_start(t_shell *shell)
@@ -50,8 +58,7 @@ int		shell_start(t_shell *shell)
 		if (!(info = init_info(shell)))
 			continue ;
 		ft_putstr_fd("minishell > ", 1);
-		line = get_line();
-		//get_next_line(0, &line);
+		get_next_line(0, &line);
 		if (parsing(line, info))
 			continue ;
 		if (process_info(info))
@@ -60,26 +67,24 @@ int		shell_start(t_shell *shell)
 	}
 }
 
-t_shell		*init_shell(char **argv)
+t_shell		*init_shell(char **env_i)
 {
 	t_shell		*ret;
 
 	if (!(ret = (t_shell*)malloc(sizeof(t_shell))))
 		return (0);
-	ret->env = init_env(argv);
+	ret->env = init_env(env_i);
 	return (ret);
 }
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **env)
 {
-	t_shell				*shell;
-
+	t_shell	*shell;
 	argc = -1;
-	g_sig = 0;
-	signal(SIGINT, sig_sigint);
-	signal(SIGQUIT, sig_sigquit);
-	if (!(shell = init_shell(argv)))
+	g_env = env;
+	(void) argv;
+	if (!(shell = init_shell(env)))
 		return (1);
-	print_env(shell->env);
+	// print_env(shell->env);
 	shell_start(shell);
 }

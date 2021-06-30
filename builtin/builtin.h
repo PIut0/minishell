@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:18:07 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/29 15:10:41 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/30 13:06:45 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	m_pwd(int fd);
 void	m_cd(char *s);
 void	m_exit(void);
 void	m_echo(t_token *tmp);
-void	m_env(t_env *env);
+void	m_env(t_env *env, int fd);
 void	m_unset(char *key, t_env *env);
-void	m_export(char **argv, t_env *env);
+void	m_export(char **argv, t_env *env, int fd);
 void	m_exec(char **argv);
 
 //builtin_utils
@@ -53,7 +53,7 @@ int		max(int a, int b);
 // void	rm_env(t_node *node);
 // t_env	*init_env(char **arg_env);
 
-void	print_export(t_env *env);
+void	print_export(t_env *env, int fd);
 
 //greater_sign
 void	double_g_s(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ref1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:03:00 by klim              #+#    #+#             */
-/*   Updated: 2021/06/26 19:26:03 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/28 22:21:56 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,18 @@ char		*ft_sp_merge(char **sp)
 		ret = ft_strjoin_free(ret, sp[i], 3);
 	free(sp);
 	return (ret);
+}
+
+int		ft_strcmp(char *s1, char *s2)
+{
+	int		i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+		i++;
+	if (i == (int)ft_strlen(s1) && i == (int)ft_strlen(s2))
+		return (1);
+	return (0);
 }

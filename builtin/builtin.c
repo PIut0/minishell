@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/30 11:03:21 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/30 13:06:18 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ void	m_exec(char **argv)
 		printf("프로그램 실행 error\n");
 }
 
-void	m_env(t_env *env)
+void	m_env(t_env *env, int fd)
 {
-	print_env(env);
+	print_env(env, fd);
 }
 
 void	m_unset(char *key, t_env *env)
@@ -115,16 +115,21 @@ void	m_unset(char *key, t_env *env)
 	rm_env(n);
 }
 
-void	m_export(char **argv, t_env *env)
+void	m_export(char **argv, t_env *env, int fd)
 {
 	int i;
 	// t_node *tmp;
 
 	i = 0;
 	if (!argv[1])
-		print_export(env);
+		print_export(env, fd);
 	while (argv[++i])
 	{
+		if (is_bracket(argv[i]))
+		{
+			print_export(env, fd);
+			break ;
+		}
 		add_env(argv[i], env);
 	}
 }

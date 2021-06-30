@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/30 00:57:43 by ash              ###   ########.fr       */
+/*   Updated: 2021/06/30 13:05:44 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ int		max(int a, int b)
 		return (b);
 }
 
-void	print_export(t_env *env)
+void	print_export(t_env *env, int fd)
 {
 	t_node *now;
 
 	now = env->head->next;
 	while (now != env->tail)
 	{
-		write(1, now->key, ft_strlen(now->key));
+		write(fd, now->key, ft_strlen(now->key));
 		if (now->value[0])
 		{
-			write(1, "=\"", 2);
-			write(1, now->value, ft_strlen(now->value));
-			write(1, "\"", 1);
+			write(fd, "=\"", 2);
+			write(fd, now->value, ft_strlen(now->value));
+			write(fd, "\"", 1);
 		}
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 		now = now->next;
 	}
 }
@@ -55,15 +55,3 @@ int		check_flag(char *argv)
 	}
 	return (1);
 }
-
-// void	*err_ptr(char *s, void *ptr)
-// {
-// 	printf("%s\n", s);
-// 	return (ptr);
-// }
-
-// int		err_int(char *s, int ret)
-// {
-// 	printf("%s\n", s);
-// 	return (ret);
-// }
