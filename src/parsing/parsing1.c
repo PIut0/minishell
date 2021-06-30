@@ -6,29 +6,48 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/29 17:39:44 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/27 16:23:32 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*replace_bs(char *line, int len)
+int			backup_bs(char *line, int len)
 {
 	int		i;
+	int		count;
 
 	i = -1;
+	count = 0;
+	while (++i < len)
+	{
+		if (line[i] == BACK_SLASH)
+		{
+			line[i] = '\\';
+			count++;
+		}
+	}
+	return (count);
+}
+
+int			replace_bs(char *line, int len)
+{
+	int		i;
+	int		count;
+
+	i = -1;
+	count = 0;
 	while (++i < len)
 	{
 		if ((i > 0 && line[i-1] == BACK_SLASH) || is_quote(line, i) == 1)
 			;
 		else if (line[i] == '\\')
 		{
-			if (is_quote(line, i) != 2 ||
-				(line[i + 1] == '"' || line[i + 1] == '\\'))
-				line[i] = BACK_SLASH;
+			line[i] = BACK_SLASH;
+			count++;
 		}
 	}
-	return (line);
+	return (count);
 }
 
 char		*remove_space(char *str)
@@ -58,9 +77,10 @@ int			parsing(char *line, t_info *info)
 {
 	t_token		*head;
 	int			len;
+	int			bs_cnt;
 
 	len = ft_strlen(line);
-	line = replace_bs(line, len);
+	bs_cnt = replace_bs(line, len);
 	if (is_quote(line, len))
 		return (err_int("minishell: unexpected quote", 1));
 	head = init_token("");

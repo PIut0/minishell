@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/06/28 21:53:10 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/27 16:30:37 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ char	*change_dq_edq(char *str, int key)
 {
 	int		i;
 
-	if (!str)
-		return (0);
 	i = -1;
 	while (str[++i])
 	{
@@ -27,19 +25,6 @@ char	*change_dq_edq(char *str, int key)
 			str[i] = '"';
 	}
 	return (str);
-}
-
-char	*get_pid(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	return (ft_itoa((int)pid));
-}
-
-char	*get_errno(void)
-{
-	return (ft_itoa((int)errno));
 }
 
 char	*change_key_to_value(char *argv, int *i, int env_len, t_info *info)
@@ -52,17 +37,13 @@ char	*change_key_to_value(char *argv, int *i, int env_len, t_info *info)
 	key = ft_substr(argv, (*i) + 1, env_len);
 	value = "";
 	if ((node = find_node(key, info->shell->env)))
-		if (!ft_strncmp((value = node->value), "~", 2))
-			value = find_node("HOME", info->shell->env)->value;
-	if (!(ft_strncmp(key, "?", 2)))
-		value = get_errno();
-	if (!(ft_strncmp(key, "$", 2)))
-		value = get_pid();
+		value = node->value;
 	argv[*i] = 0;
 	value = change_dq_edq(value, 0);
 	ret = ft_strjoin(argv, value);
 	ret = ft_strjoin(ret, argv + *i + env_len + 1);
 	free(argv);
+	//printf("key: %s | value: %s\n",key, value);
 	return (ret);
 }
 
@@ -71,8 +52,7 @@ int		get_env_len(char *argv, int i)
 	int		idx;
 
 	idx = i + 1;
-	if (!ft_isalpha(argv[idx]) && argv[idx] != '_'
-		&& argv[idx] != '$' && argv[idx] != '?')
+	if (!ft_isalpha(argv[idx]) && argv[idx] != '_')
 		return (0);
 	while (argv[++idx])
 	{
@@ -88,8 +68,6 @@ char	*replace_env(char *argv, t_info *info)
 	int		i;
 	int		env_len;
 
-	if (!argv || !info)
-		return (0);
 	i = -1;
 	while (argv[++i])
 	{
@@ -109,8 +87,6 @@ char	*remove_quote(char *str)
 	char	**sp;
 	char	*ret;
 
-	if (!str)
-		return (0);
 	sp = splice_str(str, "\'\"");
 	ret = ft_sp_merge(sp);
 	free(str);
@@ -122,50 +98,15 @@ char	*remove_bs(char *str)
 	char	**sp;
 	char	*ret;
 
-	if (!str)
-		return (0);
 	sp = ft_split(str, BACK_SLASH);
 	ret = ft_sp_merge(sp);
 	free(str);
 	return (ret);
 }
 
-char	*change_nega_char(char *argv)
-{
-	int		i;
-
-	if (!argv)
-		return (0);
-	i = -1;
-	while (argv[++i])
-	{
-		if (is_quote(argv, i) && ft_strchr(NEGATIVE_CHAR, argv[i]))
-			argv[i] = -argv[i];
-	}
-	return (argv);
-}
-
-char	*replace_home(char *argv)
-{
-	char	*ret;
-
-	ret = (char *)malloc(6);
-	ret[0] = '$';
-	ret[1] = 'H';
-	ret[2] = 'O';
-	ret[3] = 'M';
-	ret[4] = 'E';
-	ret[5] = 0;
-	free(argv);
-	return (ret);
-}
-
 char	*parse_data(char *argv, t_info *info)
 {
-	if (!ft_strncmp(argv, "~", 2))
-		argv = replace_home(argv);
 	argv = replace_env(argv, info);
-	argv = change_nega_char(argv);
 	argv = remove_quote(argv);
 	argv = change_dq_edq(argv, 1);
 	argv = remove_bs(argv);

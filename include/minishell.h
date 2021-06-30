@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:22:06 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 13:07:18 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,16 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <errno.h>
-# include <termios.h>
-# include <signal.h>
+#include <dirent.h>
+#include <limits.h>
+#include <fcntl.h>
 # include "libft.h"
+// #include "../builtin/builtin.h"
 
 # define WHITE_SPACE " \t\n\v\f\b"
-# define NEGATIVE_CHAR "><~"
 # define BACK_SLASH -1
 # define ENV_D_QUOTE -2
 
-int		g_sig;
-typedef struct termios	t_term;
 typedef enum		e_token_type
 {
 	_null,
@@ -58,13 +56,16 @@ typedef	struct		s_shell
 {
 	t_env			*env;
 }					t_shell;
+
 typedef	struct		s_token
 {
 	char			*data;
 	char			**argv;
 	t_token_type	token_type;
+	int				fd;
 	struct	s_token	*next;
 }					t_token;
+
 typedef	struct		s_info
 {
 	char			*cmd;
@@ -74,10 +75,10 @@ typedef	struct		s_info
 
 int				get_next_line(int fd, char **line);
 int				parsing(char *line, t_info *info);
-char			*replace_bs(char *line, int len);
-char			*backup_bs(char *line, int len);
+int				replace_bs(char *line, int len);
+int				backup_bs(char *line, int len);
 int				parse_token(char *line, t_info *info, t_token *head, int len);
-int				join_brackets(t_token *t);
+int				join_brackets(t_token *head);
 char			*get_brackets(t_token_type t);
 char			*ft_strjoin_free(char *s1, char *s2, int n);
 int				is_type_brackets(t_token_type t);
@@ -93,10 +94,6 @@ char	*replace_env(char *argv, t_info *info);
 char	*remove_quote(char *str);
 char	*change_dq_edq(char *str, int key);
 char	*remove_bs(char *str);
-
-char		*backup_data(char *data, t_info *info);
-char		*backup_nega_char(char *data);
-
 
 int		process_info(t_info *info);
 
@@ -114,15 +111,22 @@ int		err_int(char *s, int ret);
 void	*err_ptr(char *s, void *ret);
 char	**splice_str(char *str, char *charset);
 char		*ft_sp_merge(char **sp);
-
-char	*get_line(void);
-
-void		sig_sigint(int sig);
-void		sig_sigquit(int sig);
+int		ft_strcmp(char *s1, char *s2);
 
 
 void	free_info(t_info *info);
 t_info	*init_info(t_shell *shell);
 
+
+void	check_btin_func(t_token *tmp, t_info *info);
+void	check_func(t_token *tmp, t_info *info);
+
+void	print_env(t_env *env, int fd);
+// t_node	*init_node(char *s);
+// t_node	*find_node(char *key, t_env *env);
+// int		check_key_val(t_node *node);
+// int		add_env(char *s, t_env *env);
+// void	rm_env(t_node *node);
+// t_env	*init_env(char **arg_env);
 
 #endif
