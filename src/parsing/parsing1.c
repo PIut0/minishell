@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:53:25 by klim             ###   ########.fr       */
+/*   Updated: 2021/06/30 13:56:32 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,29 @@
 char		*backup_bs(char *line, int len)
 {
 	int		i;
-	int		count;
 
 	i = -1;
-	count = 0;
 	while (++i < len)
 	{
 		if (line[i] == BACK_SLASH)
-		{
 			line[i] = '\\';
-			count++;
-		}
 	}
-	return (count);
+	return (line);
 }
 
 char		*replace_bs(char *line, int len)
 {
 	int		i;
-	int		count;
 
 	i = -1;
-	count = 0;
 	while (++i < len)
 	{
 		if ((i > 0 && line[i-1] == BACK_SLASH) || is_quote(line, i) == 1)
 			;
 		else if (line[i] == '\\')
-		{
 			line[i] = BACK_SLASH;
-			count++;
-		}
 	}
-	return (count);
+	return (line);
 }
 
 char		*remove_space(char *str)
