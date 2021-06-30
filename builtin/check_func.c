@@ -43,6 +43,7 @@ void	check_btin_func(t_token *tmp, t_info *info)
 
 	while (tmp->argv[i])
 	{
+		printf("argv[i] = %s\n", tmp->argv[i]);
 		if (ft_strcmp(tmp->argv[i], ">") == 1)
 		{
 			if (tmp->fd != 0)
@@ -54,6 +55,7 @@ void	check_btin_func(t_token *tmp, t_info *info)
 			if (tmp->fd != 0)
 				close(tmp->fd);
 			tmp->fd = open_double(tmp->argv[i + 1]);
+			
 		}
 		else if (ft_strcmp(tmp->argv[i], "<") == 1)
 		{
@@ -63,10 +65,7 @@ void	check_btin_func(t_token *tmp, t_info *info)
 	}
 	cmd = tmp->argv[0];
 	if (ft_strcmp("echo", cmd)== 1)
-	{
-		// write(1, "here!\n", 6);
 		m_echo(tmp);
-	}
 	else if (ft_strcmp("exit", cmd) == 1){
 		m_exit();
 	}
@@ -101,7 +100,7 @@ void	check_btin_func(t_token *tmp, t_info *info)
 
 void	check_func(t_token *tmp, t_info *info)
 {
-	info->cmd = 0;
+	info->shell->env->head->prev = 0;
 	//fork해서 자식프로세스로 실행해야 안끝남. 
 	if (ft_strcmp(tmp->argv[0], "cat") == 1)
 	{
@@ -113,7 +112,7 @@ void	check_func(t_token *tmp, t_info *info)
 	}
 	else
 	{
-		printf("here\n");
+		printf("exec here\n");
 		return ;
 	}
 }
