@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:07:18 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/30 13:52:58 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-#include <dirent.h>
-#include <limits.h>
-#include <fcntl.h>
+# include <dirent.h>
+# include <limits.h>
+# include <fcntl.h>
+# include <termios.h>
 # include "libft.h"
 // #include "../builtin/builtin.h"
-
+int					g_sig;
 # define WHITE_SPACE " \t\n\v\f\b"
 # define BACK_SLASH -1
 # define ENV_D_QUOTE -2
 
+typedef struct		termios		t_term;
 typedef enum		e_token_type
 {
 	_null,
@@ -75,8 +77,8 @@ typedef	struct		s_info
 
 int				get_next_line(int fd, char **line);
 int				parsing(char *line, t_info *info);
-int				replace_bs(char *line, int len);
-int				backup_bs(char *line, int len);
+char			*replace_bs(char *line, int len);
+char			*backup_bs(char *line, int len);
 int				parse_token(char *line, t_info *info, t_token *head, int len);
 int				join_brackets(t_token *head);
 char			*get_brackets(t_token_type t);
