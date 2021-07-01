@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/30 21:27:23 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 15:12:55 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,50 @@
 void	m_pwd(int fd)
 {
 	char	buf[PATH_MAX];
+	pid_t	pid_pwd;
+	int		status;
 
-	if (!(getcwd(buf, sizeof(buf))))
-		return ; //error
-	write(fd, buf, ft_strlen(buf));
-	write(fd, "\n", 1);
+	// pid_pwd = fork();
+	if ((pid_pwd = fork()) < 0)
+		exit(1);
+	else if (pid_pwd == 0)
+	{
+		if (!(getcwd(buf, sizeof(buf))))
+			return; //error
+		write(fd, buf, ft_strlen(buf));
+		write(fd, "\n", 1);
+		exit(0);
+	}
+	else
+		if (waitpid(pid_pwd, &status, 0) < 0)
+			err_ptr("error\n", 0);
 }
 
 void	m_cd(char *s)
 {
 	int result;
+	pid_t pid_cd;
+	int status;
 
-	result = chdir(s);
-	if(result == 0)
-		;
-	else
-		err_int("fail", 0);
+	// pid_pwd = fork();
+	if ((pid_cd = fork()) < 0)
+		err_ptr("error", 0);
+	else if (pid_cd == 0)
+	{
+		result = chdir(s);
+		if (result == 0)
+			;
+		else
+			err_int("fail", 0);
+		exit(0);
+	}
+	else if (waitpid(pid_cd, &status, 0) < 0)
+		err_ptr("wait_error\n", 0);
 }
 
 void	m_exit(void)
 {
 	printf("bye!\n");
-	kill(getppid(), SIGTERM);
 	exit(0);
 }
 
@@ -57,45 +79,70 @@ void	m_echo(t_token *tmp)
 	int j;
 	int check;
 	int flag;
+	pid_t	pid_pwd;
+	int		status;
 
-	i = 0;
-	j = 0;
-	check = 0;
-	flag = 0;
-	if (tmp->fd == 0)
-		tmp->fd = 1;
-	if (!tmp->argv[1])
+	// pid_pwd = fork();
+	if ((pid_pwd = fork()) < 0)
+		err_ptr("fork error\n", 0);
+	else if (pid_pwd == 0)
 	{
-		write(1, "\n", 1);
-		return ;
-	}
-	while (tmp->argv[++i])
-	{
-		if (is_bracket(tmp->argv[i]))
+		i = 0;
+		j = 0;
+		check = 0;
+		flag = 0;
+		if (tmp->fd == 0)
+			tmp->fd = 1;
+		if (!tmp->argv[1])
 		{
-			if (tmp->argv[++i])
-				++i;
-			if (!tmp->argv[i])
-				break ;
+			write(1, "\n", 1);
+			exit(1);
 		}
-		if (!check && check_flag(tmp->argv[i]))
-			flag = 1;
-		else
-			check = 1;
-		if (check && tmp->argv[i])
+		while (tmp->argv[++i])
 		{
-			ft_putstr_fd(backup_nega_char(tmp->argv[i]), tmp->fd);
-			if (tmp->argv[i + 1])
-				write(tmp->fd, " ", 1);
+			if (is_bracket(tmp->argv[i]))
+			{
+				if (tmp->argv[++i])
+					++i;
+				if (!tmp->argv[i])
+					break;
+			}
+			if (!check && check_flag(tmp->argv[i]))
+				flag = 1;
+			else
+				check = 1;
+			if (check && tmp->argv[i])
+			{
+				ft_putstr_fd(backup_nega_char(tmp->argv[i]), tmp->fd);
+				if (tmp->argv[i + 1])
+					write(tmp->fd, " ", 1);
+			}
 		}
+		if (flag == 0)
+			write(tmp->fd, "\n", 1);
+		exit(0);
 	}
-	if (flag == 0)
-		write(tmp->fd, "\n", 1);
+	else
+		if (waitpid(pid_pwd, &status, 0) < 0)
+			err_ptr("wait error\n", 0);
 }
 
 void	m_env(t_env *env, int fd)
 {
-	print_env(env, fd);
+	pid_t	pid_pwd;
+	int		status;
+
+	// pid_pwd = fork();
+	if ((pid_pwd = fork()) < 0)
+		exit(1);
+	else if (pid_pwd == 0)
+	{
+		print_env(env, fd);
+		exit(0);
+	}
+	else
+		if (waitpid(pid_pwd, &status, 0) < 0)
+			err_ptr("error\n", 0);
 }
 
 void	m_unset(char *key, t_env *env)
@@ -103,11 +150,12 @@ void	m_unset(char *key, t_env *env)
 	t_node *n;
 
 	if (!key)
-		return ;
+		return;
 	n = find_node(key, env);
 	if (!n)
-		return ;
+		return;
 	rm_env(n);
+	exit(0);
 }
 
 void	m_export(char **argv, t_env *env, int fd)
@@ -116,7 +164,7 @@ void	m_export(char **argv, t_env *env, int fd)
 	// t_node *tmp;
 
 	i = 0;
-	printf("test3: %p\n",env->tail);
+	// printf("test3: %p\n",env->tail);
 	if (!argv[1])
 		print_export(env, fd);
 	while (argv[++i])

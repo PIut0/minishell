@@ -68,10 +68,9 @@ void	check_btin_func(t_token *tmp, t_info *info)
 	t_node *home;
 	int i;
 	i = 0;
-	printf("test2: %p\n",info->shell->env->tail);
 
-	signal(SIGINT, child_sig);
-	signal(SIGQUIT, child_sig);
+	// signal(SIGINT, child_sig);
+	// signal(SIGQUIT, child_sig);
 	check_bracket(tmp);
 	cmd = tmp->argv[0];
 	if (ft_strcmp("echo", cmd)== 1)
@@ -88,7 +87,12 @@ void	check_btin_func(t_token *tmp, t_info *info)
 		if (!tmp->argv[1])
 		{
 			home = find_node("HOME", info->shell->env);
-			m_cd(home->value);
+			if (!home){
+				printf("cd: HOME not set");
+				return ;
+			}
+			else
+				m_cd(home->value);
 		}
 		else
 			m_cd(tmp->argv[1]);
@@ -108,11 +112,11 @@ void	check_btin_func(t_token *tmp, t_info *info)
 	else
 	{
 		printf("%s is not command\n", tmp->argv[0]);
-		//return ;
-		exit(0);
+		return ;
+		// exit(0);
 	}
-	//return ;
-	exit(0);
+	return ;
+	// exit(0);
 }
 
 char	*get_keyvalue(t_node *t)
@@ -152,7 +156,7 @@ char	**get_char_env(t_env *env)
 
 void	check_func(t_token *tmp, t_info *info)
 {
-	pid_t PID;
+	pid_t pid;
 	char **path;
 	t_node *p_node;
 	int		i;
@@ -161,8 +165,8 @@ void	check_func(t_token *tmp, t_info *info)
 	i = 0;
 	p_node = find_node("PATH", info->shell->env);
 	path = ft_split(p_node->value, ':');
-	PID = fork();
-	if (PID == 0)
+	pid = fork();
+	if (pid == 0)
 	{
 		signal(SIGINT, child_sig);
 		signal(SIGQUIT, child_sig);
@@ -179,5 +183,5 @@ void	check_func(t_token *tmp, t_info *info)
 		exit(0);
 	}
 	else
-		wait(&PID);
+		wait(&pid);
 }
