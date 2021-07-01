@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/01 20:45:34 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 22:43:41 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,12 @@
 void	m_pwd(int fd)
 {
 	char	buf[PATH_MAX];
-	pid_t	pid_pwd;
-	int		status;
 
-	if ((pid_pwd = fork()) < 0)
-		exit(1);
-	else if (pid_pwd == 0)
-	{
-		if (!(getcwd(buf, sizeof(buf))))
-			return; //error
-		write(fd, buf, ft_strlen(buf));
-		write(fd, "\n", 1);
-		exit(0);
-	}
-	else
-		if (waitpid(pid_pwd, &status, 0) < 0)
-			err_ptr("error\n", 0);
+	if (!(getcwd(buf, sizeof(buf))))
+		return; //error
+	write(fd, buf, ft_strlen(buf));
+	write(fd, "\n", 1);
+	return ;
 }
 
 int		m_cd(char *s, t_info *info)
@@ -93,47 +83,23 @@ void	do_echo(int i, int check, t_token *tmp, int flag)
 	}
 	if (flag == 0)
 		write(tmp->out, "\n", 1);
-	exit(0);
+	return ;
 }
 
 void	m_echo(t_token *tmp)
 {
-	pid_t	pid_pwd;
-	int		status;
-
-	if ((pid_pwd = fork()) < 0)
-		err_ptr("fork error\n", 0);
-	else if (!pid_pwd)
+	if (!tmp->argv[1])
 	{
-		if (tmp->out == 0)
-			tmp->out = 1;
-		if (!tmp->argv[1])
-		{
-			write(tmp->out, "\n", 1);
-			exit(1);
-		}
-		do_echo(0, 0, tmp, 0);
+		write(tmp->out, "\n", 1);
+		return ;
 	}
-	else
-		if (waitpid(pid_pwd, &status, 0) < 0)
-			err_ptr("wait error\n", 0);
+	do_echo(0, 0, tmp, 0);
 }
 
 void	m_env(t_env *env, int fd)
 {
-	pid_t	pid_pwd;
-	int		status;
-
-	if ((pid_pwd = fork()) < 0)
-		exit(1);
-	else if (pid_pwd == 0)
-	{
-		print_env(env, fd);
-		exit(0);
-	}
-	else
-		if (waitpid(pid_pwd, &status, 0) < 0)
-			err_ptr("error\n", 0);
+	print_env(env, fd);
+	return ;
 }
 
 void	m_unset(char **argv, t_env *env)

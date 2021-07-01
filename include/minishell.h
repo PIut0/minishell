@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 20:39:23 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 22:39:36 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef	struct		s_shell
 {
 	t_env			*env;
 	t_history		*history;
+	int				_stdin;
+	int				_stdout;
 }					t_shell;
 
 typedef	struct		s_token
@@ -155,7 +157,7 @@ void		add_history(t_shell *shell, char *line);
 
 int		check_bracket(t_token *tmp);
 int		check_btin_func(t_token *tmp, t_info *info);
-void	check_func(t_token *tmp, t_info *info);
+void	check_func(t_token *tmp, t_info *info, int c);
 
 void	print_env(t_env *env, int fd);
 void	print_env2(t_env *env);

@@ -139,7 +139,7 @@ int		is_dir(char *argv)
 	return (0);
 }
 
-void	check_func(t_token *tmp, t_info *info)
+void	check_func(t_token *tmp, t_info *info, int c)
 {
 	pid_t	pid;
 	char	**path;
@@ -147,6 +147,9 @@ void	check_func(t_token *tmp, t_info *info)
 	char	*s;
 
 	i = -1;
+	if (c)
+		pid = 0;
+	//else
 	pid = fork();
 	path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 	if (pid == 0)
@@ -158,7 +161,8 @@ void	check_func(t_token *tmp, t_info *info)
 			execve(s, tmp->argv, get_char_env(info->shell->env));
 		}
 		execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
-		printf("%s is not command\n", tmp->argv[0]);
+		printf("bash: command not found: %s\n", tmp->argv[0]);
+		return ;
 		exit(0);
 	}
 	else
