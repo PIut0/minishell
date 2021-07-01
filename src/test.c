@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 05:29:32 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 05:36:49 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int		main(int argc, char **argv, char **env)
 	t_shell	*shell;
 	argc = -1;
 	(void) argv;
-	g_sig.in = dup(STDIN);
-	g_sig.out = dup(STDOUT);
-	g_sig.sig = 0;
+	g_signal.in = dup(STDIN);
+	g_signal.out = dup(STDOUT);
+	g_signal.sig = 0;
 	if (!(shell = init_shell(env)))
 		return (1);
 	// print_env(shell->env);

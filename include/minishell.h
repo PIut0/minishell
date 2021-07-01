@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 05:27:10 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 05:36:25 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void	print_export(t_env *env, int fd);
 void	double_g_s(char *str);
 
 
-extern	t_sig g_sig;
+t_sig	 g_signal;
 //check_btin_func
 
 #endif
