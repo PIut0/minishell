@@ -162,7 +162,7 @@ void	check_func(t_token *tmp, t_info *info, int c)
 		}
 		execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
 		printf("bash: command not found: %s\n", tmp->argv[0]);
-		return ;
+		//return ;
 		exit(0);
 	}
 	else

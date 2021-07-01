@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 16:56:29 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 00:58:34 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int		parse_argv(t_info *info, t_token *head)
 	t_env		*env;
 	t_token		*token;
 	char		**tmp;
-	int			i;
+	//int			i;
 
 	env = info->shell->env;
 	token = head->next;
@@ -180,9 +180,11 @@ int		parse_argv(t_info *info, t_token *head)
 	{
 		token->argv = splice_str(token->data, WHITE_SPACE);
 		tmp = token->argv;
-		i = -1;
-		while (tmp[++i])
-			tmp[i] = parse_data(tmp[i], info);
+		if (tmp[0])
+			tmp[0] = parse_data(tmp[0], info);
+		//i = -1;
+		//while (tmp[++i])
+		//	tmp[i] = parse_data(tmp[i], info);
 		token = token->next;
 	}
 	return (0);

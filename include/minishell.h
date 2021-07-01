@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 22:39:36 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 01:42:16 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define BACK_SLASH -1
 # define ENV_D_QUOTE -2
 # define NEGATIVE_CHAR "><~"
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 # define _UP 4283163
 # define _DOWN 4348699
@@ -123,6 +127,7 @@ char	*remove_quote(char *str);
 char	*change_dq_edq(char *str, int key);
 char	*remove_bs(char *str);
 char		*backup_nega_char(char *data);
+char		*backup_data(char *data, t_info *info);
 
 int		process_info(t_info *info);
 
@@ -140,6 +145,7 @@ int		err_int(char *s, int ret);
 void	*err_ptr(char *s, void *ret);
 char	**splice_str(char *str, char *charset);
 char		*ft_sp_merge(char **sp);
+char		*ft_sp_merge2(char **sp, char *c);
 int		ft_strcmp(char *s1, char *s2);
 
 char	*get_line(t_shell *shell);

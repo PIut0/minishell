@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 16:57:57 by klim              #+#    #+#             */
-/*   Updated: 2021/06/27 16:28:57 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 23:39:16 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void		print_argv(char **argv)
 	i = -1;
 	printf("| ");
 	while (argv[++i])
-		printf("%s ",argv[i]);
+		printf("'%s' ",argv[i]);
 	printf("|\n");
 }

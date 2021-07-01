@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 21:35:33 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 01:17:00 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		shell_start(t_shell *shell)
 		add_history(shell, line);
 		if (parsing(line, info))
 			continue ;
+		//print_token(info->head);
 		if (process_info(info))
 			continue ;
 		free_info(info);
@@ -66,7 +67,6 @@ t_shell		*init_shell(char **env_i)
 
 int		main(int argc, char **argv, char **env)
 {
-
 	signal(SIGINT, sig_sigint);
 	signal(SIGQUIT, sig_sigquit);
 	t_shell	*shell;

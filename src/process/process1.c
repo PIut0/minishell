@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 23:27:18 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 01:15:02 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int		process_tmp(t_info *info, t_token *tmp, int c)
 {
 	int		i;
 
+	dup2(tmp->in, STDIN);
+	dup2(tmp->out, STDOUT);
 	if (!(tmp->argv) || !(tmp->argv[0]))
 		;
 	else if (check_builtin(tmp->argv[0]))
@@ -47,7 +49,7 @@ int		process_tmp(t_info *info, t_token *tmp, int c)
 	{
 		i = -1;
 		while (tmp->argv[++i])
-			backup_bs(tmp->argv[i], ft_strlen(tmp->argv[i]));
+			tmp->argv[i] = backup_data(tmp->argv[i], info);
 		check_func(tmp, info, c);
 	}
 	return (0);
@@ -62,13 +64,13 @@ int		get_pipe(int *pipefd[])
 	if (pid == 0)
 	{
 		close((*pipefd)[1]);
-		dup2((*pipefd)[0], STDIN_FILENO);
+		dup2((*pipefd)[0], STDIN);
 		return (-1);
 	}
 	else
 	{
 		close((*pipefd)[0]);
-		dup2((*pipefd)[1], STDOUT_FILENO);
+		dup2((*pipefd)[1], STDOUT);
 		return (pid);
 	}
 }
@@ -102,6 +104,7 @@ int		process_info(t_info *info)
 		printf("test\n");
 		exit(0);
 	}
-	dup2(info->shell->_stdout, STDOUT_FILENO);
+	dup2(info->shell->_stdout, STDOUT);
+	dup2(info->shell->_stdin, STDIN);
 	return (0);
 }

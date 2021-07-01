@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 16:56:39 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 01:33:35 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ t_token		*init_token(char *data)
 	ret->next = 0;
 	ret->token_type = _null;
 	ret->data = data;
-	ret->in = 0;
-	ret->out = 1;
+	ret->in = STDIN;
+	ret->out = STDOUT;
 	return (ret);
 }
 
@@ -42,10 +42,8 @@ t_token_type	get_token(char *line, int i)
 		return (_d_brackets);
 	else if (line[i] == '>' && line[i + 1] != '>')
 		return (_brackets);
-	else if (line[i] == '<' && line[i + 1] == '<')
+	else if (line[i] == '<')
 		return (_r_brackets);
-	else if (line[i] == '<' && line[i + 1] != '<')
-		return (_rd_brackets);
 	else if (line[i] == ';')
 		return (_semicolon);
 	return (_null);
