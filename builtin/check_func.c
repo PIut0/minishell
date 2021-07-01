@@ -34,6 +34,20 @@ int		open_double(char *s)
 	return (fd);
 }
 
+void	rdbracket(char *escape)
+{
+	char	*line;
+
+	ft_putstr_fd("> ",STDOUT_FILENO);
+	while (get_next_line(STDIN_FILENO, &line))
+	{
+		if (ft_strcmp(escape, line))
+			break ;
+		ft_putstr_fd("> ",STDOUT_FILENO);
+	}
+	return ;
+}
+
 void	check_bracket(t_token *tmp)
 {
 	int i;
@@ -54,9 +68,12 @@ void	check_bracket(t_token *tmp)
 			tmp->fd = open_double(tmp->argv[i + 1]);
 
 		}
-		else if (ft_strcmp(tmp->argv[i], "<") == 1)
+		else if (ft_strcmp(tmp->argv[i], "<<") == 1)
 		{
-
+			if (!tmp->argv[i + 1] || !tmp->argv[i + 1][0])
+				return ;
+			printf("test\n");
+			rdbracket(tmp->argv[i + 1]);
 		}
 		i++;
 	}
@@ -113,10 +130,10 @@ void	check_btin_func(t_token *tmp, t_info *info)
 	{
 		printf("%s is not command\n", tmp->argv[0]);
 		return ;
-		// exit(0);
+		//exit(0);
 	}
 	return ;
-	// exit(0);
+	//exit(0);
 }
 
 char	*get_keyvalue(t_node *t)
@@ -174,7 +191,8 @@ void	check_func(t_token *tmp, t_info *info)
 			s = ft_strjoin(path[i], "/");
 			s = ft_strjoin(s, tmp->argv[0]);
 			// printf("here\n");
-			if (execve(s, tmp->argv, get_char_env(info->shell->env)))
+			if (execve(s, tmp->argv, NULL))
+			//if (execve(s, tmp->argv, get_char_env(info->shell->env)))
 				;
 			i++;
 		}

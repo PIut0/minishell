@@ -6,7 +6,11 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/07/01 15:24:56 by klim             ###   ########.fr       */
+=======
+/*   Updated: 2021/07/01 14:51:27 by klim             ###   ########.fr       */
+>>>>>>> klim
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +38,11 @@ int		process_info(t_info *info)
 {
 	int		i;
 	t_token	*tmp;
+<<<<<<< HEAD
 	// pid_t	pid;
+=======
+	//pid_t	PID;
+>>>>>>> klim
 
 	tmp = info->head->next;
 	while (tmp)
@@ -49,12 +57,21 @@ int		process_info(t_info *info)
 			i = -1;
 			while (tmp->argv[++i])
 				tmp->argv[i] = parse_data(tmp->argv[i], info);
+<<<<<<< HEAD
 			// printf("test1: %p\n",info->shell->env->tail);
 			// pid = fork();
 			// if (pid == 0)
 				check_btin_func(tmp, info);
 			// else
 			// 	wait(&pid);
+=======
+			printf("test1: %p\n",info->shell->env->tail);
+			//PID = fork();
+			//if (PID == 0)
+				check_btin_func(tmp, info);
+			//else
+			//	wait(&PID);
+>>>>>>> klim
 		}
 		else
 		{
