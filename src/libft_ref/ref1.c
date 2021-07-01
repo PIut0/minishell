@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:03:00 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 01:42:00 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 06:23:28 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char		*ft_sp_merge(char **sp)
 
 	if (!sp)
 		return (0);
-	ret = (char *)malloc(1);
+	ret = ft_strdup("");
 	i = -1;
 	while (sp[++i])
 		ret = ft_strjoin_free(ret, sp[i], 3);
@@ -46,7 +46,7 @@ char		*ft_sp_merge2(char **sp, char *c)
 
 	if (!sp)
 		return (0);
-	ret = (char *)malloc(1);
+	ret = ft_strdup("");
 	i = -1;
 	while (sp[++i])
 	{
