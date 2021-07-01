@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 17:33:52 by klim              #+#    #+#             */
-/*   Updated: 2021/06/27 15:23:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 16:58:02 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	free_info(t_info *info)
 {
 	t_token	*tmp;
 
-	free(info->cmd);
 	while (info->head)
 	{
 		tmp = info->head->next;

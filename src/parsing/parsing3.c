@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:50:21 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 16:56:39 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_token		*init_token(char *data)
 	ret->next = 0;
 	ret->token_type = _null;
 	ret->data = data;
+	ret->in = 0;
+	ret->out = 1;
 	return (ret);
 }
 

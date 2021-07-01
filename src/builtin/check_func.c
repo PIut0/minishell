@@ -10,27 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "minishell.h"
 
 extern char **g_env;
 
-int		open_single(char *s)
+int		open_file(char *s, int flag)
 {
 	int fd;
 
-	fd = open(s, O_RDWR | O_CREAT | O_TRUNC, 00777);
-	if (fd == -1)
-		fd = 0;
-	return (fd);
-}
-
-int		open_double(char *s)
-{
-	int fd;
-
-	fd = open(s, O_RDWR | O_CREAT | O_APPEND, 00777);
-	if (fd == -1)
-		fd = 0;
+	if (!s || !*s)
+		return (-1);
+	if (flag)
+		fd = open(s, O_RDWR | O_CREAT | O_TRUNC, 00777);
+	else
+		fd = open(s, O_RDWR | O_CREAT | O_APPEND, 00777);
 	return (fd);
 }
 
@@ -48,92 +41,56 @@ void	rdbracket(char *escape)
 	return ;
 }
 
-void	check_bracket(t_token *tmp)
+int		check_bracket(t_token *tmp)
 {
 	int i;
 
 	i = 0;
 	while (tmp->argv[i])
 	{
-		if (ft_strcmp(tmp->argv[i], ">") == 1)
+		if (ft_strcmp(tmp->argv[i], ">") || ft_strcmp(tmp->argv[i], ">>"))
 		{
-			if (tmp->fd != 0)
-				close(tmp->fd);
-			tmp->fd = open_single(tmp->argv[i + 1]);
+			if (tmp->out != 1)
+				close(tmp->out);
+			tmp->out = open_file(tmp->argv[i + 1], ft_strcmp(tmp->argv[i], ">"));
+			if (tmp->out < 0)
+				return (err_int("file open fail", 1));
 		}
-		else if (ft_strcmp(tmp->argv[i], ">>") == 1)
-		{
-			if (tmp->fd != 0)
-				close(tmp->fd);
-			tmp->fd = open_double(tmp->argv[i + 1]);
-
-		}
-		else if (ft_strcmp(tmp->argv[i], "<<") == 1)
+		else if (ft_strcmp(tmp->argv[i], "<<"))
 		{
 			if (!tmp->argv[i + 1] || !tmp->argv[i + 1][0])
-				return ;
-			printf("test\n");
+				return (err_int("invalid file", 1));
 			rdbracket(tmp->argv[i + 1]);
 		}
 		i++;
 	}
+	return (0);
 }
 
-void	check_btin_func(t_token *tmp, t_info *info)
+int		check_btin_func(t_token *tmp, t_info *info)
 {
 	char *cmd;
-	t_node *home;
 	int i;
 	i = 0;
 
-	// signal(SIGINT, child_sig);
-	// signal(SIGQUIT, child_sig);
-	check_bracket(tmp);
+	if (check_bracket(tmp))
+		return (1);
 	cmd = tmp->argv[0];
-	if (ft_strcmp("echo", cmd)== 1)
-	{
+	if (ft_strcmp("echo", cmd))
 		m_echo(tmp);
-	}
-	else if (ft_strcmp("exit", cmd) == 1){
+	else if (ft_strcmp("exit", cmd))
 		m_exit();
-	}
-	else if (ft_strcmp("pwd", cmd) == 1){
-		m_pwd(tmp->fd);
-	}
-	else if (ft_strcmp("cd", cmd) == 1){
-		if (!tmp->argv[1])
-		{
-			home = find_node("HOME", info->shell->env);
-			if (!home){
-				printf("cd: HOME not set");
-				return ;
-			}
-			else
-				m_cd(home->value);
-		}
-		else
-			m_cd(tmp->argv[1]);
-	}
-	else if (ft_strcmp("export", cmd) == 1){
-		m_export(tmp->argv, info->shell->env, tmp->fd);
-	}
-	else if (ft_strcmp("env", cmd) == 1){
-		m_env(info->shell->env, tmp->fd);
-	}
-	else if (ft_strcmp("unset", cmd) == 1){
-		while (tmp->argv[++i])
-		{
-			m_unset(tmp->argv[i], info->shell->env);
-		}
-	}
-	else
-	{
-		printf("%s is not command\n", tmp->argv[0]);
-		return ;
-		//exit(0);
-	}
-	return ;
-	//exit(0);
+	else if (ft_strcmp("pwd", cmd))
+		m_pwd(tmp->out);
+	else if (ft_strcmp("cd", cmd))
+		m_cd(tmp->argv[1], info);
+	else if (ft_strcmp("export", cmd) == 1)
+		m_export(tmp->argv, info->shell->env, tmp->out);
+	else if (ft_strcmp("env", cmd) == 1)
+		m_env(info->shell->env, tmp->out);
+	else if (ft_strcmp("unset", cmd) == 1)
+		m_unset(tmp->argv, info->shell->env);
+	return (0);
 }
 
 char	*get_keyvalue(t_node *t)
@@ -173,28 +130,24 @@ char	**get_char_env(t_env *env)
 
 void	check_func(t_token *tmp, t_info *info)
 {
-	pid_t pid;
-	char **path;
-	t_node *p_node;
+	pid_t	pid;
+	char	**path;
 	int		i;
 	char	*s;
 
-	i = 0;
-	p_node = find_node("PATH", info->shell->env);
-	path = ft_split(p_node->value, ':');
+	i = -1;
+	path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 	pid = fork();
 	if (pid == 0)
 	{
 		signal(SIGINT, child_sig);
 		signal(SIGQUIT, child_sig);
+		while(path[++i])
 		{
 			s = ft_strjoin(path[i], "/");
 			s = ft_strjoin(s, tmp->argv[0]);
-			// printf("here\n");
-			if (execve(s, tmp->argv, NULL))
-			//if (execve(s, tmp->argv, get_char_env(info->shell->env)))
-				;
-			i++;
+			if (execve(s, tmp->argv, get_char_env(info->shell->env)) == -1)
+				exit(1);
 		}
 		printf("%s is not command\n", tmp->argv[0]);
 		exit(0);

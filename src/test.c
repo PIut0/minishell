@@ -6,29 +6,14 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 14:50:58 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 16:59:10 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-char **g_env;
-
-//void	processing(t_info *info)
-//{
-//	if (is_builtin(info->cmd))
-//		builtin(info);
-//	else if (is_path(info->cmd))
-//		path(info);
-//	else if (is_env(info->cmd))
-//		env(info);
-//	else if (is_execve(info))
-//		run_execve(info);
-//	else
-//		err();
-//	return ;
-//}
+char	**g_env;
 
 void	print_env(t_env *env, int fd)
 {
@@ -58,13 +43,12 @@ int		shell_start(t_shell *shell)
 		if (!(info = init_info(shell)))
 			continue ;
 		ft_putstr_fd("minishell > ", 1);
-		//get_next_line(0, &line);
 		line = get_line(shell);
+		add_history(shell, line);
 		if (parsing(line, info))
 			continue ;
 		if (process_info(info))
 			continue ;
-		add_history(shell, line);
 		free_info(info);
 	}
 }

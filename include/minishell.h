@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 21:17:21 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 16:38:44 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ typedef	struct		s_token
 	char			*data;
 	char			**argv;
 	t_token_type	token_type;
-	int				fd;
+	int				in;
+	int				out;
 	struct	s_token	*next;
 }					t_token;
 
@@ -152,12 +153,30 @@ t_history	*init_history();
 t_his		*init_his(char *data);
 void		add_history(t_shell *shell, char *line);
 
-void	check_bracket(t_token *tmp);
-void	check_btin_func(t_token *tmp, t_info *info);
+int		check_bracket(t_token *tmp);
+int		check_btin_func(t_token *tmp, t_info *info);
 void	check_func(t_token *tmp, t_info *info);
 
 void	print_env(t_env *env, int fd);
 void	print_env2(t_env *env);
 
+
+void	m_pwd(int fd);
+int		m_cd(char *s, t_info *info);
+void	m_exit(void);
+void	m_echo(t_token *tmp);
+void	m_env(t_env *env, int fd);
+void	m_unset(char **argv, t_env *env);
+void	m_export(char **argv, t_env *env, int fd);
+
+int		check_flag(char *argv);
+int		max(int a, int b);
+
+void	print_export(t_env *env, int fd);
+
+//greater_sign
+void	double_g_s(char *str);
+
+//check_btin_func
 
 #endif

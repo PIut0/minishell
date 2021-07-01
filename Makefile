@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/30 20:00:54 by klim             ###   ########.fr        #
+#    Updated: 2021/07/01 16:15:25 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,9 @@ SRCS_LIST	=	test.c \
 				util/env_util1.c \
 				argv.c \
 				info.c \
-				../builtin/builtin.c \
-				../builtin/builtin_utils.c \
-				../builtin/check_func.c \
+				builtin/builtin.c \
+				builtin/builtin_utils.c \
+				builtin/check_func.c \
 
 
 

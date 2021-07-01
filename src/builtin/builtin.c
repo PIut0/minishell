@@ -6,16 +6,11 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/06/30 21:27:23 by klim             ###   ########.fr       */
-=======
-/*   Updated: 2021/07/01 15:12:55 by sehyan           ###   ########.fr       */
->>>>>>> sehyan2
+/*   Updated: 2021/07/01 16:48:18 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "builtin.h"
+#include "minishell.h"
 
 void	m_pwd(int fd)
 {
@@ -23,7 +18,6 @@ void	m_pwd(int fd)
 	pid_t	pid_pwd;
 	int		status;
 
-	// pid_pwd = fork();
 	if ((pid_pwd = fork()) < 0)
 		exit(1);
 	else if (pid_pwd == 0)
@@ -39,26 +33,21 @@ void	m_pwd(int fd)
 			err_ptr("error\n", 0);
 }
 
-void	m_cd(char *s)
+int		m_cd(char *s, t_info *info)
 {
 	int result;
-	pid_t pid_cd;
-	int status;
 
-	// pid_pwd = fork();
-	if ((pid_cd = fork()) < 0)
-		err_ptr("error", 0);
-	else if (pid_cd == 0)
+	if (!s)
 	{
-		result = chdir(s);
-		if (result == 0)
-			;
-		else
-			err_int("fail", 0);
-		exit(0);
+		if (!find_node("HOME", info->shell->env))
+			return (err_int("cd: HOME not set", 1));
+		s = find_node("HOME", info->shell->env)->value;
 	}
-	else if (waitpid(pid_cd, &status, 0) < 0)
-		err_ptr("wait_error\n", 0);
+	result = chdir(s);
+	if (result == 0)
+		return (0);
+	else
+		return err_int("fail", 1);
 }
 
 void	m_exit(void)
@@ -78,69 +67,53 @@ int		is_bracket(char *argv)
 	return (0);
 }
 
+void	do_echo(int i, int check, t_token *tmp, int flag)
+{
+	while (tmp->argv[++i])
+	{
+		if (is_bracket(tmp->argv[i]))
+		{
+			if (!tmp->argv[++i])
+				break;
+			continue ;
+		}
+		if (!check && check_flag(tmp->argv[i]))
+			flag = 1;
+		else
+			check = 1;
+		if (check && tmp->argv[i])
+		{
+			ft_putstr_fd(backup_nega_char(tmp->argv[i]), tmp->out);
+			if (tmp->argv[i + 1])
+				write(tmp->out, " ", 1);
+		}
+	}
+	if (flag == 0)
+		write(tmp->out, "\n", 1);
+	exit(0);
+}
+
 void	m_echo(t_token *tmp)
 {
-	int i;
-	int j;
-	int check;
-	int flag;
 	pid_t	pid_pwd;
 	int		status;
 
-	// pid_pwd = fork();
 	if ((pid_pwd = fork()) < 0)
 		err_ptr("fork error\n", 0);
-	else if (pid_pwd == 0)
+	else if (!pid_pwd)
 	{
-		i = 0;
-		j = 0;
-		check = 0;
-		flag = 0;
-		if (tmp->fd == 0)
-			tmp->fd = 1;
+		if (tmp->out == 0)
+			tmp->out = 1;
 		if (!tmp->argv[1])
 		{
-			write(1, "\n", 1);
+			write(tmp->out, "\n", 1);
 			exit(1);
 		}
-		while (tmp->argv[++i])
-		{
-<<<<<<< HEAD
-			ft_putstr_fd(backup_nega_char(tmp->argv[i]), tmp->fd);
-			if (tmp->argv[i + 1])
-				write(tmp->fd, " ", 1);
-=======
-			if (is_bracket(tmp->argv[i]))
-			{
-				if (tmp->argv[++i])
-					++i;
-				if (!tmp->argv[i])
-					break;
-			}
-			if (!check && check_flag(tmp->argv[i]))
-				flag = 1;
-			else
-				check = 1;
-			if (check && tmp->argv[i])
-			{
-				ft_putstr_fd(backup_nega_char(tmp->argv[i]), tmp->fd);
-				if (tmp->argv[i + 1])
-					write(tmp->fd, " ", 1);
-			}
->>>>>>> sehyan2
-		}
-		if (flag == 0)
-			write(tmp->fd, "\n", 1);
-		exit(0);
+		do_echo(0, 0, tmp, 0);
 	}
-<<<<<<< HEAD
-	if (flag == 0)
-		write(tmp->fd, "\n", 1);
-=======
 	else
 		if (waitpid(pid_pwd, &status, 0) < 0)
 			err_ptr("wait error\n", 0);
->>>>>>> sehyan2
 }
 
 void	m_env(t_env *env, int fd)
@@ -148,7 +121,6 @@ void	m_env(t_env *env, int fd)
 	pid_t	pid_pwd;
 	int		status;
 
-	// pid_pwd = fork();
 	if ((pid_pwd = fork()) < 0)
 		exit(1);
 	else if (pid_pwd == 0)
@@ -161,17 +133,27 @@ void	m_env(t_env *env, int fd)
 			err_ptr("error\n", 0);
 }
 
-void	m_unset(char *key, t_env *env)
+void	m_unset(char **argv, t_env *env)
 {
-	t_node *n;
 
-	if (!key)
-		return;
-	n = find_node(key, env);
-	if (!n)
-		return;
-	rm_env(n);
-	exit(0);
+	int		i;
+	t_node	*n;
+	char	*key;
+
+	i = 0;
+	if (!argv[1])
+		return ;
+	while (argv[++i])
+	{
+		key = argv[i];
+		if (!key[0])
+			continue ;
+		n = find_node(key, env);
+		if (!n)
+			continue ;
+		rm_env(n);
+	}
+	return ;
 }
 
 void	m_export(char **argv, t_env *env, int fd)
@@ -180,11 +162,7 @@ void	m_export(char **argv, t_env *env, int fd)
 	// t_node *tmp;
 
 	i = 0;
-<<<<<<< HEAD
-	printf("test3: %p\n",env->tail);
-=======
 	// printf("test3: %p\n",env->tail);
->>>>>>> sehyan2
 	if (!argv[1])
 		print_export(env, fd);
 	while (argv[++i])
