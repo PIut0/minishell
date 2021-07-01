@@ -6,14 +6,12 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 16:59:10 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 18:51:59 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-
-char	**g_env;
 
 void	print_env(t_env *env, int fd)
 {
@@ -71,7 +69,6 @@ int		main(int argc, char **argv, char **env)
 	signal(SIGQUIT, sig_sigquit);
 	t_shell	*shell;
 	argc = -1;
-	g_env = env;
 	(void) argv;
 	if (!(shell = init_shell(env)))
 		return (1);

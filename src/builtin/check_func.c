@@ -128,6 +128,17 @@ char	**get_char_env(t_env *env)
 	return (ret);
 }
 
+int		is_dir(char *argv)
+{
+	int		i;
+
+	i = -1;
+	while (argv[++i])
+		if(argv[i] == '/')
+			return (1);
+	return (0);
+}
+
 void	check_func(t_token *tmp, t_info *info)
 {
 	pid_t	pid;
@@ -140,15 +151,13 @@ void	check_func(t_token *tmp, t_info *info)
 	path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 	if (pid == 0)
 	{
-		signal(SIGINT, child_sig);
-		signal(SIGQUIT, child_sig);
-		while(path[++i])
+		while(path[++i] && !is_dir(tmp->argv[0]))
 		{
 			s = ft_strjoin(path[i], "/");
 			s = ft_strjoin(s, tmp->argv[0]);
-			execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
 			execve(s, tmp->argv, get_char_env(info->shell->env));
 		}
+		execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
 		printf("%s is not command\n", tmp->argv[0]);
 		exit(0);
 	}
