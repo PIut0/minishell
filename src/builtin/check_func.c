@@ -27,45 +27,45 @@ int		open_file(char *s, int flag)
 	return (fd);
 }
 
-void	rdbracket(char *escape)
-{
-	char	*line;
+//void	rdbracket(char *escape)
+//{
+//	char	*line;
 
-	ft_putstr_fd("> ",STDOUT_FILENO);
-	while (get_next_line(STDIN_FILENO, &line))
-	{
-		if (ft_strcmp(escape, line))
-			break ;
-		ft_putstr_fd("> ",STDOUT_FILENO);
-	}
-	return ;
-}
+//	ft_putstr_fd("> ",STDOUT_FILENO);
+//	while (get_next_line(STDIN_FILENO, &line))
+//	{
+//		if (ft_strcmp(escape, line))
+//			break ;
+//		ft_putstr_fd("> ",STDOUT_FILENO);
+//	}
+//	return ;
+//}
 
-int		check_bracket(t_token *tmp)
-{
-	int i;
+//int		check_bracket(t_token *tmp)
+//{
+//	int i;
 
-	i = 0;
-	while (tmp->argv[i])
-	{
-		if (ft_strcmp(tmp->argv[i], ">") || ft_strcmp(tmp->argv[i], ">>"))
-		{
-			if (tmp->out != 1)
-				close(tmp->out);
-			tmp->out = open_file(tmp->argv[i + 1], ft_strcmp(tmp->argv[i], ">"));
-			if (tmp->out < 0)
-				return (err_int("file open fail", 1));
-		}
-		else if (ft_strcmp(tmp->argv[i], "<<"))
-		{
-			if (!tmp->argv[i + 1] || !tmp->argv[i + 1][0])
-				return (err_int("invalid file", 1));
-			rdbracket(tmp->argv[i + 1]);
-		}
-		i++;
-	}
-	return (0);
-}
+//	i = 0;
+//	while (tmp->argv[i])
+//	{
+//		if (ft_strcmp(tmp->argv[i], ">") || ft_strcmp(tmp->argv[i], ">>"))
+//		{
+//			if (tmp->out != 1)
+//				close(tmp->out);
+//			tmp->out = open_file(tmp->argv[i + 1], ft_strcmp(tmp->argv[i], ">"));
+//			if (tmp->out < 0)
+//				return (err_int("file open fail", 1));
+//		}
+//		else if (ft_strcmp(tmp->argv[i], "<<"))
+//		{
+//			if (!tmp->argv[i + 1] || !tmp->argv[i + 1][0])
+//				return (err_int("invalid file", 1));
+//			rdbracket(tmp->argv[i + 1]);
+//		}
+//		i++;
+//	}
+//	return (0);
+//}
 
 int		check_btin_func(t_token *tmp, t_info *info)
 {
@@ -73,21 +73,21 @@ int		check_btin_func(t_token *tmp, t_info *info)
 	int i;
 	i = 0;
 
-	if (check_bracket(tmp))
-		return (1);
+	//if (check_bracket(tmp))
+	//	return (1);
 	cmd = tmp->argv[0];
 	if (ft_strcmp("echo", cmd))
 		m_echo(tmp);
 	else if (ft_strcmp("exit", cmd))
 		m_exit(tmp);
 	else if (ft_strcmp("pwd", cmd))
-		m_pwd(tmp->out);
+		m_pwd(STDOUT);
 	else if (ft_strcmp("cd", cmd))
 		m_cd(tmp->argv[1], info);
 	else if (ft_strcmp("export", cmd) == 1)
-		m_export(tmp->argv, info->shell->env, tmp->out);
+		m_export(tmp->argv, info->shell->env, STDOUT);
 	else if (ft_strcmp("env", cmd) == 1)
-		m_env(info->shell->env, tmp->out);
+		m_env(info->shell->env, STDOUT);
 	else if (ft_strcmp("unset", cmd) == 1)
 		m_unset(tmp->argv, info->shell->env);
 	return (0);
@@ -147,11 +147,9 @@ void	check_func(t_token *tmp, t_info *info, int c)
 	char	*s;
 
 	i = -1;
+	c = 0;
 	signal(SIGINT, child_sig);
 	signal(SIGQUIT, child_sig);
-	if (c)
-		pid = 0;
-	//else
 	pid = fork();
 	path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 	if (pid == 0)
@@ -164,9 +162,8 @@ void	check_func(t_token *tmp, t_info *info, int c)
 		}
 		execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
 		printf("bash: command not found: %s\n", tmp->argv[0]);
-		//return ;
 		exit(0);
 	}
 	else
-		wait(&pid);
+		waitpid(pid, NULL, 0);
 }

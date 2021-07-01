@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/02 01:45:30 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 04:26:29 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,5 @@ void	m_export(char **argv, t_env *env, int fd)
 	if (!argv[1])
 		print_export(env, fd);
 	while (argv[++i])
-	{
-		if (is_bracket(argv[i]))
-		{
-			print_export(env, fd);
-			break ;
-		}
 		add_env(argv[i], env);
-	}
 }

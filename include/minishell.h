@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 01:42:16 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 05:27:10 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # define _LEFT 4479771
 # define _RIGHT 4414235
 
-int					g_sig;
 char				**g_env;
 typedef struct		termios		t_term;
 typedef enum		e_token_type
@@ -52,6 +51,13 @@ typedef enum		e_token_type
 	_rd_brackets,
 	_semicolon
 }					t_token_type;
+
+typedef struct	s_sig
+{
+	int			in;
+	int			out;
+	int			sig;
+}				t_sig;
 
 typedef struct	s_node
 {
@@ -185,6 +191,8 @@ void	print_export(t_env *env, int fd);
 //greater_sign
 void	double_g_s(char *str);
 
+
+extern	t_sig g_sig;
 //check_btin_func
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 01:54:13 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 05:29:32 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int		shell_start(t_shell *shell)
 	char	*line;
 	t_info	*info;
 
-	signal(SIGINT, sig_sigint);
-	signal(SIGQUIT, sig_sigquit);
 	while (1)
 	{
+		signal(SIGINT, sig_sigint);
+		signal(SIGQUIT, sig_sigquit);
 		if (!(info = init_info(shell)))
 			continue ;
 		ft_putstr_fd("minishell > ", 1);
@@ -72,6 +72,9 @@ int		main(int argc, char **argv, char **env)
 	t_shell	*shell;
 	argc = -1;
 	(void) argv;
+	g_sig.in = dup(STDIN);
+	g_sig.out = dup(STDOUT);
+	g_sig.sig = 0;
 	if (!(shell = init_shell(env)))
 		return (1);
 	// print_env(shell->env);

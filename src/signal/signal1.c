@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 20:04:00 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 01:56:41 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 05:27:59 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		sig_sigint(int sig)
 {
-	g_sig = sig;
-	ft_putstr_fd("\nminishell2 > ", STDOUT);
+	g_sig.sig = sig;
+	ft_putstr_fd("\nminishell > ", STDOUT);
 	//printf("\nminishell > ");
 	//printf("");
 	return ;
@@ -23,6 +23,8 @@ void		sig_sigint(int sig)
 
 void		child_sig(int sig)
 {
+	dup2(g_sig.in, STDIN);
+	dup2(g_sig.out, STDOUT);
 	if (sig == SIGINT)
 		ft_putstr_fd("\n",STDOUT);
 	else

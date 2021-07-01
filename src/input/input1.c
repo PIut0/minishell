@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 02:02:58 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 05:28:51 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*reset_ret(char *ret, int *idx)
 	*idx = 0;
 	free(ret);
 	ret = ft_strdup("");
-	g_sig = 0;
+	g_sig.sig = 0;
 	return (ret);
 }
 
@@ -86,10 +86,10 @@ char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 {
 	while (read(0, &ch, sizeof(int)) > 0)
 	{
-		if (g_sig == SIGINT)
+		if (g_sig.sig == SIGINT)
 			ret = reset_ret(ret, &idx);
 		if (ch == 4 && !idx)
-			return (0);
+			return (err_ptr("exit", 0));
 		else if ((ch == 4 && idx) || ch == _LEFT || ch == _RIGHT)
 			continue ;
 		else if (ch == _UP || ch == _DOWN)
