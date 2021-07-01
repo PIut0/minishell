@@ -136,8 +136,8 @@ void	check_func(t_token *tmp, t_info *info)
 	char	*s;
 
 	i = -1;
-	path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 	pid = fork();
+	path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 	if (pid == 0)
 	{
 		signal(SIGINT, child_sig);
@@ -146,8 +146,8 @@ void	check_func(t_token *tmp, t_info *info)
 		{
 			s = ft_strjoin(path[i], "/");
 			s = ft_strjoin(s, tmp->argv[0]);
-			if (execve(s, tmp->argv, get_char_env(info->shell->env)) == -1)
-				exit(1);
+			execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
+			execve(s, tmp->argv, get_char_env(info->shell->env));
 		}
 		printf("%s is not command\n", tmp->argv[0]);
 		exit(0);
