@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 01:17:00 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 01:54:13 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int		shell_start(t_shell *shell)
 	char	*line;
 	t_info	*info;
 
+	signal(SIGINT, sig_sigint);
+	signal(SIGQUIT, sig_sigquit);
 	while (1)
 	{
 		if (!(info = init_info(shell)))
@@ -67,8 +69,6 @@ t_shell		*init_shell(char **env_i)
 
 int		main(int argc, char **argv, char **env)
 {
-	signal(SIGINT, sig_sigint);
-	signal(SIGQUIT, sig_sigquit);
 	t_shell	*shell;
 	argc = -1;
 	(void) argv;

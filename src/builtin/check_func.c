@@ -147,6 +147,8 @@ void	check_func(t_token *tmp, t_info *info, int c)
 	char	*s;
 
 	i = -1;
+	signal(SIGINT, child_sig);
+	signal(SIGQUIT, child_sig);
 	if (c)
 		pid = 0;
 	//else

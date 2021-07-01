@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 01:15:02 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 02:00:39 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int		process_info(t_info *info)
 		wait(&pid);
 	if (exit_check)
 	{
-		printf("test\n");
 		exit(0);
 	}
 	dup2(info->shell->_stdout, STDOUT);
