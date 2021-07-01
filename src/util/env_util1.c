@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 21:21:29 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 06:05:26 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ t_node	*init_node(char *s)
 		n->value[++j] = 0;
 	}
 	else
+	{
+		free(n->value);
 		n->value = 0;
+	}
 	n->next = 0;
 	n->prev = 0;
 	return (n);
@@ -151,8 +154,10 @@ void	rm_env(t_node *node)
 {
 	node->next->prev = node->prev;
 	node->prev->next = node->next;
-	free(node->key);
-	free(node->value);
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
 	free(node);
 }
 
@@ -160,6 +165,7 @@ t_env	*init_env(char **arg_env)
 {
 	t_env	*env;
 	int		i;
+
 	i = -1;
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return ((t_env *)err_ptr("malloc error", 0));

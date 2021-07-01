@@ -151,9 +151,9 @@ void	check_func(t_token *tmp, t_info *info, int c)
 	signal(SIGINT, child_sig);
 	signal(SIGQUIT, child_sig);
 	pid = fork();
-	path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 	if (pid == 0)
 	{
+		path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 		while(path[++i] && !is_dir(tmp->argv[0]))
 		{
 			s = ft_strjoin(path[i], "/");
