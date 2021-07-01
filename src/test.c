@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:07:42 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/30 21:17:45 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,13 @@ int		shell_start(t_shell *shell)
 		if (!(info = init_info(shell)))
 			continue ;
 		ft_putstr_fd("minishell > ", 1);
-		get_next_line(0, &line);
+		//get_next_line(0, &line);
+		line = get_line(shell);
 		if (parsing(line, info))
 			continue ;
 		if (process_info(info))
 			continue ;
+		add_history(shell, line);
 		free_info(info);
 	}
 }
@@ -74,11 +76,15 @@ t_shell		*init_shell(char **env_i)
 	if (!(ret = (t_shell*)malloc(sizeof(t_shell))))
 		return (0);
 	ret->env = init_env(env_i);
+	ret->history = init_history();
 	return (ret);
 }
 
 int		main(int argc, char **argv, char **env)
 {
+
+	signal(SIGINT, sig_sigint);
+	signal(SIGQUIT, sig_sigquit);
 	t_shell	*shell;
 	argc = -1;
 	g_env = env;

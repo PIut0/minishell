@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:07:18 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/06/30 21:17:21 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,27 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-#include <dirent.h>
-#include <limits.h>
-#include <fcntl.h>
+# include <dirent.h>
+# include <limits.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <termios.h>
+# include <signal.h>
 # include "libft.h"
 // #include "../builtin/builtin.h"
-
 # define WHITE_SPACE " \t\n\v\f\b"
 # define BACK_SLASH -1
 # define ENV_D_QUOTE -2
+# define NEGATIVE_CHAR "><~"
 
+# define _UP 4283163
+# define _DOWN 4348699
+# define _LEFT 4479771
+# define _RIGHT 4414235
+
+int					g_sig;
+char				**g_env;
+typedef struct		termios		t_term;
 typedef enum		e_token_type
 {
 	_null,
@@ -52,9 +63,23 @@ typedef struct	s_env
 	t_node		*tail;
 }				t_env;
 
+typedef struct	s_his
+{
+	char			*data;
+	struct s_his	*next;
+	struct s_his	*prev;
+}				t_his;
+
+typedef struct	s_history
+{
+	t_his		*head;
+	t_his		*tail;
+	t_his		*cur;
+}				t_history;
 typedef	struct		s_shell
 {
 	t_env			*env;
+	t_history		*history;
 }					t_shell;
 
 typedef	struct		s_token
@@ -75,8 +100,8 @@ typedef	struct		s_info
 
 int				get_next_line(int fd, char **line);
 int				parsing(char *line, t_info *info);
-int				replace_bs(char *line, int len);
-int				backup_bs(char *line, int len);
+char			*replace_bs(char *line, int len);
+char			*backup_bs(char *line, int len);
 int				parse_token(char *line, t_info *info, t_token *head, int len);
 int				join_brackets(t_token *head);
 char			*get_brackets(t_token_type t);
@@ -94,6 +119,7 @@ char	*replace_env(char *argv, t_info *info);
 char	*remove_quote(char *str);
 char	*change_dq_edq(char *str, int key);
 char	*remove_bs(char *str);
+char		*backup_nega_char(char *data);
 
 int		process_info(t_info *info);
 
@@ -113,20 +139,25 @@ char	**splice_str(char *str, char *charset);
 char		*ft_sp_merge(char **sp);
 int		ft_strcmp(char *s1, char *s2);
 
+char	*get_line(t_shell *shell);
+void		sig_sigint(int sig);
+void		sig_sigquit(int sig);
+void		child_sig(int sig);
+
 
 void	free_info(t_info *info);
 t_info	*init_info(t_shell *shell);
 
+t_history	*init_history();
+t_his		*init_his(char *data);
+void		add_history(t_shell *shell, char *line);
 
+void	check_bracket(t_token *tmp);
 void	check_btin_func(t_token *tmp, t_info *info);
 void	check_func(t_token *tmp, t_info *info);
 
 void	print_env(t_env *env, int fd);
-// t_node	*init_node(char *s);
-// t_node	*find_node(char *key, t_env *env);
-// int		check_key_val(t_node *node);
-// int		add_env(char *s, t_env *env);
-// void	rm_env(t_node *node);
-// t_env	*init_env(char **arg_env);
+void	print_env2(t_env *env);
+
 
 #endif

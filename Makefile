@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ash <ash@student.42.fr>                    +#+  +:+       +#+         #
+#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/29 15:14:33 by ash              ###   ########.fr        #
+#    Updated: 2021/06/30 20:00:54 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,16 @@ SRCS_DIR	=	./src/
 SRCS_LIST	=	test.c \
 				gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
+				history/history1.c \
 				libft_ref/ref1.c \
+				input/input1.c \
+				parsing/backup1.c \
 				parsing/parsing1.c \
 				parsing/parsing2.c \
 				parsing/parsing3.c \
 				parsing/parsing4.c \
 				process/process1.c \
+				signal/signal1.c \
 				util/util1.c \
 				util/parse_util1.c \
 				util/err_util1.c \
@@ -33,7 +37,7 @@ SRCS_LIST	=	test.c \
 				../builtin/builtin.c \
 				../builtin/builtin_utils.c \
 				../builtin/check_func.c \
-				
+
 
 
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
