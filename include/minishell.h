@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/01 16:38:44 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 20:39:23 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void	print_env2(t_env *env);
 
 void	m_pwd(int fd);
 int		m_cd(char *s, t_info *info);
-void	m_exit(void);
+void	m_exit(t_token *tmp);
 void	m_echo(t_token *tmp);
 void	m_env(t_env *env, int fd);
 void	m_unset(char **argv, t_env *env);

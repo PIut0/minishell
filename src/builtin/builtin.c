@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/01 16:48:18 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 20:45:34 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ int		m_cd(char *s, t_info *info)
 		return err_int("fail", 1);
 }
 
-void	m_exit(void)
+void	m_exit(t_token *tmp)
 {
-	printf("bye!\n");
-	kill(getppid(), SIGTERM);
-	exit(0);
+	printf("exit\n");
+	if (!tmp->argv[1])
+		exit(0);
+	if (ft_atoi(tmp->argv[1]) > 255)
+		exit(255);
+	exit(ft_atoi(tmp->argv[1]));
 }
 
 int		is_bracket(char *argv)

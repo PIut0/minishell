@@ -79,7 +79,7 @@ int		check_btin_func(t_token *tmp, t_info *info)
 	if (ft_strcmp("echo", cmd))
 		m_echo(tmp);
 	else if (ft_strcmp("exit", cmd))
-		m_exit();
+		m_exit(tmp);
 	else if (ft_strcmp("pwd", cmd))
 		m_pwd(tmp->out);
 	else if (ft_strcmp("cd", cmd))
