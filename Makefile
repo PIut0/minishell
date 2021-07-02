@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
+#    By: ash <ash@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/02 18:16:17 by sehyan           ###   ########.fr        #
+#    Updated: 2021/07/03 02:57:10 by ash              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS_LIST	=	test.c \
 				argv.c \
 				info.c \
 				builtin/builtin.c \
+				builtin/builtin2.c \
 				builtin/builtin_utils.c \
 				builtin/check_func.c \
 				builtin/sort_str.c \

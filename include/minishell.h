@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 18:15:48 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/03 00:57:17 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,8 @@ char			**sort_str(char **env_s);
 char			**sort_key(char **env_s, int n);
 
 void			print_env(t_env *env, int fd);
-void			print_env2(t_env *env);
+void			do_echo(int i, int check, t_token *tmp, int flag);
+int				is_bracket(char *argv);
 void			m_pwd(int fd);
 int				m_cd(char *s, t_info *info);
 void			m_exit(t_token *tmp);

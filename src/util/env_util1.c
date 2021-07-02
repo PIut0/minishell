@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 17:23:03 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/03 00:57:09 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,18 +113,6 @@ int		plus_env(t_node *n, t_env *env)
 		}
 	}
 	return (0);
-}
-
-void	print_env2(t_env *env)
-{
-	t_node *t;
-
-	t = env->head->next;
-	while (t != env->tail)
-	{
-		printf("%s=%s\n",t->key,t->value);
-		t = t->next;
-	}
 }
 
 int		add_env(char *s, t_env *env)
