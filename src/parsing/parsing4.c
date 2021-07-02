@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:28:20 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 21:26:44 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*parse_data(char *argv, t_info *info)
 	argv = remove_quote(argv);
 	argv = change_dq_edq(argv, 1);
 	argv = remove_bs(argv);
+	argv = backup_nega_char(argv);
 	return (argv);
 }
 
