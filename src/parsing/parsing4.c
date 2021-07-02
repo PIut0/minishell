@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 21:26:44 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 21:51:13 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int		get_env_len(char *argv, int i)
 	return (idx - i - 1);
 }
 
-char	*replace_home(char *argv)
+char	*replace_home(char *argv, t_info *info)
 {
 	char	*ret;
 
-	ret = ft_strdup("$HOME");
+	ret = ft_strdup(info->shell->home);
 	ret = ft_strjoin(ret, argv + 1);
 	free(argv);
 	return (ret);
@@ -65,7 +65,7 @@ char	*replace_home(char *argv)
 char	*parse_data(char *argv, t_info *info)
 {
 	if (!ft_strncmp(argv, "~", 2) || !ft_strncmp(argv, "~/", 2))
-		argv = replace_home(argv);
+		argv = replace_home(argv, info);
 	argv = replace_env(argv, info);
 	argv = change_nega_char(argv);
 	argv = remove_quote(argv);

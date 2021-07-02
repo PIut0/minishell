@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 21:00:55 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 21:48:42 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_shell		*init_shell(char **env_i)
 		return (0);
 	ret->env = init_env(env_i);
 	ret->history = init_history();
+	ret->home = ft_strdup(find_node("HOME", ret->env)->value);
 	ret->std_in = dup(STDIN_FILENO);
 	ret->std_out = dup(STDOUT_FILENO);
 	return (ret);

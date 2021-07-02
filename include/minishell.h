@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 21:00:07 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 21:50:08 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef	struct			s_shell
 {
 	t_env				*env;
 	t_history			*history;
+	char				*home;
 	int					std_in;
 	int					std_out;
 }						t_shell;
@@ -213,7 +214,7 @@ int						parse_token(char *line,
 char					*change_key_to_value(char *argv, int *i,
 						int env_len, t_info *info);
 int						get_env_len(char *argv, int i);
-char					*replace_home(char *argv);
+char					*replace_home(char *argv, t_info *info);
 char					*parse_data(char *argv, t_info *info);
 int						parse_argv(t_info *info, t_token *head);
 
