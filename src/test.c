@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:11:58 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 10:57:31 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_env(t_env *env, int fd)
 	tmp = env->head->next;
 	while (tmp != env->tail)
 	{
-		if (tmp->value[0] != 0)
+		if (tmp->value)
 		{
 			write(fd, tmp->key, ft_strlen(tmp->key));
 			write(fd, "=", 1);

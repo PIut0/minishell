@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:34:58 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 12:57:29 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_node	*init_node(char *s)
 	i = -1;
 	while ((s[++i] != '=') && s[i])
 		n->key[i] = s[i];
-	if (s[i] == '=')
+	if (s[i] == '=' && n->key)
 	{
 		j = -1;
 		while (s[++i])
@@ -36,6 +36,7 @@ t_node	*init_node(char *s)
 	{
 		free(n->value);
 		n->value = 0;
+
 	}
 	n->next = 0;
 	n->prev = 0;
@@ -156,9 +157,12 @@ void	rm_env(t_node *node)
 	node->prev->next = node->next;
 	if (node->key)
 		free(node->key);
+	node->key = 0;
 	if (node->value)
 		free(node->value);
+	node->value = 0;
 	free(node);
+	node = 0;
 }
 
 t_env	*init_env(char **arg_env)

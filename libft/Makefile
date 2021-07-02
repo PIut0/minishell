@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/07/02 10:41:22 by sehyan            #+#    #+#              #
+#    Updated: 2021/07/02 10:42:10 by sehyan           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC			= gcc
 CFLAGS		= -Wextra -Wall -Werror -c
 
@@ -53,19 +65,19 @@ OBJ_B		= $(SRC_B:.c=.o)
 all			: $(NAME)
 
 %.o			: %.c
-	$(CC) $(CFLAGS) $< -o $@
+	@$(CC) $(CFLAGS) $< -o $@
 
 bonus		: $(OBJ_B)
-	ar -csr $(NAME) $(OBJ_B)
+	@ar -csr $(NAME) $(OBJ_B)
 
 $(NAME)		: $(OBJECTS)
-	ar -csr $@ $(OBJECTS)
+	@ar -csr $@ $(OBJECTS)
 
 clean		:
-	rm -rf $(OBJECTS) $(OBJ_B)
+	@rm -rf $(OBJECTS) $(OBJ_B)
 
 fclean		: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re			: fclean all
 

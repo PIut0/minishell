@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/02 04:26:29 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 12:55:11 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	m_export(char **argv, t_env *env, int fd)
 	// t_node *tmp;
 
 	i = 0;
-	// printf("test3: %p\n",env->tail);
 	if (!argv[1])
 		print_export(env, fd);
 	while (argv[++i])
