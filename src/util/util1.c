@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:44 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:26:43 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:42:03 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			is_quote(char *line, int n)
 	return (quote);
 }
 
-char	*get_pid(void)
+char		*get_pid(void)
 {
 	pid_t	pid;
 
@@ -57,7 +57,7 @@ char	*get_pid(void)
 	return (ft_itoa((int)pid));
 }
 
-char	*get_errno(void)
+char		*get_errno(void)
 {
 	return (ft_itoa((int)errno));
 }
