@@ -6,7 +6,7 @@
 /*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/03 00:54:30 by ash              ###   ########.fr       */
+/*   Updated: 2021/07/03 04:11:36 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ int		m_cd(char *s, t_info *info)
 	if (!s)
 	{
 		if (!find_node("HOME", info->shell->env))
-			return (err_int("cd: HOME not set", 1));
+			return (err_int("minishell : cd: HOME not set", 1));
 		s = find_node("HOME", info->shell->env)->value;
 	}
-	printf("=====%s\n", info->shell->home);
 	result = chdir(s);
 	if (result == 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 00:57:09 by ash              ###   ########.fr       */
+/*   Updated: 2021/07/03 03:53:16 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,34 @@ void	add_env_back(t_node *tmp, char *s)
 	int j;
 
 	i = 0;
-	j = ft_strlen(tmp->value);
-	while (s[i])
+	if (tmp->value)
 	{
-		tmp->value[j] = s[i];
-		i++;
-		j++;
+		j = ft_strlen(tmp->value);
+		while (s[i])
+		{
+			tmp->value[j] = s[i];
+			i++;
+			j++;
+		}
+		tmp->value[j] = 0;
 	}
-	tmp->value[j] = 0;
+	else
+		tmp->value = ft_strdup(s);
 }
 
 int		plus_env(t_node *n, t_env *env)
 {
 	t_node	*tmp;
+	int		i;
 
-	n->key[ft_strlen(n->key) - 1] = 0;
-	if ((tmp = find_node(n->key, env)))
+	i = 0;
+	while (n->key[i])
+	{
+		if (n->key[i] == '+')
+			n->key[i] = 0;
+		i++;
+	}
+	if ((tmp = find_node(n->key, env)) && n->value)
 	{
 		add_env_back(tmp, n->value);
 	}

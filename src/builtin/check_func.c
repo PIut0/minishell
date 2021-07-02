@@ -60,7 +60,8 @@ char	*get_keyvalue(t_node *t)
 	ret = ft_strdup("");
 	ret = ft_strjoin_free(ret, t->key, 1);
 	ret = ft_strjoin_free(ret, "=", 1);
-	ret = ft_strjoin_free(ret, t->value, 1);
+	if (t->value)
+		ret = ft_strjoin_free(ret, t->value, 1);
 	return (ret);
 }
 
@@ -113,6 +114,11 @@ void	check_func(t_token *tmp, t_info *info, int c)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (!find_node("PATH", info->shell->env))
+		{
+			printf("bash: %s: No such file or directory\n", tmp->argv[0]);
+			exit(1);
+		}
 		path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 		while(path[++i] && !is_dir(tmp->argv[0]))
 		{
