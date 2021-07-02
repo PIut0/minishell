@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
+#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/02 15:10:23 by sehyan           ###   ########.fr        #
+#    Updated: 2021/07/02 20:55:56 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,28 +17,29 @@ SHELL		=	BASH
 
 NAME		=	minishell
 SRCS_DIR	=	./src/
-SRCS_LIST	=	test.c \
+SRCS_LIST	=	main.c \
+				builtin/builtin.c \
+				builtin/builtin_utils.c \
+				builtin/check_func.c \
+				env/env1.c \
 				gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
 				history/history1.c \
-				libft_ref/ref1.c \
+				info/info.c \
 				input/input1.c \
+				input/input2.c \
+				libft_ref/ref1.c \
 				parsing/backup1.c \
 				parsing/parsing1.c \
 				parsing/parsing2.c \
 				parsing/parsing3.c \
 				parsing/parsing4.c \
+				parsing/parsing5.c \
 				process/process1.c \
 				signal/signal1.c \
 				util/util1.c \
 				util/parse_util1.c \
 				util/err_util1.c \
-				util/env_util1.c \
-				argv.c \
-				info.c \
-				builtin/builtin.c \
-				builtin/builtin_utils.c \
-				builtin/check_func.c \
 
 
 
@@ -55,7 +56,7 @@ $(NAME)		: $(OBJS)
 	@make all -C libft/
 	@cp libft/libft.a ./libft.a
 	@$(CC) -g -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
-	@./make.sh
+	@./loading.sh
 
 leak		: $(OBJS)
 	make all -C libft/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/02 10:51:00 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/02 21:01:06 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,24 @@ int		max(int a, int b)
 		return (a);
 	else
 		return (b);
+}
+
+void	print_env(t_env *env, int fd)
+{
+	t_node	*tmp;
+
+	tmp = env->head->next;
+	while (tmp != env->tail)
+	{
+		if (tmp->value)
+		{
+			write(fd, tmp->key, ft_strlen(tmp->key));
+			write(fd, "=", 1);
+			write(fd, tmp->value, ft_strlen(tmp->value));
+			write(fd, "\n", 1);
+		}
+		tmp = tmp->next;
+	}
 }
 
 void	print_export(t_env *env, int fd)

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:49:46 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 21:00:07 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef	struct			s_info
 **		builtin
 */
 int						max(int a, int b);
+void					print_env(t_env *env, int fd);
 void					print_export(t_env *env, int fd);
 int						check_flag(char *argv);
 

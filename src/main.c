@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:50:07 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 21:00:55 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void		print_env(t_env *env, int fd)
-{
-	t_node	*tmp;
-
-	tmp = env->head->next;
-	while (tmp != env->tail)
-	{
-		if (tmp->value)
-		{
-			write(fd, tmp->key, ft_strlen(tmp->key));
-			write(fd, "=", 1);
-			write(fd, tmp->value, ft_strlen(tmp->value));
-			write(fd, "\n", 1);
-		}
-		tmp = tmp->next;
-	}
-}
 
 int			shell_start(t_shell *shell)
 {
