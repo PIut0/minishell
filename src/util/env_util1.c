@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 21:21:29 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 17:23:03 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_node	*init_node(char *s)
 	i = -1;
 	while ((s[++i] != '=') && s[i])
 		n->key[i] = s[i];
-	if (s[i] == '=')
+	if (s[i] == '=' && n->key)
 	{
 		j = -1;
 		while (s[++i])
@@ -33,7 +33,11 @@ t_node	*init_node(char *s)
 		n->value[++j] = 0;
 	}
 	else
+	{
+		free(n->value);
 		n->value = 0;
+
+	}
 	n->next = 0;
 	n->prev = 0;
 	return (n);
@@ -128,8 +132,6 @@ int		add_env(char *s, t_env *env)
 	t_node	*n;
 	t_node	*tmp;
 
-	if (!(n = (t_node *)malloc(sizeof(t_node))))
-		return (err_int("malloc error", 1));
 	n = init_node(s);
 	if (n->key[ft_strlen(n->key) - 1] == '+')
 		return (plus_env(n, env));
@@ -141,6 +143,7 @@ int		add_env(char *s, t_env *env)
 	env->tail->prev = n;
 	if (!(check_key_val(n)))
 	{
+		printf("minishell: export: '%s': not a valid identifier\n", s);
 		rm_env(n);
 		return (1);
 	}
@@ -151,15 +154,21 @@ void	rm_env(t_node *node)
 {
 	node->next->prev = node->prev;
 	node->prev->next = node->next;
-	free(node->key);
-	free(node->value);
+	if (node->key)
+		free(node->key);
+	node->key = 0;
+	if (node->value)
+		free(node->value);
+	node->value = 0;
 	free(node);
+	node = 0;
 }
 
 t_env	*init_env(char **arg_env)
 {
 	t_env	*env;
 	int		i;
+
 	i = -1;
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return ((t_env *)err_ptr("malloc error", 0));

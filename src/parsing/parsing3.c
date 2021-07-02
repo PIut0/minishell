@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:50:21 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 15:17:39 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_token		*init_token(char *data)
 	ret->next = 0;
 	ret->token_type = _null;
 	ret->data = data;
+	ret->in = STDIN;
+	ret->out = STDOUT;
 	return (ret);
 }
 
@@ -40,10 +42,8 @@ t_token_type	get_token(char *line, int i)
 		return (_d_brackets);
 	else if (line[i] == '>' && line[i + 1] != '>')
 		return (_brackets);
-	else if (line[i] == '<' && line[i + 1] == '<')
+	else if (line[i] == '<')
 		return (_r_brackets);
-	else if (line[i] == '<' && line[i + 1] != '<')
-		return (_rd_brackets);
 	else if (line[i] == ';')
 		return (_semicolon);
 	return (_null);

@@ -6,23 +6,37 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 17:33:52 by klim              #+#    #+#             */
-/*   Updated: 2021/06/27 15:23:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 06:07:22 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void	free_token(t_token *t)
+{
+	int		i;
+
+	i = -1;
+	while (t->argv[++i])
+		free(t->argv[i]);
+	free(t->argv);
+	free(t->data);
+	free(t);
+}
+
 void	free_info(t_info *info)
 {
 	t_token	*tmp;
+	t_token	*target;
 
-	free(info->cmd);
-	while (info->head)
+	tmp = info->head->next;
+	while (tmp)
 	{
-		tmp = info->head->next;
-		free(info->head);
-		info->head = tmp;
+		target = tmp;
+		tmp = tmp->next;
+		free_token(target);
 	}
+	free(info->cmd);
 	free(info);
 }
 

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 21:03:31 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 05:38:52 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*reset_ret(char *ret, int *idx)
 	*idx = 0;
 	free(ret);
 	ret = ft_strdup("");
-	g_sig = 0;
+	g_signal.sig = 0;
 	return (ret);
 }
 
@@ -86,10 +86,10 @@ char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 {
 	while (read(0, &ch, sizeof(int)) > 0)
 	{
-		if (g_sig == SIGINT)
+		if (g_signal.sig == SIGINT)
 			ret = reset_ret(ret, &idx);
 		if (ch == 4 && !idx)
-			exit(0);
+			return (err_ptr("exit", 0));
 		else if ((ch == 4 && idx) || ch == _LEFT || ch == _RIGHT)
 			continue ;
 		else if (ch == _UP || ch == _DOWN)
@@ -103,7 +103,7 @@ char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 		else if (++idx)
 			write(0, &ch, sizeof(int));
 		if (!(ret = add_char(ret, ch)))
-			return (0);
+			return (err_ptr("malloc err", 0));
 		ch = 0;
 		// left: 4479771 right: 4414235  up: 4283163 down: 4348699
 	}
@@ -121,5 +121,7 @@ char	*get_line(t_shell *shell)
 	ret = ft_strdup("");
 	ret = get_input(0, 0, ret, shell);
 	reset_input_mode(&org_term);
+	if (!ret)
+		exit(0);
 	return (ret);
 }

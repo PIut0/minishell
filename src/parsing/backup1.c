@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 21:03:37 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 13:50:24 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/01 23:38:31 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ char		*backup_nega_char(char *data)
 
 char		*backup_data(char *data, t_info *info)
 {
-	info = 0;
-
+	data = replace_env(data, info);
 	data = backup_bs(data, ft_strlen(data));
 	data = backup_nega_char(data);
 	return (data);

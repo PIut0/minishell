@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/30 16:11:11 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 18:48:52 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "minishell.h"
 
 int		max(int a, int b)
 {
@@ -22,21 +22,31 @@ int		max(int a, int b)
 
 void	print_export(t_env *env, int fd)
 {
-	t_node *now;
+	t_node	*now;
+	char	**env_s;
+	int 	i;
 
-	now = env->head->next;
-	while (now != env->tail)
+	env_s = get_char_env(env);
+	env_s = sort_str(env_s);
+	i = 0;
+	while (env_s[i])
 	{
-		write(fd, now->key, ft_strlen(now->key));
-		if (now->value[0])
+		if ((now = find_node(env_s[i], env)))
 		{
-			write(fd, "=\"", 2);
-			write(fd, backup_nega_char(now->value), ft_strlen(now->value));
-			write(fd, "\"", 1);
+			ft_putstr_fd("declare -x ", fd);
+			write(fd, now->key, ft_strlen(now->key));
+			if (now->value)
+			{
+				write(fd, "=\"", 2);
+				write(fd, backup_nega_char(now->value), ft_strlen(now->value));
+				write(fd, "\"", 1);
+			}
+			write(fd, "\n", 1);
 		}
-		write(fd, "\n", 1);
-		now = now->next;
+		i++;
+		free(env_s[i-1]);
 	}
+	free(env_s);
 }
 
 int		check_flag(char *argv)

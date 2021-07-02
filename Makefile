@@ -3,15 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
+#    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/06/30 20:00:54 by klim             ###   ########.fr        #
+#    Updated: 2021/07/02 18:16:17 by sehyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= 	gcc
 CFLAGS		=	-Wextra -Wall -Werror -c -I include
+
+SHELL		=	BASH
 
 NAME		=	minishell
 SRCS_DIR	=	./src/
@@ -34,9 +36,10 @@ SRCS_LIST	=	test.c \
 				util/env_util1.c \
 				argv.c \
 				info.c \
-				../builtin/builtin.c \
-				../builtin/builtin_utils.c \
-				../builtin/check_func.c \
+				builtin/builtin.c \
+				builtin/builtin_utils.c \
+				builtin/check_func.c \
+				builtin/sort_str.c \
 
 
 
@@ -47,27 +50,26 @@ INCLS		=	include
 all			: $(NAME)
 
 %.o			: %.c
-	$(CC) $(CFLAGS) $< -o $@
+	@$(CC) $(CFLAGS) $< -o $@
 
 $(NAME)		: $(OBJS)
-	make all -C libft/
-	cp libft/libft.a ./libft.a
-	$(CC) -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
+	@make all -C libft/
+	@cp libft/libft.a ./libft.a
+	@$(CC) -g -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
+	@./make.sh
 
 leak		: $(OBJS)
 	make all -C libft/
 	cp libft/libft.a ./libft.a
-#$(CC) -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
 	$(CC) -fsanitize=address -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
 
 clean		:
-	rm -rf $(OBJS)
-	rm -rf libft.a
-	make clean -C libft
+	@rm -rf $(OBJS)
+	@rm -rf libft.a
+	@make clean -C libft
 
 fclean		: clean
-	rm -rf $(NAME)
-	make fclean -C libft
+	@rm -rf $(NAME)
+	@make fclean -C libft
 
 re			: fclean all
-	./$(NAME)

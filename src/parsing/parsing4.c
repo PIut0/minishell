@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 21:12:53 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 06:33:33 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,20 +148,15 @@ char	*replace_home(char *argv)
 {
 	char	*ret;
 
-	ret = (char *)malloc(6);
-	ret[0] = '$';
-	ret[1] = 'H';
-	ret[2] = 'O';
-	ret[3] = 'M';
-	ret[4] = 'E';
-	ret[5] = 0;
+	ret = ft_strdup("$HOME");
+	ret = ft_strjoin(ret, argv + 1);
 	free(argv);
 	return (ret);
 }
 
 char	*parse_data(char *argv, t_info *info)
 {
-	if (!ft_strncmp(argv, "~", 2))
+	if (!ft_strncmp(argv, "~", 2) || !ft_strncmp(argv, "~/", 2))
 		argv = replace_home(argv);
 	argv = replace_env(argv, info);
 	argv = change_nega_char(argv);
@@ -177,6 +172,7 @@ int		parse_argv(t_info *info, t_token *head)
 	t_env		*env;
 	t_token		*token;
 	char		**tmp;
+	//int			i;
 
 	env = info->shell->env;
 	token = head->next;
@@ -186,6 +182,9 @@ int		parse_argv(t_info *info, t_token *head)
 		tmp = token->argv;
 		if (tmp[0])
 			tmp[0] = parse_data(tmp[0], info);
+		//i = -1;
+		//while (tmp[++i])
+		//	tmp[i] = parse_data(tmp[i], info);
 		token = token->next;
 	}
 	return (0);
