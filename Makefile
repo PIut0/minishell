@@ -6,7 +6,7 @@
 #    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/02 10:27:33 by sehyan           ###   ########.fr        #
+#    Updated: 2021/07/02 15:10:23 by sehyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,13 +54,12 @@ all			: $(NAME)
 $(NAME)		: $(OBJS)
 	@make all -C libft/
 	@cp libft/libft.a ./libft.a
-	@$(CC) -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
+	@$(CC) -g -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
 	@./make.sh
 
 leak		: $(OBJS)
 	make all -C libft/
 	cp libft/libft.a ./libft.a
-#$(CC) -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
 	$(CC) -fsanitize=address -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
 
 clean		:

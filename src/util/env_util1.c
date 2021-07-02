@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 12:57:29 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/02 15:39:25 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,6 @@ int		add_env(char *s, t_env *env)
 	t_node	*n;
 	t_node	*tmp;
 
-	if (!(n = (t_node *)malloc(sizeof(t_node))))
-		return (err_int("malloc error", 1));
 	n = init_node(s);
 	if (n->key[ft_strlen(n->key) - 1] == '+')
 		return (plus_env(n, env));
