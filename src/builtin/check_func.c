@@ -84,7 +84,7 @@ char	**get_char_env(t_env *env)
 		ret[++i] = get_keyvalue(t);
 		t = t->next;
 	}
-	ret[i] = 0;
+	ret[++i] = 0;
 	return (ret);
 }
 

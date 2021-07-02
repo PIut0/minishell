@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/02 18:48:52 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/03 00:17:15 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	print_export(t_env *env, int fd)
 	int 	i;
 
 	env_s = get_char_env(env);
+	// for (int j = 0; env_s[j]; j++)
+	// 	printf("test : %s\n", env_s[j]);
 	env_s = sort_str(env_s);
 	i = 0;
 	while (env_s[i])
