@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:12:20 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 16:48:05 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ int			parsing(char *line, t_info *info)
 	t_token		*head;
 	int			len;
 
+	//info = 0;
 	len = ft_strlen(line);
 	line = replace_bs(line, len);
+	head = init_token(ft_strdup(""));
 	if (is_quote(line, len))
 		return (err_int("minishell: unexpected quote", 1));
-	head = init_token("");
 	if (parse_token(line, info, head, len))
 		return (1);
 	info->head = head;

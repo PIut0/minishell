@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 15:17:39 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/02 16:47:58 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ t_token		*init_token(char *data)
 
 	if (!(ret = (t_token *)malloc(sizeof(t_token))))
 		return (0);
-	if (!data)
-		return (0);
+	ret->argv = 0;
 	ret->next = 0;
 	ret->token_type = _null;
-	ret->data = data;
+	ret->data = ft_strdup(data);
+	free(data);
 	ret->in = STDIN;
 	ret->out = STDOUT;
 	return (ret);

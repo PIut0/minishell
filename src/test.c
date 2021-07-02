@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 10:57:31 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/02 16:52:05 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int		shell_start(t_shell *shell)
 		add_history(shell, line);
 		if (parsing(line, info))
 			continue ;
-		//print_token(info->head);
 		if (process_info(info))
 			continue ;
 		free_info(info);
