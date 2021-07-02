@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 05:36:25 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:27:02 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,14 @@ char	*remove_bs(char *str);
 char		*backup_nega_char(char *data);
 char		*backup_data(char *data, t_info *info);
 
-int		process_info(t_info *info);
+char	*get_errno(void);
+char	*get_pid(void);
+int		process_info(t_info *info, int is_child, int pid);
 
 void			print_token(t_token *head);
 void		print_argv(char **argv);
+char	*history_ret(int ch, char *ret, t_shell *shell, int *idx);
+char	*reset_ret(char *ret, int *idx);
 
 t_node			*init_node(char *s);
 t_node			*find_node(char *key, t_env *env);

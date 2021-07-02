@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 05:38:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:13:56 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,38 +50,6 @@ char	*add_char(char *str, int c)
 	return (ret);
 }
 
-char	*reset_ret(char *ret, int *idx)
-{
-	*idx = 0;
-	free(ret);
-	ret = ft_strdup("");
-	g_signal.sig = 0;
-	return (ret);
-}
-
-char	*history_ret(int ch, char *ret, t_shell *shell, int *idx)
-{
-	int		i;
-	int		len;
-
-	if ((ch == _UP && shell->history->cur == shell->history->head)
-		|| (ch == _DOWN && shell->history->cur == shell->history->tail))
-		return (ret);
-	i = -1;
-	len = ft_strlen(ret);
-	while (++i < len)
-		write(0, "\b \b", 3);
-	free(ret);
-	if (ch == _UP)
-		shell->history->cur = shell->history->cur->prev;
-	else
-		shell->history->cur = shell->history->cur->next;
-	ret = ft_strdup(shell->history->cur->data);
-	write(0, ret, ft_strlen(ret));
-	*idx = ft_strlen(ret);
-	return (ret);
-}
-
 char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 {
 	while (read(0, &ch, sizeof(int)) > 0)
@@ -105,7 +73,6 @@ char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 		if (!(ret = add_char(ret, ch)))
 			return (err_ptr("malloc err", 0));
 		ch = 0;
-		// left: 4479771 right: 4414235  up: 4283163 down: 4348699
 	}
 	write(0, "\n", 1);
 	return (ret);

@@ -27,46 +27,6 @@ int		open_file(char *s, int flag)
 	return (fd);
 }
 
-//void	rdbracket(char *escape)
-//{
-//	char	*line;
-
-//	ft_putstr_fd("> ",STDOUT_FILENO);
-//	while (get_next_line(STDIN_FILENO, &line))
-//	{
-//		if (ft_strcmp(escape, line))
-//			break ;
-//		ft_putstr_fd("> ",STDOUT_FILENO);
-//	}
-//	return ;
-//}
-
-//int		check_bracket(t_token *tmp)
-//{
-//	int i;
-
-//	i = 0;
-//	while (tmp->argv[i])
-//	{
-//		if (ft_strcmp(tmp->argv[i], ">") || ft_strcmp(tmp->argv[i], ">>"))
-//		{
-//			if (tmp->out != 1)
-//				close(tmp->out);
-//			tmp->out = open_file(tmp->argv[i + 1], ft_strcmp(tmp->argv[i], ">"));
-//			if (tmp->out < 0)
-//				return (err_int("file open fail", 1));
-//		}
-//		else if (ft_strcmp(tmp->argv[i], "<<"))
-//		{
-//			if (!tmp->argv[i + 1] || !tmp->argv[i + 1][0])
-//				return (err_int("invalid file", 1));
-//			rdbracket(tmp->argv[i + 1]);
-//		}
-//		i++;
-//	}
-//	return (0);
-//}
-
 int		check_btin_func(t_token *tmp, t_info *info)
 {
 	char *cmd;

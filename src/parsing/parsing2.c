@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:25:06 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:16:45 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ int			open_bracket(t_token *t, char *target)
 		return (err_int("bash: No such file or directory", 1));
 	if (t->token_type == _brackets)
 	{
-		if(t->out != STDOUT)
+		if (t->out != STDOUT)
 			close(t->out);
 		t->out = open(target, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	}
 	if (t->token_type == _d_brackets)
 	{
-		if(t->out != STDOUT)
+		if (t->out != STDOUT)
 			close(t->out);
 		t->out = open(target, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	if (t->token_type == _r_brackets)
 	{
-		if(t->in != STDIN)
+		if (t->in != STDIN)
 			close(t->in);
 		t->in = open(target, O_RDONLY, 0644);
 		if (t->in < 0)
@@ -75,7 +75,6 @@ int			join_brackets(t_token *t)
 			if (open_bracket(t, target[0]))
 				return (1);
 			target[0][0] = 0;
-			//t->data = ft_strjoin(t->data, " ");
 			t->data = ft_strjoin(t->data, ft_sp_merge2(target, " "));
 			t->token_type = tmp->token_type;
 			t->next = tmp->next;

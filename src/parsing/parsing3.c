@@ -6,13 +6,13 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 16:47:58 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:16:24 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token		*init_token(char *data)
+t_token			*init_token(char *data)
 {
 	t_token		*ret;
 
@@ -49,7 +49,7 @@ t_token_type	get_token(char *line, int i)
 	return (_null);
 }
 
-int			add_new_token(t_token *head, char *line, int *i, int last)
+int				add_new_token(t_token *head, char *line, int *i, int last)
 {
 	t_token_type	type;
 	t_token			*tmp;
@@ -71,7 +71,7 @@ int			add_new_token(t_token *head, char *line, int *i, int last)
 	return (0);
 }
 
-int			parse_token(char *line, t_info *info, t_token *head, int len)
+int				parse_token(char *line, t_info *info, t_token *head, int len)
 {
 	int				i;
 	int				last;
