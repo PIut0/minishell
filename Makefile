@@ -6,7 +6,7 @@
 #    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/03 13:20:47 by sehyan           ###   ########.fr        #
+#    Updated: 2021/07/03 14:03:20 by sehyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,8 +46,6 @@ SRCS_LIST	=	main.c \
 				util/parse_util1.c \
 				util/err_util1.c \
 
-
-
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS		=	$(SRCS:.c=.o)
 INCLS		=	include
@@ -61,12 +59,6 @@ $(NAME)		: $(OBJS)
 	@make all -C libft/
 	@cp libft/libft.a ./libft.a
 	@$(CC) -g -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
-	# @./loading.sh
-
-leak		: $(OBJS)
-	make all -C libft/
-	cp libft/libft.a ./libft.a
-	$(CC) -fsanitize=address -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
 
 clean		:
 	@rm -rf $(OBJS)
