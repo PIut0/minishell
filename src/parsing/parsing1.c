@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:35:42 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 15:50:51 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,18 @@ int			parsing(char *line, t_info *info)
 
 	len = ft_strlen(line);
 	line = replace_bs(line, len);
-	head = init_token(ft_strdup(""));
 	if (is_quote(line, len))
+	{
+		free(line);
 		return (err_int("minishell: unexpected quote", 1));
-	if (parse_token(line, info, head, len))
-		return (1);
+	}
+	head = init_token(ft_strdup(""));
 	info->head = head;
+	if (parse_token(line, info, head, len))
+	{
+		free(line);
+		return (1);
+	}
 	free(line);
 	return (0);
 }

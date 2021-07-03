@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 13:36:29 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 15:33:12 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int		run_execve(t_token *tmp, t_info *info, int i)
 		path = ft_split(find_node("PATH", info->shell->env)->value, ':');
 		while (path[++i] && !is_dir(tmp->argv[0]))
 		{
-			s = ft_strjoin(path[i], "/");
-			s = ft_strjoin(s, tmp->argv[0]);
+			s = ft_strjoin_free(path[i], "/", 1);
+			s = ft_strjoin_free(s, tmp->argv[0], 1);
 			execve(s, tmp->argv, get_char_env(info->shell->env));
 		}
 	}

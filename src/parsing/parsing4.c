@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 13:57:43 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 15:31:47 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@ char	*change_key_to_value(char *argv, int *i, int env_len, t_info *info)
 	key = ft_substr(argv, (*i) + 1, env_len);
 	value = "";
 	if ((node = find_node(key, info->shell->env)))
-		if (!ft_strncmp((value = node->value), "~", 2))
-			value = find_node("HOME", info->shell->env)->value;
+		value = ft_strdup(find_node(key, info->shell->env)->value);
+	if (!value)
+		value = ft_strdup("");
 	if (!(ft_strncmp(key, "?", 2)))
 		value = get_errno();
 	if (!(ft_strncmp(key, "$", 2)))
 		value = get_pid();
 	argv[*i] = 0;
 	value = change_dq_edq(value, 0);
-	ret = ft_strjoin(argv, value);
-	ret = ft_strjoin(ret, argv + *i + env_len + 1);
+	ret = ft_strjoin_free(argv, value, 2);
+	ret = ft_strjoin_free(ret, argv + *i + env_len + 1, 1);
 	free(argv);
+	free(key);
 	return (ret);
 }
 
@@ -57,7 +59,7 @@ char	*replace_home(char *argv, t_info *info)
 	char	*ret;
 
 	ret = ft_strdup(info->shell->home);
-	ret = ft_strjoin(ret, argv + 1);
+	ret = ft_strjoin_free(ret, argv + 1, 1);
 	free(argv);
 	return (ret);
 }

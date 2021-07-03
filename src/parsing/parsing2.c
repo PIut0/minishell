@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:16:45 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 15:49:01 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ int			open_bracket(t_token *t, char *target)
 int			join_brackets(t_token *t)
 {
 	t_token		*tmp;
+	int			ret;
 	char		**target;
 
 	t = t->next;
+	ret = 0;
 	while (t)
 	{
 		if (is_type_brackets(t->token_type))
@@ -72,16 +74,16 @@ int			join_brackets(t_token *t)
 			if (!tmp || !tmp->data)
 				return (err_int("empty file name", 1));
 			target = splice_str(tmp->data, WHITE_SPACE);
-			if (open_bracket(t, target[0]))
-				return (1);
+			ret = open_bracket(t, target[0]);
 			target[0][0] = 0;
-			t->data = ft_strjoin(t->data, ft_sp_merge2(target, " "));
+			t->data = ft_strjoin_free(t->data, ft_sp_merge2(target, " "), 3);
 			t->token_type = tmp->token_type;
 			t->next = tmp->next;
+			free(tmp->data);
 			free(tmp);
 		}
 		else
 			t = t->next;
 	}
-	return (0);
+	return (ret);
 }
