@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:34:44 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:48:15 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int						check_flag(char *argv);
 
 int						m_pwd(int fd);
 int						m_cd(char *s, t_info *info);
-int						m_exit(t_token *tmp);
+int						m_exit(t_token *tmp, t_info *info);
 int						m_env(t_env *env, int fd);
 int						is_bracket(char *argv);
 void					do_echo(int i, int check, t_token *tmp, int flag);

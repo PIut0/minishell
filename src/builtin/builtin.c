@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/03 11:30:27 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:48:00 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ int		m_cd(char *s, t_info *info)
 		return (err_int("fail", 1));
 }
 
-int		m_exit(t_token *tmp)
+int		m_exit(t_token *tmp, t_info *info)
 {
 	int		ret;
 
+	dup2(info->shell->std_out, STDOUT);
 	printf("exit\n");
-	ret = ft_atoi2(tmp->argv[1]);
 	if (!tmp->argv[1])
 		exit(0);
+	ret = ft_atoi2(tmp->argv[1]);
 	if (ret > 255 || ret < 0)
 	{
 		printf("minishell: exit: %s: numeric argument required\n",

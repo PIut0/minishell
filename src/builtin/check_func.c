@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:44:29 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:47:45 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		check_btin_func(t_token *tmp, t_info *info)
 	if (ft_strcmp("echo", cmd))
 		errno = m_echo(tmp);
 	else if (ft_strcmp("exit", cmd))
-		errno = m_exit(tmp);
+		errno = m_exit(tmp, info);
 	else if (ft_strcmp("pwd", cmd))
 		errno = m_pwd(STDOUT);
 	else if (ft_strcmp("cd", cmd))
