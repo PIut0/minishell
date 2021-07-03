@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:16:24 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 15:56:51 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int				parse_token(char *line, t_info *info, t_token *head, int len)
 	}
 	if (add_new_token(head, line, &i, last))
 		return (1);
-	if (join_brackets(head))
+	if (join_brackets(head, 0))
 		return (1);
 	if (parse_argv(info, head))
 		return (1);

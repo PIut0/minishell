@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 15:49:01 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/03 15:56:38 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,12 @@ int			open_bracket(t_token *t, char *target)
 	return (0);
 }
 
-int			join_brackets(t_token *t)
+int			join_brackets(t_token *t, int ret)
 {
 	t_token		*tmp;
-	int			ret;
 	char		**target;
 
 	t = t->next;
-	ret = 0;
 	while (t)
 	{
 		if (is_type_brackets(t->token_type))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/03 11:48:00 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 16:07:17 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ int		m_cd(char *s, t_info *info)
 	if (result == 0)
 		return (0);
 	else
-		return (err_int("fail", 1));
+	{
+		dup2(info->shell->std_out, STDOUT);
+		printf("minishell: cd: %s: ", s);
+		return (err_int("NO such file or directory", 1));
+	}
 }
 
 int		m_exit(t_token *tmp, t_info *info)
