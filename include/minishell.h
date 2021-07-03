@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 13:31:37 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 13:59:19 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ int						check_func(t_token *tmp, t_info *info, int i);
 
 char					**sort_key(char **env_s, int n);
 char					**sort_str(char **env_s);
-
 
 /*
 **		env

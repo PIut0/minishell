@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 13:51:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 13:58:48 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int		process_info(t_info *info, int is_child, int pid)
 	t_token	*tmp;
 
 	tmp = info->head->next;
-	is_child = 0;
 	while (tmp)
 	{
 		pid = 0;
