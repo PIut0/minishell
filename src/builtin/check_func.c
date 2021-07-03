@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:58:07 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 13:36:29 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,5 @@ int		check_func(t_token *tmp, t_info *info, int i)
 	}
 	else
 		waitpid(pid, &errno, 0);
-	return (errno);
+	return (parse_errno(errno));
 }

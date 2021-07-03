@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:51:01 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:51:09 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 13:31:34 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,11 @@ int		is_dir(char *argv)
 		if (argv[i] == '/')
 			return (1);
 	return (0);
+}
+
+int		parse_errno(int err)
+{
+	if ((int)err > 255)
+		err = err >> 8;
+	return (err);
 }
