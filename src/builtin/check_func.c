@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_btin_func.c                                       :+:      :+:    :+:   */
+/*   check_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 16:28:51 by sehyan            #+#    #+#             */
-/*   Updated: 2021/06/29 15:01:16 by ash              ###   ########.fr       */
+/*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
+/*   Updated: 2021/07/03 11:44:29 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,12 @@
 
 extern char **g_env;
 
-int		open_file(char *s, int flag)
-{
-	int fd;
-
-	if (!s || !*s)
-		return (-1);
-	if (flag)
-		fd = open(s, O_RDWR | O_CREAT | O_TRUNC, 00777);
-	else
-		fd = open(s, O_RDWR | O_CREAT | O_APPEND, 00777);
-	return (fd);
-}
-
 int		check_btin_func(t_token *tmp, t_info *info)
 {
-	char *cmd;
-	int i;
-	i = 0;
+	char	*cmd;
+	int		i;
 
+	i = 0;
 	cmd = tmp->argv[0];
 	if (ft_strcmp("echo", cmd))
 		errno = m_echo(tmp);
@@ -93,39 +80,37 @@ int		is_dir(char *argv)
 
 	i = -1;
 	while (argv[++i])
-		if(argv[i] == '/')
+		if (argv[i] == '/')
 			return (1);
 	return (0);
 }
 
-int		check_func(t_token *tmp, t_info *info, int c)
+int		check_func(t_token *tmp, t_info *info, int i)
 {
 	pid_t	pid;
 	char	**path;
-	int		i;
 	char	*s;
 
-	i = -1;
-	c = 0;
 	signal(SIGINT, child_sig);
 	signal(SIGQUIT, child_sig);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!find_node("PATH", info->shell->env))
+		if (find_node("PATH", info->shell->env))
 		{
-			printf("minishell: %s: No such file or directory\n", tmp->argv[0]);
-			exit(1);
-		}
-		path = ft_split(find_node("PATH", info->shell->env)->value, ':');
-		while(path[++i] && !is_dir(tmp->argv[0]))
-		{
-			s = ft_strjoin(path[i], "/");
-			s = ft_strjoin(s, tmp->argv[0]);
-			execve(s, tmp->argv, get_char_env(info->shell->env));
+			path = ft_split(find_node("PATH", info->shell->env)->value, ':');
+			while (path[++i] && !is_dir(tmp->argv[0]))
+			{
+				s = ft_strjoin(path[i], "/");
+				s = ft_strjoin(s, tmp->argv[0]);
+				execve(s, tmp->argv, get_char_env(info->shell->env));
+			}
 		}
 		execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
-		printf("minishell: %s: command not found\n", tmp->argv[0]);
+		if (is_dir(tmp->argv[0]))
+			printf("minishell: %s: No such file or directory\n", tmp->argv[0]);
+		else
+			printf("minishell: %s: command not found\n", tmp->argv[0]);
 		exit(127);
 	}
 	else

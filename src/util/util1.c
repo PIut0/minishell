@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:44 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:21:14 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:32:39 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,17 @@ char		*get_errno(void)
 	if ((int)errno > 255)
 		errno = errno >> 8;
 	return (ft_itoa((int)errno));
+}
+
+int		open_file(char *s, int flag)
+{
+	int fd;
+
+	if (!s || !*s)
+		return (-1);
+	if (flag)
+		fd = open(s, O_RDWR | O_CREAT | O_TRUNC, 00777);
+	else
+		fd = open(s, O_RDWR | O_CREAT | O_APPEND, 00777);
+	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:14:15 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:35:32 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		check_builtin(char *argv)
 	return (0);
 }
 
-int		process_tmp(t_info *info, t_token *tmp, int c)
+int		process_tmp(t_info *info, t_token *tmp)
 {
 	int		i;
 
@@ -44,7 +44,7 @@ int		process_tmp(t_info *info, t_token *tmp, int c)
 	else if (check_builtin(tmp->argv[0]))
 		errno = check_btin_func(tmp, info);
 	else
-		errno = check_func(tmp, info, c);
+		errno = check_func(tmp, info, -1);
 	dup2(info->shell->std_out, STDOUT);
 	dup2(info->shell->std_in, STDIN);
 	return (errno);
@@ -84,13 +84,13 @@ int		process_info(t_info *info, int is_child, int pid)
 	{
 		pid = 0;
 		if (tmp->token_type != _pipe)
-			process_tmp(info, tmp, is_child);
+			process_tmp(info, tmp);
 		else
 		{
 			pid = get_pipe();
 			if (pid)
 			{
-				errno = process_tmp(info, tmp, is_child);
+				errno = process_tmp(info, tmp);
 				waitpid(pid, &errno, 0);
 				break ;
 			}

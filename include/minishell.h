@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:00:01 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:34:44 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,11 @@ int						m_echo(t_token *tmp);
 int						m_unset(char **argv, t_env *env);
 int						m_export(char **argv, t_env *env, int fd);
 
-int						open_file(char *s, int flag);
 int						check_btin_func(t_token *tmp, t_info *info);
 char					*get_keyvalue(t_node *t);
 char					**get_char_env(t_env *env);
 int						is_dir(char *argv);
-int						check_func(t_token *tmp, t_info *info, int c);
+int						check_func(t_token *tmp, t_info *info, int i);
 
 char					**sort_key(char **env_s, int n);
 char					**sort_str(char **env_s);
@@ -233,7 +232,7 @@ char					*remove_bs(char *str);
 **		process
 */
 int						check_builtin(char *argv);
-int						process_tmp(t_info *info, t_token *tmp, int c);
+int						process_tmp(t_info *info, t_token *tmp);
 int						get_pipe(void);
 int						process_info(t_info *info, int is_child, int pid);
 
@@ -259,6 +258,7 @@ int						is_space(char c);
 int						is_quote(char *line, int n);
 char					*get_pid(void);
 char					*get_errno(void);
+int						open_file(char *s, int flag);
 
 t_sig					g_signal;
 
