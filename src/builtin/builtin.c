@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/03 04:11:36 by ash              ###   ########.fr       */
+/*   Updated: 2021/07/03 11:21:43 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	m_pwd(int fd)
+int		m_pwd(int fd)
 {
 	char	buf[PATH_MAX];
 
 	if (!(getcwd(buf, sizeof(buf))))
-		return; //error
+		return (0);
 	write(fd, buf, ft_strlen(buf));
 	write(fd, "\n", 1);
-	return ;
+	return (0);
 }
 
 int		m_cd(char *s, t_info *info)
@@ -40,20 +40,31 @@ int		m_cd(char *s, t_info *info)
 		return err_int("fail", 1);
 }
 
-void	m_exit(t_token *tmp)
+int		m_exit(t_token *tmp)
 {
+	int		ret;
+
 	printf("exit\n");
+	ret = ft_atoi2(tmp->argv[1]);
 	if (!tmp->argv[1])
 		exit(0);
-	if (ft_atoi(tmp->argv[1]) > 255)
+	if (ret > 255 || ret < 0)
+	{
+		printf("minishell: exit: %s: numeric argument required\n", tmp->argv[1]);
 		exit(255);
-	exit(ft_atoi(tmp->argv[1]));
+	}
+	if (tmp->argv[2])
+	{
+		printf("minishell: exit: too many arguments\n");
+		return (1);
+	}
+	exit(ret);
 }
 
-void	m_env(t_env *env, int fd)
+int		m_env(t_env *env, int fd)
 {
 	print_env(env, fd);
-	return ;
+	return (0);
 }
 
 int		is_bracket(char *argv)

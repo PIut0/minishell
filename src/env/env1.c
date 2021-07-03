@@ -144,6 +144,7 @@ int		add_env(char *s, t_env *env)
 	if (!(check_key_val(n)))
 	{
 		printf("minishell: export: '%s': not a valid identifier\n", s);
+		errno = 1;
 		rm_env(n);
 		return (1);
 	}

@@ -58,10 +58,10 @@ int			main(int argc, char **argv, char **env)
 
 	argc = -1;
 	(void)argv;
+	if (!(shell = init_shell(env)))
+		return (1);
 	g_signal.in = dup(STDIN);
 	g_signal.out = dup(STDOUT);
 	g_signal.sig = 0;
-	if (!(shell = init_shell(env)))
-		return (1);
 	return (shell_start(shell));
 }

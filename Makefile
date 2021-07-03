@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ash <ash@student.42.fr>                    +#+  +:+       +#+         #
+#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/03 02:57:10 by ash              ###   ########.fr        #
+#    Updated: 2021/07/03 11:02:40 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS_LIST	=	main.c \
 				input/input1.c \
 				input/input2.c \
 				libft_ref/ref1.c \
+				libft_ref/atoi2.c \
 				parsing/backup1.c \
 				parsing/parsing1.c \
 				parsing/parsing2.c \

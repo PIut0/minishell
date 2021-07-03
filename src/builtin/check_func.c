@@ -35,20 +35,20 @@ int		check_btin_func(t_token *tmp, t_info *info)
 
 	cmd = tmp->argv[0];
 	if (ft_strcmp("echo", cmd))
-		m_echo(tmp);
+		errno = m_echo(tmp);
 	else if (ft_strcmp("exit", cmd))
-		m_exit(tmp);
+		errno = m_exit(tmp);
 	else if (ft_strcmp("pwd", cmd))
-		m_pwd(STDOUT);
+		errno = m_pwd(STDOUT);
 	else if (ft_strcmp("cd", cmd))
-		m_cd(tmp->argv[1], info);
+		errno = m_cd(tmp->argv[1], info);
 	else if (ft_strcmp("export", cmd) == 1)
-		m_export(tmp->argv, info->shell->env, STDOUT);
+		errno = m_export(tmp->argv, info->shell->env, STDOUT);
 	else if (ft_strcmp("env", cmd) == 1)
-		m_env(info->shell->env, STDOUT);
+		errno = m_env(info->shell->env, STDOUT);
 	else if (ft_strcmp("unset", cmd) == 1)
-		m_unset(tmp->argv, info->shell->env);
-	return (0);
+		errno = m_unset(tmp->argv, info->shell->env);
+	return (errno);
 }
 
 char	*get_keyvalue(t_node *t)
@@ -98,7 +98,7 @@ int		is_dir(char *argv)
 	return (0);
 }
 
-void	check_func(t_token *tmp, t_info *info, int c)
+int		check_func(t_token *tmp, t_info *info, int c)
 {
 	pid_t	pid;
 	char	**path;
@@ -114,7 +114,7 @@ void	check_func(t_token *tmp, t_info *info, int c)
 	{
 		if (!find_node("PATH", info->shell->env))
 		{
-			printf("bash: %s: No such file or directory\n", tmp->argv[0]);
+			printf("minishell: %s: No such file or directory\n", tmp->argv[0]);
 			exit(1);
 		}
 		path = ft_split(find_node("PATH", info->shell->env)->value, ':');
@@ -125,9 +125,10 @@ void	check_func(t_token *tmp, t_info *info, int c)
 			execve(s, tmp->argv, get_char_env(info->shell->env));
 		}
 		execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
-		printf("bash: command not found: %s\n", tmp->argv[0]);
-		exit(0);
+		printf("minishell: %s: command not found\n", tmp->argv[0]);
+		exit(127);
 	}
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &errno, 0);
+	return (errno);
 }

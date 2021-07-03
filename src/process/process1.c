@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 21:27:48 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:14:15 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int		process_tmp(t_info *info, t_token *tmp, int c)
 	if (!(tmp->argv) || !(tmp->argv[0]))
 		;
 	else if (check_builtin(tmp->argv[0]))
-		check_btin_func(tmp, info);
+		errno = check_btin_func(tmp, info);
 	else
-		check_func(tmp, info, c);
+		errno = check_func(tmp, info, c);
 	dup2(info->shell->std_out, STDOUT);
 	dup2(info->shell->std_in, STDIN);
-	return (0);
+	return (errno);
 }
 
 int		get_pipe(void)
@@ -90,8 +90,8 @@ int		process_info(t_info *info, int is_child, int pid)
 			pid = get_pipe();
 			if (pid)
 			{
-				process_tmp(info, tmp, is_child);
-				waitpid(pid, NULL, 0);
+				errno = process_tmp(info, tmp, is_child);
+				waitpid(pid, &errno, 0);
 				break ;
 			}
 			else
@@ -100,6 +100,6 @@ int		process_info(t_info *info, int is_child, int pid)
 		tmp = tmp->next;
 	}
 	if (is_child)
-		exit(0);
+		exit(errno);
 	return (0);
 }

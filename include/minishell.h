@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 21:50:08 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:00:01 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,6 @@ typedef enum			e_token_type
 	_rd_brackets,
 	_semicolon
 }						t_token_type;
-
-typedef struct			s_sig
-{
-	int					in;
-	int					out;
-	int					sig;
-}						t_sig;
 
 typedef struct			s_node
 {
@@ -105,6 +98,13 @@ typedef	struct			s_token
 	struct s_token		*next;
 }						t_token;
 
+typedef struct			s_sig
+{
+	int					in;
+	int					out;
+	int					sig;
+}						t_sig;
+
 typedef	struct			s_info
 {
 	char				*cmd;
@@ -120,22 +120,22 @@ void					print_env(t_env *env, int fd);
 void					print_export(t_env *env, int fd);
 int						check_flag(char *argv);
 
-void					m_pwd(int fd);
+int						m_pwd(int fd);
 int						m_cd(char *s, t_info *info);
-void					m_exit(t_token *tmp);
-void					m_env(t_env *env, int fd);
+int						m_exit(t_token *tmp);
+int						m_env(t_env *env, int fd);
 int						is_bracket(char *argv);
 void					do_echo(int i, int check, t_token *tmp, int flag);
-void					m_echo(t_token *tmp);
-void					m_unset(char **argv, t_env *env);
-void					m_export(char **argv, t_env *env, int fd);
+int						m_echo(t_token *tmp);
+int						m_unset(char **argv, t_env *env);
+int						m_export(char **argv, t_env *env, int fd);
 
 int						open_file(char *s, int flag);
 int						check_btin_func(t_token *tmp, t_info *info);
 char					*get_keyvalue(t_node *t);
 char					**get_char_env(t_env *env);
 int						is_dir(char *argv);
-void					check_func(t_token *tmp, t_info *info, int c);
+int						check_func(t_token *tmp, t_info *info, int c);
 
 char					**sort_key(char **env_s, int n);
 char					**sort_str(char **env_s);
@@ -186,6 +186,8 @@ char					*history_ret(int ch, char *ret,
 /*
 **		libft_ref
 */
+int						ft_atoi2(const char *str);
+
 char					*ft_strjoin_free(char *s1, char *s2, int n);
 char					*ft_sp_merge(char **sp);
 char					*ft_sp_merge2(char **sp, char *c);
@@ -243,7 +245,7 @@ void					child_sig(int sig);
 void					sig_sigquit(int sig);
 
 /*
-**		signal
+**		util
 */
 int						err_int(char *s, int ret);
 void					*err_ptr(char *s, void *ret);

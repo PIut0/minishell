@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:44 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:42:03 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:21:14 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ char		*get_pid(void)
 
 char		*get_errno(void)
 {
+	if ((int)errno > 255)
+		errno = errno >> 8;
 	return (ft_itoa((int)errno));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:54:39 by ash               #+#    #+#             */
-/*   Updated: 2021/07/03 00:57:25 by ash              ###   ########.fr       */
+/*   Updated: 2021/07/03 11:06:35 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,46 +32,55 @@ void	do_echo(int i, int check, t_token *tmp, int flag)
 	return ;
 }
 
-void	m_echo(t_token *tmp)
+int		m_echo(t_token *tmp)
 {
 	if (!tmp->argv[1])
 	{
 		write(STDOUT, "\n", 1);
-		return ;
+		return (0);
 	}
 	do_echo(0, 0, tmp, 0);
+	return (0);
 }
 
-void	m_unset(char **argv, t_env *env)
+int		m_unset(char **argv, t_env *env)
 {
-
 	int		i;
 	t_node	*n;
 	char	*key;
 
 	i = 0;
+	errno = 0;
 	if (!argv[1])
-		return ;
+		return (0);
 	while (argv[++i])
 	{
 		key = argv[i];
 		if (!key[0])
 			continue ;
+		if (get_env_len(key, 0) + 1 != (int)ft_strlen(key))
+		{
+			printf("minishell: export: '%s': not a valid identifier\n", key);
+			errno = 1;
+			continue ;
+		}
 		n = find_node(key, env);
 		if (!n)
 			continue ;
 		rm_env(n);
 	}
-	return ;
+	return (errno);
 }
 
-void	m_export(char **argv, t_env *env, int fd)
+int		m_export(char **argv, t_env *env, int fd)
 {
 	int i;
 
 	i = 0;
+	errno = 0;
 	if (!argv[1])
 		print_export(env, fd);
 	while (argv[++i])
 		add_env(argv[i], env);
+	return (errno);
 }
