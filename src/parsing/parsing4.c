@@ -80,6 +80,7 @@ int		parse_argv(t_info *info, t_token *head)
 	t_env		*env;
 	t_token		*token;
 	char		**tmp;
+	//int			i;
 
 	env = info->shell->env;
 	token = head->next;
@@ -89,6 +90,9 @@ int		parse_argv(t_info *info, t_token *head)
 		tmp = token->argv;
 		if (tmp[0])
 			tmp[0] = parse_data(tmp[0], info);
+		//i = -1;
+		//while (tmp[++i])
+		//	tmp[i] = parse_data(tmp[i], info);
 		token = token->next;
 	}
 	return (0);

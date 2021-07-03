@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 20:04:00 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:18:04 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 04:33:29 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void		child_sig(int sig)
 	dup2(g_signal.in, STDIN);
 	dup2(g_signal.out, STDOUT);
 	if (sig == SIGINT)
-		ft_putstr_fd("\n", STDOUT);
+		ft_putstr_fd("\n",STDOUT);
 	else
-		ft_putstr_fd("QUIT: 3\n", STDOUT);
+		ft_putstr_fd("Quit: 3\n", STDOUT);
 	return ;
 }
 

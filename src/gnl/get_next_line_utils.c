@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 20:32:47 by klim              #+#    #+#             */
-/*   Updated: 2021/06/23 17:21:45 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 23:49:35 by ash              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strdup(const char *s1)
 	char	*t;
 
 	n = ft_strlen((char *)s1);
-	if (!(t = (char*)malloc(n + 1)))
+	if (!(t = (char *)malloc(n + 1)))
 		return (0);
 	i = -1;
 	while (++i < n)

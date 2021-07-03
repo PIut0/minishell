@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ash <ash@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
 /*   Updated: 2021/07/02 21:50:08 by klim             ###   ########.fr       */
@@ -123,10 +123,10 @@ int						check_flag(char *argv);
 void					m_pwd(int fd);
 int						m_cd(char *s, t_info *info);
 void					m_exit(t_token *tmp);
+void					m_env(t_env *env, int fd);
 int						is_bracket(char *argv);
 void					do_echo(int i, int check, t_token *tmp, int flag);
 void					m_echo(t_token *tmp);
-void					m_env(t_env *env, int fd);
 void					m_unset(char **argv, t_env *env);
 void					m_export(char **argv, t_env *env, int fd);
 
@@ -137,6 +137,10 @@ char					**get_char_env(t_env *env);
 int						is_dir(char *argv);
 void					check_func(t_token *tmp, t_info *info, int c);
 
+char					**sort_key(char **env_s, int n);
+char					**sort_str(char **env_s);
+
+
 /*
 **		env
 */
@@ -145,7 +149,6 @@ t_node					*find_node(char *key, t_env *env);
 int						check_key_val(t_node *node);
 void					add_env_back(t_node *tmp, char *s);
 int						plus_env(t_node *n, t_env *env);
-void					print_env2(t_env *env);
 int						add_env(char *s, t_env *env);
 void					rm_env(t_node *node);
 t_env					*init_env(char **arg_env);

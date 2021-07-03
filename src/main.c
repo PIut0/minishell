@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
 /*   Updated: 2021/07/02 21:48:42 by klim             ###   ########.fr       */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int			shell_start(t_shell *shell)
+int		shell_start(t_shell *shell)
 {
 	char	*line;
 	t_info	*info;
@@ -38,10 +38,13 @@ int			shell_start(t_shell *shell)
 t_shell		*init_shell(char **env_i)
 {
 	t_shell		*ret;
+	t_node		*tmp;
 
 	if (!(ret = (t_shell*)malloc(sizeof(t_shell))))
 		return (0);
 	ret->env = init_env(env_i);
+	tmp = find_node("HOME", ret->env);
+	ret->home = tmp->value;
 	ret->history = init_history();
 	ret->home = ft_strdup(find_node("HOME", ret->env)->value);
 	ret->std_in = dup(STDIN_FILENO);

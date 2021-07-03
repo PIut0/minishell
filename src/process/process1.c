@@ -79,6 +79,7 @@ int		process_info(t_info *info, int is_child, int pid)
 	t_token	*tmp;
 
 	tmp = info->head->next;
+	is_child = 0;
 	while (tmp)
 	{
 		pid = 0;

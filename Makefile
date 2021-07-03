@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
+#    By: ash <ash@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/02 20:55:56 by klim             ###   ########.fr        #
+#    Updated: 2021/07/03 02:57:10 by ash              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,10 @@ NAME		=	minishell
 SRCS_DIR	=	./src/
 SRCS_LIST	=	main.c \
 				builtin/builtin.c \
+				builtin/builtin2.c \
 				builtin/builtin_utils.c \
 				builtin/check_func.c \
+				builtin/sort_str.c \
 				env/env1.c \
 				gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
@@ -56,7 +58,7 @@ $(NAME)		: $(OBJS)
 	@make all -C libft/
 	@cp libft/libft.a ./libft.a
 	@$(CC) -g -I$(INCLS) $(OBJS) -L. -lft -o $(NAME)
-	@./loading.sh
+	# @./loading.sh
 
 leak		: $(OBJS)
 	make all -C libft/
