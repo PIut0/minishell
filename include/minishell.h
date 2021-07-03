@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:51:21 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 13:31:37 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,7 @@ char					*get_errno(void);
 int						open_file(char *s, int flag);
 
 int						is_dir(char *argv);
+int						parse_errno(int err);
 
 t_sig					g_signal;
 
