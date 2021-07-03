@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo -ne '🍔                  (10%)\r'
 sleep 0.1
 echo -ne '🍔🍔                (20%)\r'

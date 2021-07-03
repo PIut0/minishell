@@ -6,7 +6,7 @@
 #    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/03 11:02:40 by klim             ###   ########.fr        #
+#    Updated: 2021/07/03 11:58:21 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS_LIST	=	main.c \
 				process/process1.c \
 				signal/signal1.c \
 				util/util1.c \
+				util/util2.c \
 				util/parse_util1.c \
 				util/err_util1.c \
 

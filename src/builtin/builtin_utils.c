@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 19:33:27 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/03 11:03:52 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:50:03 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_export(t_env *env, int fd)
 {
 	t_node	*now;
 	char	**env_s;
-	int 	i;
+	int		i;
 
 	env_s = get_char_env(env);
 	env_s = sort_str(env_s);

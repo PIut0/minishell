@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:48:15 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 11:51:21 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ int						m_export(char **argv, t_env *env, int fd);
 int						check_btin_func(t_token *tmp, t_info *info);
 char					*get_keyvalue(t_node *t);
 char					**get_char_env(t_env *env);
-int						is_dir(char *argv);
 int						check_func(t_token *tmp, t_info *info, int i);
 
 char					**sort_key(char **env_s, int n);
@@ -259,6 +258,8 @@ int						is_quote(char *line, int n);
 char					*get_pid(void);
 char					*get_errno(void);
 int						open_file(char *s, int flag);
+
+int						is_dir(char *argv);
 
 t_sig					g_signal;
 
