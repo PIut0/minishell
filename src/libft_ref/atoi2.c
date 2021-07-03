@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 10:58:09 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 11:01:25 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/03 13:13:24 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int			ft_atoi2(const char *str)
 	while (ft_isdigit(*s))
 	{
 		if (is_overflow(n, *s, c) && n)
-            return (-1);
+			return (-1);
 		n = (n * 10) + (*s - '0') * c;
 		s++;
 	}
-    if (*s != 0)
-        return (-1);
+	if (*s != 0)
+		return (-1);
 	return (n);
 }

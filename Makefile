@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
+#    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/03 11:58:21 by klim             ###   ########.fr        #
+#    Updated: 2021/07/03 13:20:47 by sehyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS_LIST	=	main.c \
 				builtin/check_func.c \
 				builtin/sort_str.c \
 				env/env1.c \
+				env/env2.c \
 				gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
 				history/history1.c \
