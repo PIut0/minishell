@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 17:33:52 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:07:22 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 16:46:41 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@ void	free_token(t_token *t)
 {
 	int		i;
 
-	i = -1;
-	while (t->argv[++i])
-		free(t->argv[i]);
-	free(t->argv);
-	free(t->data);
+	if (t->argv)
+	{
+		i = -1;
+		while (t->argv[++i])
+			free(t->argv[i]);
+		free(t->argv);
+	}
+	if (t->data)
+		free(t->data);
 	free(t);
 }
 
@@ -29,7 +33,7 @@ void	free_info(t_info *info)
 	t_token	*tmp;
 	t_token	*target;
 
-	tmp = info->head->next;
+	tmp = info->head;
 	while (tmp)
 	{
 		target = tmp;
@@ -48,5 +52,6 @@ t_info	*init_info(t_shell *shell)
 		return (0);
 	ret->cmd = 0;
 	ret->shell = shell;
+	ret->head = 0;
 	return (ret);
 }

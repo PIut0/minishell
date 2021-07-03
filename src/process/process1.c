@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:08:25 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 21:27:48 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,28 @@ int		process_tmp(t_info *info, t_token *tmp, int c)
 {
 	int		i;
 
-	i = c;
+	i = -1;
+	while (tmp->argv[++i])
+		tmp->argv[i] = parse_data(tmp->argv[i], info);
 	dup2(tmp->in, STDIN);
 	dup2(tmp->out, STDOUT);
 	if (!(tmp->argv) || !(tmp->argv[0]))
 		;
 	else if (check_builtin(tmp->argv[0]))
-	{
-		i = -1;
-		while (tmp->argv[++i])
-			tmp->argv[i] = parse_data(tmp->argv[i], info);
 		check_btin_func(tmp, info);
-	}
 	else
-	{
-		i = -1;
-		while (tmp->argv[++i])
-			tmp->argv[i] = backup_data(tmp->argv[i], info);
 		check_func(tmp, info, c);
-	}
-	dup2(info->shell->_stdout, STDOUT);
-	dup2(info->shell->_stdin, STDIN);
+	dup2(info->shell->std_out, STDOUT);
+	dup2(info->shell->std_in, STDIN);
 	return (0);
 }
 
-int		get_pipe()
+int		get_pipe(void)
 {
 	pid_t	pid;
 	int		pipefd[2];
 
 	pipe(pipefd);
-	//fcntl((*pipefd)[0], F_SETFL, O_NONBLOCK);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -83,14 +74,11 @@ int		get_pipe()
 	return (pid);
 }
 
-int		process_info(t_info *info)
+int		process_info(t_info *info, int is_child, int pid)
 {
-	int		pid;
-	int		is_child;
 	t_token	*tmp;
 
 	tmp = info->head->next;
-	is_child = 0;
 	while (tmp)
 	{
 		pid = 0;

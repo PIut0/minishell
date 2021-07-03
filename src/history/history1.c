@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 19:50:47 by klim              #+#    #+#             */
-/*   Updated: 2021/06/30 20:57:09 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:14:39 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		add_history(t_shell *shell, char *line)
 	shell->history->cur = shell->history->tail;
 }
 
-t_history	*init_history()
+t_history	*init_history(void)
 {
 	t_history	*ret;
 

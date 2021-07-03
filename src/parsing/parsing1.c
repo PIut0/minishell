@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 15:31:30 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:12:20 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:35:42 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ char		*replace_bs(char *line, int len)
 	i = -1;
 	while (++i < len)
 	{
-		if ((i > 0 && line[i-1] == BACK_SLASH) || is_quote(line, i) == 1)
+		if ((i > 0 && line[i - 1] == BACK_SLASH) || is_quote(line, i) == 1)
 			;
 		else if (line[i] == '\\')
 		{
-			if (is_quote(line, i) != 2 ||
-				(line[i + 1] == '"' || line[i + 1] == '$' || line[i + 1] == '\\'))
+			if (is_quote(line, i) != 2 || (line[i + 1] == '"'
+				|| line[i + 1] == '$' || line[i + 1] == '\\'))
 				line[i] = BACK_SLASH;
 		}
 	}
@@ -61,12 +61,12 @@ int			parsing(char *line, t_info *info)
 
 	len = ft_strlen(line);
 	line = replace_bs(line, len);
+	head = init_token(ft_strdup(""));
 	if (is_quote(line, len))
 		return (err_int("minishell: unexpected quote", 1));
-	head = init_token("");
 	if (parse_token(line, info, head, len))
 		return (1);
 	info->head = head;
 	free(line);
-	return 0;
+	return (0);
 }

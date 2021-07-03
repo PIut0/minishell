@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:03:00 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 06:23:28 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/02 20:14:28 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char		*ft_sp_merge2(char **sp, char *c)
 	return (ret);
 }
 
-int		ft_strcmp(char *s1, char *s2)
+int			ft_strcmp(char *s1, char *s2)
 {
 	int		i;
 
