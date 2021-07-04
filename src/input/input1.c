@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/07/02 20:13:56 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/04 21:19:54 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*add_char(char *str, int c)
 		ret = ft_substr(str, 0, ft_strlen(str) - 1);
 		free(str);
 	}
-	else if (c == _UP || c == _DOWN)
+	else if (c == _UP || c == _DOWN || c == _LEFT || c == _RIGHT)
 		return (str);
 	else
 	{
@@ -58,7 +58,7 @@ char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 			ret = reset_ret(ret, &idx);
 		if (ch == 4 && !idx)
 			return (err_ptr("exit", 0));
-		else if ((ch == 4 && idx) || ch == _LEFT || ch == _RIGHT)
+		else if ((ch == 4 && idx) || ch == '\t' || ch == _LEFT || ch == _RIGHT)
 			continue ;
 		else if (ch == _UP || ch == _DOWN)
 			ret = history_ret(ch, ret, shell, &idx);

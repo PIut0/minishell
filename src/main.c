@@ -6,11 +6,19 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/04 16:27:19 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/04 21:28:51 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void		err_print(void)
+{
+	if (errno == 130 && g_signal.sig == 2)
+		ft_putstr_fd("\n", STDOUT);
+	if (errno == 131 && g_signal.sig == 3)
+		ft_putstr_fd("Quit: 3\n", STDOUT);
+}
 
 int			shell_start(t_shell *shell)
 {
@@ -19,6 +27,9 @@ int			shell_start(t_shell *shell)
 
 	while (1)
 	{
+		dup2(shell->std_out, STDOUT);
+		dup2(shell->std_in, STDIN);
+		err_print();
 		signal(SIGINT, sig_sigint);
 		signal(SIGQUIT, sig_sigquit);
 		if (!(info = init_info(shell)))
@@ -31,7 +42,7 @@ int			shell_start(t_shell *shell)
 			free_info(info);
 			continue ;
 		}
-		process_info(info, 0, 0);
+		process_info(info, info->head->next, 0, 0);
 		free_info(info);
 	}
 	return (0);

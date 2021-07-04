@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 20:04:00 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 15:10:42 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/04 21:20:27 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,11 @@ void		sig_sigint(int sig)
 
 void		child_sig(int sig)
 {
-	dup2(g_signal.in, STDIN);
-	dup2(g_signal.out, STDOUT);
-	if (sig == SIGINT)
-		ft_putstr_fd("\n", STDOUT);
-	else
-		ft_putstr_fd("Quit: 3\n", STDOUT);
-	return ;
+	g_signal.sig = sig;
 }
 
 void		sig_sigquit(int sig)
 {
-	sig = 0;
+	g_signal.sig = sig;
 	return ;
 }

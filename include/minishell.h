@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 15:56:47 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/04 21:28:34 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,8 @@ char					*remove_bs(char *str);
 int						check_builtin(char *argv);
 int						process_tmp(t_info *info, t_token *tmp);
 int						get_pipe(void);
-int						process_info(t_info *info, int is_child, int pid);
+int						process_info(t_info *info, t_token *tmp,
+									int is_child, int pid);
 
 /*
 **		signal

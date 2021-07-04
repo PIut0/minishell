@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 15:33:12 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/04 21:20:45 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,8 @@ int		check_func(t_token *tmp, t_info *info, int i)
 {
 	pid_t	pid;
 
-	i = 0;
-	signal(SIGINT, child_sig);
-	signal(SIGQUIT, child_sig);
 	pid = fork();
+	i = 0;
 	if (pid == 0)
 	{
 		run_execve(tmp, info, -1);
@@ -111,6 +109,12 @@ int		check_func(t_token *tmp, t_info *info, int i)
 		exit(127);
 	}
 	else
+	{
+		signal(SIGINT, child_sig);
+		signal(SIGQUIT, child_sig);
 		waitpid(pid, &errno, 0);
+		if (errno && errno == g_signal.sig)
+			errno += 128;
+	}
 	return (parse_errno(errno));
 }

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 13:58:48 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/04 21:30:09 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,8 @@ int		get_pipe(void)
 	return (pid);
 }
 
-int		process_info(t_info *info, int is_child, int pid)
+int		process_info(t_info *info, t_token *tmp, int is_child, int pid)
 {
-	t_token	*tmp;
-
-	tmp = info->head->next;
 	while (tmp)
 	{
 		pid = 0;
@@ -90,6 +87,7 @@ int		process_info(t_info *info, int is_child, int pid)
 			if (pid)
 			{
 				parse_errno(process_tmp(info, tmp));
+				pause();
 				waitpid(pid, &errno, 0);
 				break ;
 			}
