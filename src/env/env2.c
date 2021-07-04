@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 13:20:05 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/03 14:50:10 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/04 16:31:47 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		plus_env(t_node *n, t_env *env)
 	if ((tmp = find_node(n->key, env)) && n->value)
 	{
 		add_env_back(tmp, n->value);
+		rm_env(n);
 	}
 	else
 	{
@@ -88,8 +89,10 @@ int		add_env(char *s, t_env *env)
 
 void	rm_env(t_node *node)
 {
-	node->next->prev = node->prev;
-	node->prev->next = node->next;
+	if (node->next)
+		node->next->prev = node->prev;
+	if (node->prev)
+		node->prev->next = node->next;
 	if (node->key)
 		free(node->key);
 	node->key = 0;

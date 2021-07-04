@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:16:46 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 15:31:47 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/04 16:40:35 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ char	*change_key_to_value(char *argv, int *i, int env_len, t_info *info)
 
 	key = ft_substr(argv, (*i) + 1, env_len);
 	value = "";
-	if ((node = find_node(key, info->shell->env)))
-		value = ft_strdup(find_node(key, info->shell->env)->value);
-	if (!value)
-		value = ft_strdup("");
-	if (!(ft_strncmp(key, "?", 2)))
+	if (!(ft_strncmp(key, "?", 1)))
 		value = get_errno();
-	if (!(ft_strncmp(key, "$", 2)))
+	else if (!(ft_strncmp(key, "$", 1)))
 		value = get_pid();
+	else if ((node = find_node(key, info->shell->env)) && node->value)
+		value = ft_strdup(find_node(key, info->shell->env)->value);
+	else
+		value = ft_strdup("");
 	argv[*i] = 0;
 	value = change_dq_edq(value, 0);
 	ret = ft_strjoin_free(argv, value, 2);
@@ -43,6 +43,8 @@ int		get_env_len(char *argv, int i)
 	int		idx;
 
 	idx = i + 1;
+	if (argv[idx] == '$' || argv[idx] == '?')
+		return (1);
 	if (!ft_isalpha(argv[idx]) && argv[idx] != '_'
 		&& argv[idx] != '$' && argv[idx] != '?')
 		return (0);
