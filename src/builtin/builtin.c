@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 18:12:56 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/04 20:13:15 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 13:51:10 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		m_exit(t_token *tmp, t_info *info)
 	dup2(info->shell->std_out, STDOUT);
 	printf("exit\n");
 	if (!tmp->argv[1])
-		exit(0);
+		exit(errno);
 	ret = ft_atoi2(tmp->argv[1]);
 	if (ret > 255 || ret < 0)
 	{
