@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/04 21:28:51 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 14:19:35 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,17 @@ t_shell		*init_shell(char **env_i)
 {
 	t_shell		*ret;
 	t_node		*tmp;
+	int			shell_lvl;
 
 	if (!(ret = (t_shell*)malloc(sizeof(t_shell))))
 		return (0);
 	ret->env = init_env(env_i);
 	tmp = find_node("HOME", ret->env);
 	ret->home = tmp->value;
+	tmp = find_node("SHLVL", ret->env);
+	shell_lvl = ft_atoi2(tmp->value) + 1;
+	free(tmp->value);
+	tmp->value = ft_itoa(shell_lvl);
 	ret->history = init_history();
 	ret->home = ft_strdup(find_node("HOME", ret->env)->value);
 	ret->std_in = dup(STDIN_FILENO);
