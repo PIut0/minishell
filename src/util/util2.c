@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:51:01 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 13:31:34 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 17:29:33 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,10 @@ int		parse_errno(int err)
 	if ((int)err > 255)
 		err = err >> 8;
 	return (err);
+}
+
+void	dup3(int a, int b)
+{
+	if ((dup2(a, b)) == -1)
+		exit(errno);
 }

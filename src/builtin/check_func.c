@@ -6,13 +6,11 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
-/*   Updated: 2021/07/04 21:20:45 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 17:44:22 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern char **g_env;
 
 int		check_btin_func(t_token *tmp, t_info *info)
 {
@@ -93,12 +91,12 @@ int		run_execve(t_token *tmp, t_info *info, int i)
 	return (0);
 }
 
-int		check_func(t_token *tmp, t_info *info, int i)
+int		check_func(t_token *tmp, t_info *info)
 {
 	pid_t	pid;
 
-	pid = fork();
-	i = 0;
+	if ((pid = fork()) < 0)
+		exit(errno);
 	if (pid == 0)
 	{
 		run_execve(tmp, info, -1);
@@ -113,6 +111,8 @@ int		check_func(t_token *tmp, t_info *info, int i)
 		signal(SIGINT, child_sig);
 		signal(SIGQUIT, child_sig);
 		waitpid(pid, &errno, 0);
+		dup2(info->shell->std_out, STDOUT);
+		printf("test: %d %d\n",errno, g_signal.sig);
 		if (errno && errno == g_signal.sig)
 			errno += 128;
 	}

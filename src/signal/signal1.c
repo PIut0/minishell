@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 20:04:00 by klim              #+#    #+#             */
-/*   Updated: 2021/07/04 21:20:27 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 17:29:31 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void		sig_sigint(int sig)
 {
 	g_signal.sig = sig;
+	dup3(g_signal.in, STDIN);
+	dup3(g_signal.out, STDOUT);
 	errno = 1;
 	ft_putstr_fd("\nminishell > ", STDOUT);
 	return ;

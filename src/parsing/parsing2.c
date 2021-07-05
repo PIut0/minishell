@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 13:48:39 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 17:41:36 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,23 @@ int			open_bracket(t_token *t, char *target)
 		return (err_int("bash: No such file or directory", 1));
 	if (t->token_type == _brackets)
 	{
-		if (t->out != STDOUT)
-			close(t->out);
-		t->out = open(target, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (t->out != STDOUT && (close(t->out)) == -1)
+			exit(errno);
+		if((t->out = open(target, O_RDWR | O_CREAT | O_TRUNC, 0644)) == -1)
+			exit(errno);
 	}
 	if (t->token_type == _d_brackets)
 	{
-		if (t->out != STDOUT)
-			close(t->out);
-		t->out = open(target, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (t->out != STDOUT && (close(t->out)) == -1)
+			exit(errno);
+		if((t->out = open(target, O_WRONLY | O_CREAT | O_APPEND, 0644)) == -1)
+			exit(errno);
 	}
 	if (t->token_type == _r_brackets)
 	{
 		if (t->in != STDIN)
 			close(t->in);
-		t->in = open(target, O_RDONLY, 0644);
-		if (t->in < 0)
+		if ((t->in = open(target, O_RDONLY, 0644)) < 0)
 			return (err_int("bash: No such file or directory", 1));
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/04 21:28:51 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 17:29:31 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int			shell_start(t_shell *shell)
 
 	while (1)
 	{
-		dup2(shell->std_out, STDOUT);
-		dup2(shell->std_in, STDIN);
+		dup3(shell->std_out, STDOUT);
+		dup3(shell->std_in, STDIN);
 		err_print();
 		signal(SIGINT, sig_sigint);
 		signal(SIGQUIT, sig_sigquit);

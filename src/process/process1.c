@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/04 21:30:09 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 17:49:07 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ int		process_tmp(t_info *info, t_token *tmp)
 	i = -1;
 	while (tmp->argv[++i])
 		tmp->argv[i] = parse_data(tmp->argv[i], info);
-	dup2(tmp->in, STDIN);
-	dup2(tmp->out, STDOUT);
+	dup3(tmp->in, STDIN);
+	dup3(tmp->out, STDOUT);
 	if (!(tmp->argv) || !(tmp->argv[0]))
 		;
 	else if (check_builtin(tmp->argv[0]))
 		errno = check_btin_func(tmp, info);
 	else
-		errno = check_func(tmp, info, -1);
-	dup2(info->shell->std_out, STDOUT);
-	dup2(info->shell->std_in, STDIN);
+		errno = check_func(tmp, info);
+	dup3(info->shell->std_out, STDOUT);
+	dup3(info->shell->std_in, STDIN);
 	return (parse_errno(errno));
 }
 
@@ -55,20 +55,20 @@ int		get_pipe(void)
 	pid_t	pid;
 	int		pipefd[2];
 
-	pipe(pipefd);
-	pid = fork();
+	if ((pipe(pipefd)) == -1 || (pid = fork()) == -1)
+		exit(errno);
 	if (pid == 0)
 	{
 		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
-		dup2(STDOUT, STDOUT_FILENO);
+		dup3(pipefd[0], STDIN_FILENO);
+		dup3(STDOUT, STDOUT_FILENO);
 		close(pipefd[0]);
 	}
 	else
 	{
 		close(pipefd[0]);
-		dup2(STDIN, STDIN_FILENO);
-		dup2(pipefd[1], STDOUT_FILENO);
+		dup3(STDIN, STDIN_FILENO);
+		dup3(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 	}
 	return (pid);
