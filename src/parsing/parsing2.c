@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 15:56:38 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/05 13:48:39 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			join_brackets(t_token *t, int ret)
 		if (is_type_brackets(t->token_type))
 		{
 			tmp = t->next;
-			if (!tmp || !tmp->data)
+			if (!tmp || !tmp->data || !tmp->data[0])
 				return (err_int("empty file name", 1));
 			target = splice_str(tmp->data, WHITE_SPACE);
 			ret = open_bracket(t, target[0]);
