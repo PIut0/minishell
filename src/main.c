@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/07/05 17:29:31 by klim             ###   ########.fr       */
-=======
-/*   Updated: 2021/07/05 14:28:19 by sehyan           ###   ########.fr       */
->>>>>>> c986b2212fb9cd68150e56bc0d23ee281f4b27c3
+/*   Updated: 2021/07/05 20:55:52 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void		err_print(void)
-{
-	if (errno == 130 && g_signal.sig == 2)
-		ft_putstr_fd("\n", STDOUT);
-	if (errno == 131 && g_signal.sig == 3)
-		ft_putstr_fd("Quit: 3\n", STDOUT);
-}
 
 int			shell_start(t_shell *shell)
 {
@@ -33,7 +21,6 @@ int			shell_start(t_shell *shell)
 	{
 		dup3(shell->std_out, STDOUT);
 		dup3(shell->std_in, STDIN);
-		err_print();
 		signal(SIGINT, sig_sigint);
 		signal(SIGQUIT, sig_sigquit);
 		if (!(info = init_info(shell)))
@@ -63,6 +50,7 @@ t_shell		*init_shell(char **env_i)
 	ret->env = init_env(env_i);
 	tmp = find_node("HOME", ret->env);
 	ret->home = tmp->value;
+	ret->ppid = getpid();
 	if ((tmp = find_node("SHLVL", ret->env)))
 	{
 		shell_lvl = ft_atoi2(tmp->value) + 1;

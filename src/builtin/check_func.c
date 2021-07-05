@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 17:44:22 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 21:06:11 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	**get_char_env(t_env *env)
 int		run_execve(t_token *tmp, t_info *info, int i)
 {
 	char	**path;
+	int		ret;
 	char	*s;
 
 	if (find_node("PATH", info->shell->env))
@@ -84,37 +85,37 @@ int		run_execve(t_token *tmp, t_info *info, int i)
 		{
 			s = ft_strjoin_free(path[i], "/", 1);
 			s = ft_strjoin_free(s, tmp->argv[0], 1);
-			execve(s, tmp->argv, get_char_env(info->shell->env));
+			ret = execve(s, tmp->argv, get_char_env(info->shell->env));
 		}
 	}
-	execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
-	return (0);
+	ret = execve(tmp->argv[0], tmp->argv, get_char_env(info->shell->env));
+	printf("minishell: %s: %s\n", tmp->argv[0], strerror(errno));
+	return (errno);
 }
 
 int		check_func(t_token *tmp, t_info *info)
 {
 	pid_t	pid;
+	int		ret;
 
 	if ((pid = fork()) < 0)
 		exit(errno);
+	signal(SIGINT, child_sig);
+	signal(SIGQUIT, child_sig);
 	if (pid == 0)
 	{
-		run_execve(tmp, info, -1);
-		if (is_dir(tmp->argv[0]))
-			printf("minishell: %s: No such file or directory\n", tmp->argv[0]);
-		else
-			printf("minishell: %s: command not found\n", tmp->argv[0]);
-		exit(127);
+		ret = run_execve(tmp, info, -1);
+		errno = 127;
+		if (ret == 13)
+			errno = 126;
+		exit(errno);
 	}
 	else
 	{
-		signal(SIGINT, child_sig);
-		signal(SIGQUIT, child_sig);
 		waitpid(pid, &errno, 0);
 		dup2(info->shell->std_out, STDOUT);
-		printf("test: %d %d\n",errno, g_signal.sig);
 		if (errno && errno == g_signal.sig)
 			errno += 128;
 	}
-	return (parse_errno(errno));
+	return (errno);
 }

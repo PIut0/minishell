@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 17:30:33 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 20:56:14 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef	struct			s_shell
 	char				*home;
 	int					std_in;
 	int					std_out;
+	int					ppid;
 }						t_shell;
 
 typedef	struct			s_token
@@ -247,6 +248,7 @@ void					sig_sigquit(int sig);
 */
 int						err_int(char *s, int ret);
 void					*err_ptr(char *s, void *ret);
+void					err_print(t_info *info);
 
 int						is_char_set(char *str, char *charset, char *start);
 int						b_c(char *str, char *charset);

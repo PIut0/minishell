@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 17:49:07 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/05 21:07:12 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int		process_tmp(t_info *info, t_token *tmp)
 		errno = check_func(tmp, info);
 	dup3(info->shell->std_out, STDOUT);
 	dup3(info->shell->std_in, STDIN);
-	return (parse_errno(errno));
+	err_print(info);
+	return (errno);
 }
 
 int		get_pipe(void)
@@ -80,14 +81,13 @@ int		process_info(t_info *info, t_token *tmp, int is_child, int pid)
 	{
 		pid = 0;
 		if (tmp->token_type != _pipe)
-			errno = parse_errno(process_tmp(info, tmp));
+			errno = process_tmp(info, tmp);
 		else
 		{
 			pid = get_pipe();
 			if (pid)
 			{
-				parse_errno(process_tmp(info, tmp));
-				pause();
+				process_tmp(info, tmp);
 				waitpid(pid, &errno, 0);
 				break ;
 			}
@@ -97,6 +97,6 @@ int		process_info(t_info *info, t_token *tmp, int is_child, int pid)
 		tmp = tmp->next;
 	}
 	if (is_child)
-		exit(parse_errno(errno));
+		exit(errno);
 	return (0);
 }
