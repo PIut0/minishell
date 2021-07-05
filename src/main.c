@@ -6,7 +6,7 @@
 /*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 14:19:35 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/05 14:28:19 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,14 @@ t_shell		*init_shell(char **env_i)
 	ret->env = init_env(env_i);
 	tmp = find_node("HOME", ret->env);
 	ret->home = tmp->value;
-	tmp = find_node("SHLVL", ret->env);
-	shell_lvl = ft_atoi2(tmp->value) + 1;
-	free(tmp->value);
-	tmp->value = ft_itoa(shell_lvl);
+	if ((tmp = find_node("SHLVL", ret->env)))
+	{
+		shell_lvl = ft_atoi2(tmp->value) + 1;
+		free(tmp->value);
+		tmp->value = ft_itoa(shell_lvl);
+	}
+	else
+		add_env("SHLVL=1", ret->env);
 	ret->history = init_history();
 	ret->home = ft_strdup(find_node("HOME", ret->env)->value);
 	ret->std_in = dup(STDIN_FILENO);
