@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 21:05:32 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/06 17:54:58 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@ int			is_type_brackets(t_token_type t)
 		|| t == _d_brackets || t == _rd_brackets)
 		return (1);
 	return (0);
-}
-
-char		*get_brackets(t_token_type t)
-{
-	if (t == _brackets)
-		return (">");
-	else if (t == _r_brackets)
-		return ("<");
-	else if (t == _d_brackets)
-		return (">>");
-	return ("");
 }
 
 int			open_bracket(t_token *t, char *target)

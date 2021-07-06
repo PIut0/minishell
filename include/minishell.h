@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 20:56:14 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/06 17:55:03 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,6 @@ char					*remove_space(char *str);
 int						parsing(char *line, t_info *info);
 
 int						is_type_brackets(t_token_type t);
-char					*get_brackets(t_token_type t);
 int						open_bracket(t_token *t, char *target);
 int						join_brackets(t_token *t, int ret);
 
