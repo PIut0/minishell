@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:01:37 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 03:41:10 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 04:21:58 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int				parse_token(char *line, t_info *info, t_token *head, int len)
 	}
 	if (add_new_token(head, line, &i, last))
 		return (1);
-	if (join_brackets(head, 0))
+	if (join_brackets(head, 0, info))
 		return (1);
 	if (parse_argv(info, head))
 		return (1);
