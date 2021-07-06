@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
+#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/03 14:03:20 by sehyan           ###   ########.fr        #
+#    Updated: 2021/07/07 01:57:01 by klim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS_LIST	=	main.c \
 				parsing/parsing3.c \
 				parsing/parsing4.c \
 				parsing/parsing5.c \
+				parsing/parsing6.c \
 				process/process1.c \
 				signal/signal1.c \
 				util/util1.c \

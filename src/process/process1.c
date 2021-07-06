@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 21:07:12 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 02:30:19 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,83 @@ int		check_builtin(char *argv)
 	return (0);
 }
 
+void	get_rd_input(int flag, char *target, int out, int in)
+{
+	char	*s;
+
+	s = 0;
+	while (1)
+	{
+		ft_putstr_fd("> ", out);
+		if ((get_next_line(in, &s) < 0))
+			break ;
+		if (ft_strcmp(target, s))
+		{
+			free(s);
+			break ;
+		}
+		if (flag)
+		{
+			ft_putstr_fd(s, STDOUT);
+			ft_putstr_fd("\n", STDOUT);
+		}
+		free(s);
+	}
+}
+
+int		get_pipe2(void)
+{
+	pid_t	pid;
+	int		pipefd[2];
+
+	if ((pipe(pipefd)) == -1 || (pid = fork()) == -1)
+		exit(errno);
+	if (pid == 0)
+	{
+		close(pipefd[0]);
+		dup3(STDIN, STDIN_FILENO);
+		dup3(pipefd[1], STDOUT_FILENO);
+		close(pipefd[1]);
+	}
+	else
+	{
+		close(pipefd[1]);
+		dup3(pipefd[0], STDIN_FILENO);
+		dup3(STDOUT, STDOUT_FILENO);
+		close(pipefd[0]);
+	}
+	return (pid);
+}
+
+void	set_fd_in_out(t_info *info, t_token *tmp)
+{
+	t_rd_in		*rd;
+	int			pid;
+
+	rd = tmp->rd_in->next;
+	while (rd)
+	{
+		if (!rd->next)
+		{
+			pid = get_pipe2();
+			if (!pid)
+			{
+				get_rd_input(1, rd->target, info->shell->std_out, info->shell->std_in);
+				exit(errno);
+			}
+			else
+				waitpid(pid, &errno, 0);
+			break ;
+		}
+		else
+			get_rd_input(0, rd->target, info->shell->std_out, info->shell->std_in);
+		rd = rd->next;
+	}
+	dup3(tmp->out, STDOUT);
+	if (tmp->in > 0)
+		dup3(tmp->in, STDIN);
+}
+
 int		process_tmp(t_info *info, t_token *tmp)
 {
 	int		i;
@@ -37,8 +114,9 @@ int		process_tmp(t_info *info, t_token *tmp)
 	i = -1;
 	while (tmp->argv[++i])
 		tmp->argv[i] = parse_data(tmp->argv[i], info);
-	dup3(tmp->in, STDIN);
-	dup3(tmp->out, STDOUT);
+	set_fd_in_out(info, tmp);
+	//dup3(tmp->in, STDIN);
+	//dup3(tmp->out, STDOUT);
 	if (!(tmp->argv) || !(tmp->argv[0]))
 		;
 	else if (check_builtin(tmp->argv[0]))

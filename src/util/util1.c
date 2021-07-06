@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:44 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 21:05:11 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 01:56:49 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,12 @@ int			open_file(char *s, int flag)
 {
 	int fd;
 
+	fd = -1;
 	if (!s || !*s)
 		return (-1);
-	if (flag)
+	if (flag == _brackets)
 		fd = open(s, O_RDWR | O_CREAT | O_TRUNC, 00777);
-	else
+	else if (flag == _d_brackets)
 		fd = open(s, O_RDWR | O_CREAT | O_APPEND, 00777);
 	return (fd);
 }

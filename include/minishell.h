@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/06 17:55:03 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 01:41:04 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,18 @@ typedef	struct			s_shell
 	int					ppid;
 }						t_shell;
 
+typedef	struct			s_rd_in
+{
+	char				*target;
+	struct s_rd_in		*next;
+}						t_rd_in;
+
 typedef	struct			s_token
 {
 	char				*data;
 	char				**argv;
 	t_token_type		token_type;
+	t_rd_in				*rd_in;
 	int					in;
 	int					out;
 	struct s_token		*next;
@@ -225,6 +232,9 @@ char					*change_nega_char(char *argv);
 char					*remove_quote(char *str);
 char					*change_dq_edq(char *str, int key);
 char					*remove_bs(char *str);
+
+void		add_rd_brackets(t_token *t, char *target);
+t_rd_in		*init_rd_in(char *target);
 
 /*
 **		process
