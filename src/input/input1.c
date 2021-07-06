@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 13:52:06 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 04:19:32 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*add_char(char *str, int c)
 
 char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 {
-	while (read(0, &ch, sizeof(int)) > 0)
+	while ((shell->eof = read(0, &ch, sizeof(int))) > 0)
 	{
 		if (g_signal.sig == SIGINT)
 			ret = reset_ret(ret, &idx);

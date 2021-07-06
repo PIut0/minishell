@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 03:42:49 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 04:17:41 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			shell_start(t_shell *shell)
 	char	*line;
 	t_info	*info;
 
-	while (1)
+	while (shell->eof)
 	{
 		dup3(shell->std_out, STDOUT);
 		dup3(shell->std_in, STDIN);
@@ -36,7 +36,7 @@ int			shell_start(t_shell *shell)
 		process_info(info, info->head->next, 0, 0);
 		free_info(info);
 	}
-	return (0);
+	return (errno);
 }
 
 t_shell		*init_shell(char **env_i)
@@ -50,7 +50,7 @@ t_shell		*init_shell(char **env_i)
 	ret->env = init_env(env_i);
 	tmp = find_node("HOME", ret->env);
 	ret->home = tmp->value;
-	ret->ppid = getpid();
+	ret->pid = getpid();
 	if ((tmp = find_node("SHLVL", ret->env)))
 	{
 		shell_lvl = ft_atoi2(tmp->value) + 1;
@@ -63,6 +63,7 @@ t_shell		*init_shell(char **env_i)
 	ret->home = ft_strdup(find_node("HOME", ret->env)->value);
 	ret->std_in = dup(STDIN_FILENO);
 	ret->std_out = dup(STDOUT_FILENO);
+	ret->eof = 1;
 	return (ret);
 }
 

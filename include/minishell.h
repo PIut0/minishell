@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 03:52:18 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 04:14:53 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ typedef	struct			s_shell
 	char				*home;
 	int					std_in;
 	int					std_out;
-	int					ppid;
+	int					pid;
+	int					eof;
 }						t_shell;
 
 typedef	struct			s_rd_in
