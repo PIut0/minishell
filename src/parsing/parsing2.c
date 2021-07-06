@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 02:41:00 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 03:42:37 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int			join_brackets(t_token *t, int ret)
 			t->data = ft_strjoin_free(t->data, ft_sp_merge2(target, " "), 3);
 			t->token_type = tmp->token_type;
 			t->next = tmp->next;
-			free(tmp->data);
-			free(tmp);
+			free_token(tmp);
 		}
 		else
 			t = t->next;
