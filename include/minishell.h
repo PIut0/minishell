@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 01:41:04 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 03:52:18 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,8 +233,11 @@ char					*remove_quote(char *str);
 char					*change_dq_edq(char *str, int key);
 char					*remove_bs(char *str);
 
-void		add_rd_brackets(t_token *t, char *target);
-t_rd_in		*init_rd_in(char *target);
+t_rd_in					*init_rd_in(char *target);
+void					add_rd_brackets(t_token *t, char *target);
+void					get_rd_input(int flag, char *target, int out, int in);
+int						get_pipe2(void);
+void					set_fd_in_out(t_token *tmp, int in, int out);
 
 /*
 **		process
