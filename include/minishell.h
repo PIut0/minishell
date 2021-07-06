@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 04:22:21 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 05:08:07 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,9 +236,9 @@ char					*remove_bs(char *str);
 
 t_rd_in					*init_rd_in(char *target);
 void					add_rd_brackets(t_token *t, char *target);
-void					get_rd_input(int flag, char *target, int out, int in);
+void					get_rd_input(int flag, char *target, t_info *info);
 int						get_pipe2(void);
-void					set_fd_in_out(t_token *tmp, int in, int out);
+void					set_fd_in_out(t_token *tmp, t_info *info);
 
 /*
 **		process
@@ -253,8 +253,10 @@ int						process_info(t_info *info, t_token *tmp,
 **		signal
 */
 void					sig_sigint(int sig);
-void					child_sig(int sig);
 void					sig_sigquit(int sig);
+void					child_sig(int sig);
+void					db_sigint(int sig);
+void					sig_newline(int sig);
 
 /*
 **		util
@@ -277,6 +279,8 @@ int						open_file(char *s, int flag);
 int						is_dir(char *argv);
 int						parse_errno(int err);
 void					dup3(int a, int b);
+char					*replace_env2(char *argv, t_info *info);
+char					*replace_bs2(char *line);
 
 t_sig					g_signal;
 

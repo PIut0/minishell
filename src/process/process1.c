@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 03:52:49 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 05:06:17 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ int		process_tmp(t_info *info, t_token *tmp)
 	i = -1;
 	while (tmp->argv[++i])
 		tmp->argv[i] = parse_data(tmp->argv[i], info);
-	set_fd_in_out(tmp, info->shell->std_in, info->shell->std_out);
-	if (!(tmp->argv) || !(tmp->argv[0]))
+	signal(SIGINT, sig_newline);
+	signal(SIGQUIT, sig_newline);
+	set_fd_in_out(tmp, info);
+	dup3(tmp->out, STDOUT);
+	signal(SIGINT, sig_sigint);
+	signal(SIGQUIT, sig_sigquit);
+	if (!(tmp->argv) || !(tmp->argv[0]) || (errno == 256 && g_signal.sig == 2))
 		;
 	else if (check_builtin(tmp->argv[0]))
 		errno = check_btin_func(tmp, info);

@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 16:43:39 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 03:52:47 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 05:06:10 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,14 @@ void	add_rd_brackets(t_token *t, char *target)
 	tmp->next = new;
 }
 
-void	get_rd_input(int flag, char *target, int out, int in)
+void	get_rd_input(int flag, char *target, t_info *info)
 {
 	char	*s;
 
-	s = 0;
 	while (1)
 	{
-		ft_putstr_fd("> ", out);
-		if ((get_next_line(in, &s) < 0))
+		ft_putstr_fd("> ", info->shell->std_out);
+		if ((get_next_line(info->shell->std_in, &s) <= 0))
 			break ;
 		if (ft_strcmp(target, s))
 		{
@@ -53,6 +52,9 @@ void	get_rd_input(int flag, char *target, int out, int in)
 		}
 		if (flag)
 		{
+			s = replace_bs2(s);
+			s = replace_env2(s, info);
+			s = remove_bs(s);
 			ft_putstr_fd(s, STDOUT);
 			ft_putstr_fd("\n", STDOUT);
 		}
@@ -84,7 +86,7 @@ int		get_pipe2(void)
 	return (pid);
 }
 
-void	set_fd_in_out(t_token *tmp, int in, int out)
+void	set_fd_in_out(t_token *tmp, t_info *info)
 {
 	t_rd_in		*rd;
 	int			pid;
@@ -97,7 +99,8 @@ void	set_fd_in_out(t_token *tmp, int in, int out)
 			pid = get_pipe2();
 			if (!pid)
 			{
-				get_rd_input(1, rd->target, out, in);
+				signal(SIGINT, db_sigint);
+				get_rd_input(1, rd->target, info);
 				exit(errno);
 			}
 			else
@@ -105,10 +108,9 @@ void	set_fd_in_out(t_token *tmp, int in, int out)
 			break ;
 		}
 		else
-			get_rd_input(0, rd->target, out, in);
+			get_rd_input(0, rd->target, info);
 		rd = rd->next;
 	}
-	dup3(tmp->out, STDOUT);
 	if (tmp->in > 0)
 		dup3(tmp->in, STDIN);
 }

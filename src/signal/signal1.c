@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 20:04:00 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 17:29:31 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 05:07:54 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,31 @@ void		sig_sigint(int sig)
 	return ;
 }
 
+void		sig_sigquit(int sig)
+{
+	g_signal.sig = sig;
+	return ;
+}
+
 void		child_sig(int sig)
 {
 	g_signal.sig = sig;
 }
 
-void		sig_sigquit(int sig)
+void		db_sigint(int sig)
 {
 	g_signal.sig = sig;
+	dup3(g_signal.in, STDIN);
+	dup3(g_signal.out, STDOUT);
+	errno = 1;
+	exit(errno);
 	return ;
+}
+
+void		sig_newline(int sig)
+{
+	ft_putstr_fd("\b\b  \b\b", STDOUT);
+	if (sig == SIGINT)
+		ft_putstr_fd("\n", STDOUT);
+	g_signal.sig = sig;
 }
