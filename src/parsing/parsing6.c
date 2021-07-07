@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 16:43:39 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 05:06:10 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:55:03 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	set_fd_in_out(t_token *tmp, t_info *info)
 				get_rd_input(1, rd->target, info);
 				exit(errno);
 			}
-			else
-				waitpid(pid, &errno, 0);
+			if ((waitpid(pid, &errno, 0)) == -1)
+				exit(errno);
 			break ;
 		}
 		else

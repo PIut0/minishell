@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 04:23:57 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 12:31:39 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int			open_bracket(t_token *t, char *target, t_info *info)
 		if (t->out != STDOUT && (close(t->out)) == -1)
 			exit(errno);
 		if ((t->out = open_file(target, t->token_type)) == -1)
-			exit(errno);
+			return (err_int(strerror(errno), err_int("minishell: ", 1)));
 	}
 	else if (t->token_type == _r_brackets)
 	{
 		target = parse_data(target, info);
-		if (t->in != STDIN && t->in > 0)
-			close(t->in);
+		if (t->in != STDIN && t->in > 0 && (close(t->in)) == -1)
+			exit(errno);
 		if ((t->in = open(target, O_RDONLY, 0644)) < 0)
 			return (err_int("minishell: No such file or directory", 1));
 	}

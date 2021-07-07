@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:10:17 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 04:19:32 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:54:08 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ char	*get_input(int idx, int ch, char *ret, t_shell *shell)
 			write(0, "\b \b", 3);
 		else if (ch == 127)
 			idx++;
-		else if (ch == '\n')
+		else if (ch == '\n' || ch == _LEFT - 17 || ch == _RIGHT - 17)
 			break ;
 		else if (++idx)
-			write(0, &ch, sizeof(int));
+			write(0, &ch, 1);
 		if (!(ret = add_char(ret, ch)))
 			return (err_ptr("malloc err", 0));
 		ch = 0;

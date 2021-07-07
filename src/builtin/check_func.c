@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 11:31:59 by klim              #+#    #+#             */
-/*   Updated: 2021/07/05 21:06:11 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:54:39 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ int		check_func(t_token *tmp, t_info *info)
 	}
 	else
 	{
-		waitpid(pid, &errno, 0);
+		if ((waitpid(pid, &errno, 0)) == -1)
+			exit(errno);
 		dup2(info->shell->std_out, STDOUT);
 		if (errno && errno == g_signal.sig)
 			errno += 128;

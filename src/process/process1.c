@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 15:17:14 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 05:06:17 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:55:35 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int		process_info(t_info *info, t_token *tmp, int is_child, int pid)
 			if (pid)
 			{
 				process_tmp(info, tmp);
-				waitpid(pid, &errno, 0);
+				if ((waitpid(pid, &errno, 0)) == -1)
+					exit(errno);
 				break ;
 			}
 			else

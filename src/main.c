@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:02:23 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 04:17:41 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 15:45:03 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_shell		*init_shell(char **env_i)
 
 	if (!(ret = (t_shell*)malloc(sizeof(t_shell))))
 		return (0);
-	ret->env = init_env(env_i);
+	if (!(ret->env = init_env(env_i)))
+		return (0);
 	tmp = find_node("HOME", ret->env);
 	ret->home = tmp->value;
 	ret->pid = getpid();
