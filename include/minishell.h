@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 05:08:07 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 17:13:04 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,8 +262,10 @@ void					sig_newline(int sig);
 **		util
 */
 int						err_int(char *s, int ret);
+int						err_int2(char *s, int ret);
 void					*err_ptr(char *s, void *ret);
 void					err_print(t_info *info);
+int						free_ret(void *ptr, int ret);
 
 int						is_char_set(char *str, char *charset, char *start);
 int						b_c(char *str, char *charset);

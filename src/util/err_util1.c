@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_util1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 18:18:54 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 15:24:59 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/07 17:13:20 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 int		err_int(char *s, int ret)
 {
 	printf("%s\n", s);
+	return (ret);
+}
+
+int		err_int2(char *s, int ret)
+{
+	printf("%s", s);
 	return (ret);
 }
 
@@ -33,4 +39,10 @@ void	err_print(t_info *info)
 		if (errno == 131 && g_signal.sig == 3)
 			ft_putstr_fd("Quit: 3\n", STDOUT);
 	}
+}
+
+int		free_ret(void *ptr, int ret)
+{
+	free(ptr);
+	return (ret);
 }

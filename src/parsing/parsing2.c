@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 16:00:29 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 12:31:39 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 17:21:16 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int			open_bracket(t_token *t, char *target, t_info *info)
 		if (t->out != STDOUT && (close(t->out)) == -1)
 			exit(errno);
 		if ((t->out = open_file(target, t->token_type)) == -1)
-			return (err_int(strerror(errno), err_int("minishell: ", 1)));
+			return (err_int(strerror(errno),
+				err_int2("minishell: ", free_ret(target, 1))));
 	}
 	else if (t->token_type == _r_brackets)
 	{
@@ -38,7 +39,8 @@ int			open_bracket(t_token *t, char *target, t_info *info)
 		if (t->in != STDIN && t->in > 0 && (close(t->in)) == -1)
 			exit(errno);
 		if ((t->in = open(target, O_RDONLY, 0644)) < 0)
-			return (err_int("minishell: No such file or directory", 1));
+			return (err_int(strerror(errno),
+				err_int2("minishell: ", free_ret(target, 1))));
 	}
 	else if (t->token_type == _rd_brackets)
 		add_rd_brackets(t, target);
@@ -54,14 +56,13 @@ int			join_brackets(t_token *t, int ret, t_info *info)
 	t = t->next;
 	while (t)
 	{
-		if (is_type_brackets(t->token_type))
+		if (!ret && is_type_brackets(t->token_type))
 		{
 			tmp = t->next;
 			if (!tmp || !tmp->data || !tmp->data[0])
-				return (err_int("empty file name", 1));
+				return (err_int("minishell: empty file name", 1));
 			target = splice_str(tmp->data, WHITE_SPACE);
-			if ((ret = open_bracket(t, ft_strdup(target[0]), info)))
-				return (ret);
+			ret = open_bracket(t, ft_strdup(target[0]), info);
 			target[0][0] = 0;
 			t->data = ft_strjoin_free(t->data, ft_sp_merge2(target, " "), 3);
 			t->token_type = tmp->token_type;
