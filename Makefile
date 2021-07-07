@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klim <klim@student.42.fr>                  +#+  +:+       +#+         #
+#    By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:10:56 by klim              #+#    #+#              #
-#    Updated: 2021/07/07 01:57:01 by klim             ###   ########.fr        #
+#    Updated: 2021/07/07 15:39:06 by sehyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,3 +71,5 @@ fclean		: clean
 	@make fclean -C libft
 
 re			: fclean all
+
+.PHONY		: all clean fclean re
