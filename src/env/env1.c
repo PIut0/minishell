@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:36:22 by klim              #+#    #+#             */
-/*   Updated: 2021/07/03 14:50:06 by sehyan           ###   ########.fr       */
+/*   Updated: 2021/07/07 16:48:49 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,29 @@
 t_node	*init_node(char *s)
 {
 	t_node	*n;
+	char	*key;
+	char	*value;
 	int		i;
-	int		j;
+	int		len;
 
-	if (!(n = (t_node*)ft_calloc(sizeof(t_node), 1))
-		|| !(n->key = (char *)ft_calloc(sizeof(char), ft_strlen(s)))
-		|| !(n->value = (char *)ft_calloc(sizeof(char), ft_strlen(s))))
+	if (!(n = (t_node*)ft_calloc(sizeof(t_node), 1)))
 		return ((t_node *)err_ptr("malloc err", 0));
 	i = -1;
-	while ((s[++i] != '=') && s[i])
-		n->key[i] = s[i];
-	j = -1;
-	if (s[i] == '=' && n->key)
+	len = ft_strlen(s);
+	while (s[++i] && (s[i] != '='))
+		;
+	if (!(key = (char *)malloc(i + 1)) ||
+		!(value = (char *)malloc(len - i + 1)))
+		return ((t_node *)err_ptr("malloc err", 0));
+	ft_strlcpy(key, s, i + 1);
+	ft_strlcpy(value, s + i + 1, (size_t)s + len);
+	if (i >= len)
 	{
-		while (s[++i])
-			n->value[++j] = s[i];
-		n->value[++j] = 0;
+		free(value);
+		value = 0;
 	}
-	else
-	{
-		free(n->value);
-		n->value = 0;
-	}
+	n->key = key;
+	n->value = value;
 	n->prev = 0;
 	return (n);
 }

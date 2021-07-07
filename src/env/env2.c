@@ -6,7 +6,7 @@
 /*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 13:20:05 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/07 15:46:07 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 16:50:27 by klim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int		add_env(char *s, t_env *env)
 	t_node	*tmp;
 
 	if (!(n = init_node(s)))
-		return (-1);
+	{
+		rm_env(n);
+		return (err_int("malloc error", 1));
+	}
 	n->next = 0;
 	if (n->key[ft_strlen(n->key) - 1] == '+')
 		return (plus_env(n, env));
@@ -114,6 +117,8 @@ t_env	*init_env(char **arg_env)
 		return ((t_env *)err_ptr("malloc error", 0));
 	env->head = init_node("");
 	env->tail = init_node("");
+	if (!env->head || !env->tail)
+		return ((t_env *)err_ptr("malloc error", 0));
 	env->head->next = env->tail;
 	env->tail->prev = env->head;
 	while (arg_env[++i])
