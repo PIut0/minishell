@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:54:39 by ash               #+#    #+#             */
-/*   Updated: 2021/07/07 16:10:54 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 17:22:47 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int		m_unset(char **argv, t_env *env)
 			continue ;
 		if (get_env_len(key, 0) + 1 != (int)ft_strlen(key))
 		{
-			printf("test2: %d %d",get_env_len(key, 0) + 1, (int)ft_strlen(key));
 			printf("minishell: export: '%s': not a valid identifier\n", key);
 			errno = 1;
 			continue ;

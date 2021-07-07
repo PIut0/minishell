@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 13:20:05 by sehyan            #+#    #+#             */
-/*   Updated: 2021/07/07 16:50:27 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 17:25:51 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ int		plus_env(t_node *n, t_env *env)
 		n->next = env->tail;
 		env->tail->prev = n;
 		if (!(check_key_val(n)))
-		{
-			rm_env(n);
-			return (1);
-		}
+			return (rm_env(n));
 	}
 	return (0);
 }
@@ -68,10 +65,8 @@ int		add_env(char *s, t_env *env)
 	t_node	*tmp;
 
 	if (!(n = init_node(s)))
-	{
-		rm_env(n);
-		return (err_int("malloc error", 1));
-	}
+		return (err_int("malloc error", rm_env(n)));
+	n->prev = 0;
 	n->next = 0;
 	if (n->key[ft_strlen(n->key) - 1] == '+')
 		return (plus_env(n, env));
@@ -85,13 +80,12 @@ int		add_env(char *s, t_env *env)
 	{
 		printf("minishell: export: '%s': not a valid identifier\n", s);
 		errno = 1;
-		rm_env(n);
-		return (1);
+		return (rm_env(n));
 	}
 	return (0);
 }
 
-void	rm_env(t_node *node)
+int		rm_env(t_node *node)
 {
 	if (node->next)
 		node->next->prev = node->prev;
@@ -105,6 +99,7 @@ void	rm_env(t_node *node)
 	node->value = 0;
 	free(node);
 	node = 0;
+	return (1);
 }
 
 t_env	*init_env(char **arg_env)

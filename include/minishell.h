@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klim <klim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sehyan <sehyan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:20:02 by klim              #+#    #+#             */
-/*   Updated: 2021/07/07 17:13:04 by klim             ###   ########.fr       */
+/*   Updated: 2021/07/07 17:25:10 by sehyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int						check_key_val(t_node *node);
 void					add_env_back(t_node *tmp, char *s);
 int						plus_env(t_node *n, t_env *env);
 int						add_env(char *s, t_env *env);
-void					rm_env(t_node *node);
+int						rm_env(t_node *node);
 t_env					*init_env(char **arg_env);
 
 /*
